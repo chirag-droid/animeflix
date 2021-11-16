@@ -64,6 +64,7 @@ export async function getServerSideProps(context) {
     }
     coverImage {
       extraLarge
+      color
     }
     meanScore
     genres
@@ -78,17 +79,17 @@ export async function getServerSideProps(context) {
   }
   `
 
-  const url = 'https://graphql.anilist.co',
-        options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-            query: query
-          })
-        }
+  const url = 'https://graphql.anilist.co'
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      query: query
+    })
+  }
 
   const response = await (await fetch(url, options)).json()
 
