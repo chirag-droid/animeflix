@@ -7,15 +7,15 @@ function Card({anime}) {
     const router = useRouter()
 
     return (
-        <div className='rounded-xl w-52 p-2 hover:scale-105 transform transition duration-300 ease-out'>
-            <div className='relative w-60 cursor-pointer' onClick={()=>router.push(`/anime/${anime.id}`)}>
+        <div className='w-52 p-2 hover:scale-105 transform transition duration-300 ease-out'>
+            <div className='relative w-48 cursor-pointer' onClick={()=>router.push(`/anime/${anime.id}`)}>
                 <Image
                     src={anime.coverImage.extraLarge} 
                     layout="responsive"
                     width="100%"
                     height="100%"
-                    objectFit='contain'
-                    objectPosition='left'
+                    objectPosition='center'
+                    className='rounded-md'
                 />
             </div>
 
