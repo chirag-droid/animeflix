@@ -25,6 +25,7 @@ function Banner({ anime }) {
           src={anime.bannerImage}
           layout='fill'
           objectFit='cover'
+          className='opacity-60'
         />
         : null
       }
@@ -59,7 +60,7 @@ function Banner({ anime }) {
         }
 
         <button
-          className='mt-4 rounded-sm p-1 bg-[#C3073F] active:scale-90'
+          className='mt-4 rounded-lg p-1 bg-[#C3073F] active:scale-90 transform transition duration-300 ease-in'
           onClick={()=>router.push(`/anime/${anime.id}`)}
         >
           Read more
