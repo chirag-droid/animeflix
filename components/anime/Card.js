@@ -7,8 +7,8 @@ function Card({anime}) {
     const router = useRouter()
 
     return (
-        <div className='w-52 p-2 hover:scale-105 transform transition duration-300 ease-out'>
-            <div className='relative w-48 h-64 cursor-pointer' onClick={()=>router.push(`/anime/${anime.id}`)}>
+        <div className='w-52 sm:w-56 p-2 hover:scale-105 transform transition duration-300 ease-out'>
+            <div className='relative w-40 sm:w-52 h-48 sm:h-64 cursor-pointer' onClick={()=>router.push(`/anime/${anime.id}`)}>
                 <Image
                     src={anime.coverImage.extraLarge}
                     layout='fill'
@@ -21,8 +21,8 @@ function Card({anime}) {
                 <span className='text-sm mt-2 text-white'>{anime.title.romaji}</span>
             </div>
 
-            <div className='flex space-x-2 text-white text-xs'>
-                <div className='flex items-center space-x-1'>
+            <div className='flex space-x-2 text-white text-xs mx-auto'>
+                <div className='hidden sm:flex items-center space-x-1'>
                     <PlayIcon className='w-4 h-4' />
                     <p>{anime.format}</p>
                 </div>
