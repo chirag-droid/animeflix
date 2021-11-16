@@ -2,12 +2,13 @@ import Banner from "../../components/anime/Banner"
 import Header from "../../components/Header"
 import Section from "../../components/anime/Section"
 import { EmojiSadIcon } from "@heroicons/react/solid";
+import { progress } from "../_app";
 
 function Anime({ anime, recommended }) {
   return (
     <>
       <Header />
-      <Banner anime={anime} />
+      <Banner anime={anime} onLoadingComplete={progress.finish} />
 
       {recommended.length > 0 ?
         <Section animeList={recommended} title="Recommended" />

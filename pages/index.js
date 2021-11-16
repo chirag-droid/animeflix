@@ -1,13 +1,14 @@
 import Header from "../components/Header"
 import Banner from "../components/anime/Banner"
 import Section from "../components/anime/Section"
+import { progress } from "./_app"
 
 export default function Home({ banner, trending, popular, topRated }) {
   return (
     <>
     <Header />
 
-    <Banner anime={banner} />
+    <Banner anime={banner} onLoadingComplete={progress.finish} />
 
     <Section title="Trending Now" animeList={trending} />
     <Section title="Popular" animeList={popular} />

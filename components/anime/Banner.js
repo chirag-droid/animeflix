@@ -5,7 +5,7 @@ import { PlayIcon } from "@heroicons/react/solid";
 import { ClockIcon, ThumbUpIcon } from "@heroicons/react/outline";
 import Icon from '../Icon'
 
-function Banner({ anime }) {
+function Banner({ anime, onLoadingComplete }) {
   const isMedium = useMediaQuery('(min-width: 768px)')
   const isLarge = useMediaQuery('(min-width: 1024px)')
   const router = useRouter()
@@ -24,6 +24,7 @@ function Banner({ anime }) {
       {/* The image behind the banner */}
       {anime.bannerImage ?
         <Image
+          onLoadingComplete={onLoadingComplete}
           priority
           src={anime.bannerImage}
           layout='fill'
