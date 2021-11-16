@@ -30,7 +30,7 @@ function Banner({ anime }) {
         : null
       }
 
-      <div className='text-white absolute ml-5 sm:ml-8 mt-8 lg:mt-10 xl:mt-12 2xl:mt-14 space-y-2'>
+      <div className='text-white absolute ml-4 sm:ml-8 mt-8 lg:mt-10 xl:mt-12 2xl:mt-14 space-y-2'>
         <p className='font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>{anime.title.english}</p>
         <p className='text-gray-300 font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl'>{anime.title.romaji}</p>
 
