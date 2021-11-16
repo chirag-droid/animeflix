@@ -30,7 +30,7 @@ function Banner({ anime }) {
         : null
       }
 
-      <div className='text-white absolute ml-4 sm:ml-8 mt-8 lg:mt-10 xl:mt-12 2xl:mt-14 space-y-2'>
+      <div className='text-white absolute ml-4 sm:ml-8 mt-4 sm:mt-6 lg:mt-10 xl:mt-12 2xl:mt-14 space-y-2'>
         <p className='font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>{anime.title.english}</p>
         <p className='text-gray-300 font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl'>{anime.title.romaji}</p>
 
@@ -49,21 +49,22 @@ function Banner({ anime }) {
             </div>
         </div>
 
-        <div className='flex space-x-4'>
+        <div className='grid grid-cols-4 gap-x-1 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2 md:flex'>
             {anime.genres.map(genre => <p className='p-1 rounded text-xs sm:text-sm bg-white text-black'>{genre}</p>)}
         </div>
 
         {/* todo, find a safer way */}
         {description ?
-            <p className='mt-4 max-w-3xl' dangerouslySetInnerHTML={{ __html: `${description}...` }}></p>
+            <p className='max-w-3xl' dangerouslySetInnerHTML={{ __html: `${description}...` }}></p>
             : null
         }
 
         <button
-          className='text-xs sm:text-sm md:text-base mt-4 rounded-lg p-1 bg-[#C3073F] active:scale-90 transform transition duration-300 ease-in'
+          className='flex items-center text-xs sm:text-sm md:text-base rounded-lg px-2 py-1 bg-[#C3073F] active:scale-90 transform transition duration-300 ease-in'
           onClick={()=>router.push(`/anime/${anime.id}`)}
         >
-          Read more
+          <PlayIcon className='w-5' />
+          Watch Now
         </button>
       </div>
 
