@@ -63,7 +63,7 @@ export async function getServerSideProps(context) {
       english
     }
     coverImage {
-      extraLarge
+      large
       color
     }
     meanScore
