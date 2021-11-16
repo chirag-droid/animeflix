@@ -31,7 +31,7 @@ function Banner({ anime, onLoadingComplete }) {
           objectFit='cover'
           className='opacity-60'
         />
-        : null
+        : onLoadingComplete()
       }
 
       <div className='text-white absolute ml-4 sm:ml-8 mt-4 sm:mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 space-y-2 md:space-y-3'>
