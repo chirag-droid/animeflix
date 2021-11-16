@@ -1,16 +1,24 @@
 import Banner from "../../components/anime/Banner"
 import Header from "../../components/Header"
 import Section from "../../components/anime/Section"
+import { EmojiSadIcon } from "@heroicons/react/solid";
 
 function Anime({ anime, recommended }) {
-    return (
-      <>
-        <Header />
-        <Banner anime={anime} />
+  return (
+    <>
+      <Header />
+      <Banner anime={anime} />
 
+      {recommended.length > 0 ?
         <Section animeList={recommended} title="Recommended" />
-      </>
-    )
+        :
+        <p className='flex items-center justify-center font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'>
+          no recommendations found
+          <EmojiSadIcon className='w-8' />
+        </p>
+      }
+    </>
+  )
 }
 
 export async function getServerSideProps(context) {
