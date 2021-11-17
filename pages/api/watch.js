@@ -45,7 +45,7 @@ const gogoLink = (name) => {
   name = name.split(" ").join("-")
   
   ignore.forEach(word => {
-    name = name.replaceAll(word, "")
+    name = name.replace(`/${word}/g`, "")
   });
 
   return `https://gogoanime.cm/category/${name}`
