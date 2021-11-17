@@ -56,7 +56,7 @@ function Banner({ anime, onLoadingComplete }) {
 
         <button
           className='flex items-center px-2 py-1 rounded-lg text-xs sm:text-sm md:text-base bg-[#C3073F] text-white active:scale-90 transform transition duration-300 ease-in'
-          onClick={()=>router.push(`/anime/${anime.id}`)}
+          onClick={()=>router.push(`/watch/${anime.id}?episode=1`)}
         >
           <PlayIcon className='w-5' />
           Watch Now
