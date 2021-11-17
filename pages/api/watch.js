@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       })
     }
   }
-  
+
   res.status(200).json({
     props: {
       videoLink: await getVideoLink(videoLink, options),
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
 const gogoLink = (name) => {
   name = name.split(" ").join("-")
-  name = name.replace(/[:()]/g, "")
+  name = name.replace(/[^\w-]/g, "")
 
   return `https://gogoanime.cm/category/${name}`
 }
