@@ -18,6 +18,14 @@ function Banner({ anime, onLoadingComplete }) {
       description = anime.description.substr(0, 300)
   }
 
+  const changeRoute = () => {
+    if (router.route === '/') {
+      router.push(`/anime/${anime.id}`)
+    } else {
+      router.push(`/watch/${anime.id}?episode=1`)
+    }
+  }
+
   return (
     <div className='relative h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] 2xl:h-[450px]'>
 
@@ -56,10 +64,10 @@ function Banner({ anime, onLoadingComplete }) {
 
         <button
           className='flex items-center px-2 py-1 rounded-lg text-xs sm:text-sm md:text-base bg-[#C3073F] text-white active:scale-90 transform transition duration-300 ease-in'
-          onClick={()=>router.push(`/watch/${anime.id}?episode=1`)}
+          onClick={changeRoute}
         >
           <PlayIcon className='w-5' />
-          Watch Now
+          {router.route === "/" ? 'Read More' : 'Watch Now' }
         </button>
       </div>
 
