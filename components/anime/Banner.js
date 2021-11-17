@@ -6,8 +6,10 @@ import { ClockIcon, ThumbUpIcon } from "@heroicons/react/outline";
 import Icon from '../Icon'
 
 function Banner({ anime, onLoadingComplete }) {
-  let { romaji, english } = anime.title
-  romaji = romaji.split(" ").splice(0, 11).join(" ") + '...'
+  const { romaji, english } = anime.title
+
+  let title = romaji || english
+  title = title.split(" ").splice(0, 11).join(" ") + '...'
 
   const isMedium = useMediaQuery('(min-width: 768px)')
   const isLarge = useMediaQuery('(min-width: 1024px)')
@@ -46,8 +48,8 @@ function Banner({ anime, onLoadingComplete }) {
       }
 
       <div className='text-white absolute ml-4 sm:ml-8 mt-4 sm:mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 space-y-2 md:space-y-3'>
-        <p className='font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>{romaji}</p>
-        { english.length > 35 ? null:
+        <p className='font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>{title}</p>
+        { english && english.length > 35 ? null:
           <p className='text-gray-300 font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl'>{english}</p>
         }
 
