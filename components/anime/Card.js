@@ -18,6 +18,10 @@ function Card({anime}) {
   `
 
   const toBase64 = (str) =>Buffer.from(str).toString('base64')
+  let title = anime.title.romaji
+
+  if (title.length > 35)
+    title = `${title.substr(0, 35)}...`
 
   return (
     <div className='w-52 sm:w-56 p-2 hover:scale-105 transform transition duration-300 ease-out'>
@@ -35,7 +39,7 @@ function Card({anime}) {
       </div>
     
       <div className='cursor-pointer' onClick={changeRoute}>
-        <p className='h-12 text-sm mt-2 text-white'>{anime.title.romaji}</p>
+        <p className='h-12 text-sm mt-2 text-white'>{title}</p>
 
         <div className='flex space-x-2 text-white text-xs'>
           <Icon icon={PlayIcon} text={anime.format} className='hidden sm:flex' />

@@ -43,8 +43,11 @@ function Banner({ anime, onLoadingComplete }) {
       }
 
       <div className='text-white absolute ml-4 sm:ml-8 mt-4 sm:mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 space-y-2 md:space-y-3'>
-        <p className='font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>{anime.title.english}</p>
-        <p className='text-gray-300 font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl'>{anime.title.romaji}</p>
+        <p className='font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>{anime.title.romaji}</p>
+        { anime.title.english.length > 35 ? null:
+          <p className='text-gray-300 font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl'>{anime.title.english}</p>
+        }
+
 
         <div className='flex space-x-2'>
           <Icon icon={PlayIcon} text={anime.format} />
