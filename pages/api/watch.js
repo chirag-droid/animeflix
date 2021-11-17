@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
 const gogoLink = (name) => {
   name = name.split(" ").join("-")
-  name.replace(/[:()]/g, "")
+  name = name.replace(/[:()]/g, "")
 
   return `https://gogoanime.cm/category/${name}`
 }
