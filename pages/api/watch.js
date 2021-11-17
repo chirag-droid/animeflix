@@ -1,7 +1,11 @@
 export default async function handler(req, res) {
   const { anime, episode } = req.query
 
-  const {english, romaji, err} = await getTitle(anime)
+  let {english, romaji, err} = await getTitle(anime)
+  english = english || romaji
+  romaji = romaji || english
+
+
   if (err) {
     res.status(404).json({
       notFound: true
