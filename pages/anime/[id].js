@@ -65,11 +65,6 @@ export async function getServerSideProps(context) {
     genres
     episodes
     duration
-    studios(isMain: true) {
-      nodes {
-        name
-      }
-    }
     format
   }
   `
