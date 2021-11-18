@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react'
-import Hls from 'hls.js'
+import { useEffect, useState } from 'react'
+import { Player, DefaultUi, Hls } from '@vime/react';
 
 export default function VideoPlayer({ src, headers }) {
-  const videoRef = useRef(null)
+  const [source, setSource] = useState(null)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const config = {
@@ -16,33 +16,17 @@ export default function VideoPlayer({ src, headers }) {
   }
 
   useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    video.controls = true
-    if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      // This will run in safari, where HLS is supported natively
-      video.src = src
-    } else if (Hls.isSupported()) {
-      // This will run in all other modern browsers
-      const hls = new Hls(config)
-      hls.loadSource(src)
-      hls.attachMedia(video)
-    } else {
-      console.error(
-        'This is an old browser that does not support MSE https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API'
-      )
-    }
-  }, [src, videoRef, config])
+    setSource(src)
+  }, [src])
 
   return (
-    <>
-      <video ref={videoRef} />
-      <style jsx>{`
-        video {
-          max-width: 100%;
-        }
-      `}</style>
-    </>
-  )
+    <Player>
+      <Hls version="latest" config={config} poster="/media/poster.png">
+        <source src={source} type="application/x-mpegURL" />
+      </Hls>
+
+      <DefaultUi>
+      </DefaultUi>
+    </Player>
+  );
 }

@@ -1,7 +1,9 @@
 import Header from "../../components/Header"
 import absoluteUrl from "next-absolute-url"
-import VideoPlayer from "../../components/VideoPlayer"
 import { progress } from "../_app"
+
+import dynamic from 'next/dynamic'
+const VideoPlayer = dynamic(() => import("../../components/VideoPlayer"), { ssr: false })
 
 function Video({ videoLink, headers }) {
   progress.finish()
