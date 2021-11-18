@@ -1,3 +1,5 @@
+import client from '../../utility/client'
+
 export default async function handler(req, res) {
   const { anime, episode } = req.query
 
@@ -52,7 +54,7 @@ const gogoLink = (name) => {
 }
 
 const getTitle = async (anime) => {
-  const query = `
+  const query =  `
   {
     anime: Media(id: ${anime}) {
       title {
@@ -63,27 +65,15 @@ const getTitle = async (anime) => {
   }
   `
 
-  const url = 'https://graphql.anilist.co'
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      query: query
-    })
-  }
+  const data = await client.request(query)
 
-  const response = await (await fetch(url, options)).json()
-
-  if (!response.data.anime) {
+  if (!data.anime) {
     return {
       err: true
     }
   }
 
-  return response.data.anime.title
+  return data.anime.title
 }
 
 const getVideoLink = async (pageLink, options) => {

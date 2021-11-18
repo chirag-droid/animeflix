@@ -3,6 +3,8 @@ import Header from "../../components/Header"
 import Section from "../../components/anime/Section"
 import { EmojiSadIcon } from "@heroicons/react/solid";
 import { progress } from "../_app";
+import { animeBannerFragment, animeInfoFragment } from "../../utility/fragments";
+import client from "../../utility/client";
 
 function Anime({ anime, recommended }) {
   return (
@@ -28,72 +30,35 @@ export async function getServerSideProps(context) {
   const query = `
   {
     Media(id: ${id}, type: ANIME) {
-      id
-      bannerImage
-      title {
-        english
-        romaji
-      }
-      duration
-      description
-      genres
-      format
-      meanScore
+      ...animeBannerFragment
     }
 
     recommended: Page(perPage: 8) {
       recommendations(mediaId: ${id}, sort: RATING_DESC) {
         mediaRecommendation {
-        ...anime
+        ...animeInfoFragment
         }
       }
     }
   }
 
-  fragment anime on Media {
-    id
-    title {
-      romaji
-      english
-    }
-    coverImage {
-      large
-      medium
-      color
-    }
-    meanScore
-    genres
-    episodes
-    duration
-    format
-  }
+  ${animeBannerFragment}
+  ${animeInfoFragment}
   `
 
-  const url = 'https://graphql.anilist.co'
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      query: query
-    })
-  }
+  const data = await client.request(query)
 
-  const response = await (await fetch(url, options)).json()
-
-  if (!response.data.Media) {
+  if (!data.Media) {
     return {
       notFound: true
     }
   }
 
-  const recommended = response.data.recommended.recommendations.map(anime => anime.mediaRecommendation)
+  const recommended = data.recommended.recommendations.map(anime => anime.mediaRecommendation)
 
   return {
     props: {
-      anime: response.data.Media,
+      anime: data.Media,
       recommended
     }
   }

@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
-import { useRef } from "react";
 import Card from "../components/anime/Card";
 import Header from "../components/Header";
+import client from "../utility/client";
+import { animeInfoFragment } from "../utility/fragments";
 import { progress } from "./_app";
 
 export default function Search({ searchResults }) {
   const router = useRouter()
   const { keyword } = router.query
 
-  useRef(progress.finish(), [])
+  progress.finish()
 
   return (
     <>
@@ -32,52 +33,19 @@ export async function getServerSideProps(context) {
   {
     searchResults: Page(perPage: 50) {
       media(type: ANIME, search: "${keyword}") {
-        ...animeFragment
+        ...animeInfoFragment
       }
     }
   }
 
-  fragment animeFragment on Media {
-    id
-    title {
-      romaji
-      english
-    }
-    coverImage {
-      large
-      medium
-      color
-    }
-    meanScore
-    genres
-    episodes
-    duration
-    format
-  }
+  ${animeInfoFragment}
   `
 
-  const url = 'https://graphql.anilist.co'
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      query: query
-    })
-  }
-
-  const response = await (await fetch(url, options)).json()
-
-  if (!response.data.searchResults)
-    return {
-      notFound: true
-    }
+  const data = await client.request(query)
 
   return {
     props: {
-      searchResults: response.data.searchResults.media
+      searchResults: data.searchResults.media
     }
   }
 }

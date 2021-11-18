@@ -2,7 +2,6 @@ import Header from "../../components/Header"
 import absoluteUrl from "next-absolute-url"
 import VideoPlayer from "../../components/VideoPlayer"
 import { progress } from "../_app"
-import { useRef } from "react"
 
 function Video({ videoLink, headers }) {
   progress.finish()

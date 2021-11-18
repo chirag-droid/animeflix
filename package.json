@@ -9,6 +9,7 @@
   "dependencies": {
     "@badrap/bar-of-progress": "^0.1.2",
     "@heroicons/react": "^1.0.5",
+    "graphql-request": "^3.6.1",
     "hls.js": "^1.1.1",
     "next": "latest",
     "next-absolute-url": "^1.2.2",

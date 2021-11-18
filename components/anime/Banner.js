@@ -6,22 +6,21 @@ import { ClockIcon, ThumbUpIcon } from "@heroicons/react/outline";
 import Icon from '../Icon'
 
 function Banner({ anime, onLoadingComplete }) {
-  const { romaji, english } = anime.title
-
-  let title = romaji || english
-  title = title.split(" ").splice(0, 11).join(" ") + '...'
+  const router = useRouter()
 
   const isMedium = useMediaQuery('(min-width: 768px)')
   const isLarge = useMediaQuery('(min-width: 1024px)')
-  const router = useRouter()
+  
+  const { romaji, english } = anime.title
+  let title = romaji || english
+  title = title.split(" ").splice(0, 11).join(" ") + '...'
 
   let description = ""
 
-  if (isLarge) {
+  if (isLarge)
     description = anime.description.substr(0, 320)
-  } else if (isMedium) {
+  else if (isMedium)
     description = anime.description.substr(0, 300)
-  }
 
   const changeRoute = () => {
     if (router.route === '/') {

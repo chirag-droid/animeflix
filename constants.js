@@ -1,0 +1,1 @@
+export const ApiEndpoint = "https://graphql.anilist.co"

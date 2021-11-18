@@ -3,6 +3,7 @@ import Image from "next/image"
 import { PlayIcon } from "@heroicons/react/solid";
 import { ClockIcon, ThumbUpIcon } from "@heroicons/react/outline";
 import Icon from '../Icon'
+import { base64SolidImage } from "../../utility/image";
 
 function Card({ anime }) {
   const router = useRouter()
@@ -11,14 +12,7 @@ function Card({ anime }) {
     router.push(`/anime/${anime.id}`)
   }
 
-  const solidImage = (color) => `
-    <svg width="1" height="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <rect width="1" height="1" style="fill:${color};stroke-width:3;stroke:${color}" />
-    </svg>
-  `
-
-  const toBase64 = (str) => Buffer.from(str).toString('base64')
-  let title = anime.title.romaji
+  let title = anime.title.romaji || anime.title.english
 
   if (title.length > 35)
     title = `${title.substr(0, 35)}...`
@@ -33,9 +27,7 @@ function Card({ anime }) {
           objectPosition='center'
           className='rounded-md'
           placeholder="blur"
-          blurDataURL={`data:image/svg+xml;base64,${toBase64(
-            solidImage(anime.coverImage.color)
-          )}`}
+          blurDataURL={`data:image/svg+xml;base64,${base64SolidImage(anime.coverImage.color)}`}
         />
       </div>
 
