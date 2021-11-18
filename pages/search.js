@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
   const query = `
   {
     searchResults: Page(perPage: 50) {
-      media(sort: SCORE_DESC, type: ANIME, search: "${keyword}") {
+      media(type: ANIME, search: "${keyword}") {
         ...animeFragment
       }
     }
