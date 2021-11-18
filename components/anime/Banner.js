@@ -18,9 +18,9 @@ function Banner({ anime, onLoadingComplete }) {
   let description = ""
 
   if (isLarge) {
-      description = anime.description.substr(0, 320)
+    description = anime.description.substr(0, 320)
   } else if (isMedium) {
-      description = anime.description.substr(0, 300)
+    description = anime.description.substr(0, 300)
   }
 
   const changeRoute = () => {
@@ -37,6 +37,7 @@ function Banner({ anime, onLoadingComplete }) {
       {/* The image behind the banner */}
       {anime.bannerImage ?
         <Image
+          alt=""
           onLoadingComplete={onLoadingComplete}
           priority
           src={anime.bannerImage}
@@ -49,7 +50,7 @@ function Banner({ anime, onLoadingComplete }) {
 
       <div className='text-white absolute ml-4 sm:ml-8 mt-4 sm:mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 space-y-2 md:space-y-3'>
         <p className='font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>{title}</p>
-        { english && english.length > 35 ? null:
+        {english && english.length > 35 ? null :
           <p className='text-gray-300 font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl'>{english}</p>
         }
 
@@ -61,7 +62,7 @@ function Banner({ anime, onLoadingComplete }) {
         </div>
 
         <div className='grid grid-cols-4 gap-x-1 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2 md:flex'>
-          {anime.genres.map(genre => <p className='p-1 rounded text-xs sm:text-sm bg-white text-black'>{genre}</p>)}
+          {anime.genres.map(genre => <p key={genre} className='p-1 rounded text-xs sm:text-sm bg-white text-black'>{genre}</p>)}
         </div>
 
         {/* todo, find a safer way */}
@@ -75,12 +76,12 @@ function Banner({ anime, onLoadingComplete }) {
           onClick={changeRoute}
         >
           <PlayIcon className='w-5' />
-          {router.route === "/" ? 'Read More' : 'Watch Now' }
+          {router.route === "/" ? 'Read More' : 'Watch Now'}
         </button>
       </div>
 
     </div>
-    )
+  )
 }
 
 export default Banner

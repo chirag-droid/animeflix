@@ -27,6 +27,7 @@ function Card({anime}) {
     <div className='w-52 sm:w-56 p-2 hover:scale-105 transform transition duration-300 ease-out'>
       <div className='relative w-40 sm:w-52 h-48 sm:h-64'>
         <Image
+          alt="Cover Image"
           src={anime.coverImage.large || anime.coverImage.medium}
           layout='fill'
           objectPosition='center'
