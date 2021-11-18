@@ -4,8 +4,9 @@ import Hls from 'hls.js'
 export default function VideoPlayer({ src, headers }) {
   const videoRef = useRef(null)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const config = {
-    xhrSetup: function (xhr, url) {
+    xhrSetup: function (xhr, _url) {
       console.log(headers)
       headers.forEach(header => {
         header = header.split(" ")
@@ -32,7 +33,7 @@ export default function VideoPlayer({ src, headers }) {
         'This is an old browser that does not support MSE https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API'
       )
     }
-  }, [src, videoRef])
+  }, [src, videoRef, config])
 
   return (
     <>
