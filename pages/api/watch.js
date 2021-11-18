@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   const { anime, episode } = req.query
 
-  let {english, romaji, err} = await getTitle(anime)
+  let { english, romaji, err } = await getTitle(anime)
   english = english || romaji
   romaji = romaji || english
 
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     }
   }
 
-  let status = await (await fetch(gogoLink(english), options)).status  
+  let status = await (await fetch(gogoLink(english), options)).status
   let videoLink = ""
 
   if (status === 200) {
@@ -51,7 +51,7 @@ const gogoLink = (name) => {
   return `https://gogoanime.cm/category/${name}`
 }
 
-const getTitle = async(anime) => {
+const getTitle = async (anime) => {
   const query = `
   {
     anime: Media(id: ${anime}) {
@@ -62,7 +62,7 @@ const getTitle = async(anime) => {
     }
   }
   `
-  
+
   const url = 'https://graphql.anilist.co'
   const options = {
     method: 'POST',
@@ -74,7 +74,7 @@ const getTitle = async(anime) => {
       query: query
     })
   }
-  
+
   const response = await (await fetch(url, options)).json()
 
   if (!response.data.anime) {
@@ -86,7 +86,7 @@ const getTitle = async(anime) => {
   return response.data.anime.title
 }
 
-const getVideoLink = async(pageLink, options) => {
+const getVideoLink = async (pageLink, options) => {
   let soup = await (await fetch(pageLink, options)).text()
 
   let videoLink = soup.match(`.*<a href="#" rel="100" data-video=".*`)[0].trim()

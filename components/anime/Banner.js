@@ -75,7 +75,7 @@ function Banner({ anime, onLoadingComplete }) {
           className='flex items-center px-2 py-1 rounded-lg text-xs sm:text-sm md:text-base bg-[#C3073F] text-white active:scale-90 transform transition duration-300 ease-in'
           onClick={changeRoute}
         >
-          <PlayIcon className='w-5' />
+          <PlayIcon className='w-5 mr-1' />
           {router.route === "/" ? 'Read More' : 'Watch Now'}
         </button>
       </div>

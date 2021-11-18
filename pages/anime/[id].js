@@ -68,7 +68,7 @@ export async function getServerSideProps(context) {
     format
   }
   `
-  
+
   const url = 'https://graphql.anilist.co'
   const options = {
     method: 'POST',
@@ -80,10 +80,10 @@ export async function getServerSideProps(context) {
       query: query
     })
   }
-  
+
   const response = await (await fetch(url, options)).json()
-  
-  if(!response.data.Media) {
+
+  if (!response.data.Media) {
     return {
       notFound: true
     }

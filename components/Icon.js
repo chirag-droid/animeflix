@@ -1,4 +1,4 @@
-function Icon({icon, text, className}) {
+function Icon({ icon, text, className }) {
   const HeroIcon = icon
   return (
     <div className={`flex items-center space-x-1 ${className || ''}`}>
