@@ -19,7 +19,7 @@ export default function Search({ searchResults }) {
         Found {searchResults.length} results for {keyword}
       </p>
 
-      <div className='gap-y-8 ml-5 gap-x-6 mt-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6'>
+      <div className='gap-y-8 place-items-center mt-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6'>
         {searchResults.map(anime => <Card key={anime.id} anime={anime} />)}
       </div>
     </>

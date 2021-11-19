@@ -18,7 +18,7 @@ function Card({ anime }) {
     title = `${title.substr(0, 35)}...`
 
   return (
-    <div className='w-52 sm:w-56 p-2 hover:scale-105 transform transition duration-300 ease-out'>
+    <div className='w-46 sm:w-56 p-2 hover:scale-105 transform transition duration-300 ease-out'>
       <div className='relative w-40 sm:w-52 h-48 sm:h-64'>
         <Image
           alt="Cover Image"
