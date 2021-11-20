@@ -1,4 +1,4 @@
-import AnimeCard from "./Card"
+import AnimeCard from "@components/anime/Card"
 
 function Section({title, animeList}) {
   return (

@@ -2,8 +2,8 @@ import { useRouter } from "next/router"
 import Image from "next/image"
 import { PlayIcon } from "@heroicons/react/solid";
 import { ClockIcon, ThumbUpIcon } from "@heroicons/react/outline";
-import Icon from '../Icon'
-import { base64SolidImage } from "../../utility/image";
+import Icon from '@components/Icon'
+import { base64SolidImage } from "@utility/image";
 
 function Card({ anime }) {
   const router = useRouter()

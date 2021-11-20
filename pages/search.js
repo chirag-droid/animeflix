@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import Card from "../components/anime/Card";
-import Header from "../components/Header";
-import client from "../utility/client";
-import { animeInfoFragment } from "../utility/fragments";
-import { progress } from "./_app";
+import Card from "@components/anime/Card";
+import Header from "@components/Header";
+import client from "@utility/client";
+import { animeInfoFragment } from "@utility/fragments";
+import { progress } from "@pages/_app";
 
 export default function Search({ searchResults }) {
   const router = useRouter()

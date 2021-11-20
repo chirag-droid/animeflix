@@ -1,9 +1,9 @@
 import Header from "../components/Header"
 import Banner from "../components/anime/Banner"
-import Section from "../components/anime/Section"
-import { progress } from "./_app"
-import { animeBannerFragment, animeInfoFragment } from "../utility/fragments"
-import client from "../utility/client"
+import Section from "@components/anime/Section"
+import { progress } from "@pages/_app"
+import { animeBannerFragment, animeInfoFragment } from "@utility/fragments"
+import client from "@utility/client"
 
 export default function Home({ banner, trending, popular, topRated }) {
   return (

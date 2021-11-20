@@ -1,10 +1,10 @@
-import Banner from "../../components/anime/Banner"
-import Header from "../../components/Header"
-import Section from "../../components/anime/Section"
 import { EmojiSadIcon } from "@heroicons/react/solid";
-import { progress } from "../_app";
-import { animeBannerFragment, animeInfoFragment } from "../../utility/fragments";
-import client from "../../utility/client";
+import { progress } from "@pages/_app";
+import Banner from "@components/anime/Banner"
+import Header from "@components/Header"
+import Section from "@components/anime/Section"
+import { animeBannerFragment, animeInfoFragment } from "@utility/fragments";
+import client from "@utility/client";
 
 function Anime({ anime, recommended }) {
   return (
