@@ -1,19 +1,8 @@
 import { useEffect, useRef } from 'react'
 import Hls from 'hls.js'
 
-export default function VideoPlayer({ src, headers }) {
+export default function VideoPlayer({ src }) {
   const videoRef = useRef(null)
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const config = {
-    xhrSetup: function (xhr, _url) {
-      console.log(headers)
-      headers.forEach(header => {
-        header = header.split(" ")
-        xhr.setRequestHeader(header[0], header[1])
-      });
-    }
-  }
 
   useEffect(() => {
     const video = videoRef.current
@@ -25,7 +14,7 @@ export default function VideoPlayer({ src, headers }) {
       video.src = src
     } else if (Hls.isSupported()) {
       // This will run in all other modern browsers
-      const hls = new Hls(config)
+      const hls = new Hls({})
       hls.loadSource(src)
       hls.attachMedia(video)
     } else {
@@ -33,7 +22,7 @@ export default function VideoPlayer({ src, headers }) {
         'This is an old browser that does not support MSE https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API'
       )
     }
-  }, [src, videoRef, config])
+  })
 
   return (
     <>

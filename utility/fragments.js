@@ -1,6 +1,4 @@
-import { gql } from "graphql-request";
-
-export const animeInfoFragment = gql`
+export const animeInfoFragment = `
   fragment animeInfoFragment on Media {
     id
     title {
@@ -18,7 +16,7 @@ export const animeInfoFragment = gql`
   }
 `
 
-export const animeBannerFragment = gql`
+export const animeBannerFragment = `
   fragment animeBannerFragment on Media {
     id
     title {

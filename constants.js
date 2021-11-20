@@ -1,1 +1,2 @@
-export const ApiEndpoint = "https://graphql.anilist.co"
+export const apiEndpoint = "https://graphql.anilist.co"
+export const gogoEndpoint = "https://gogoanime.cm"
