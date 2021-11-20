@@ -1,5 +1,7 @@
 # Animeflix
 
+![animeflix](https://user-images.githubusercontent.com/81347541/142728171-0add0549-1751-4a8d-8c52-4b1a11998899.png)
+
 A anime discovery, streaming site made with NextJs and TailwindCSS. The app is deployed to https://animeplix.vercel.app, but its recommended to host it yourself.
 The AniList api is used for fetching data which has a rate limit of 90 requests/min. For video data GogoAnime is scraped
 
