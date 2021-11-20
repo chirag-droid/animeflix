@@ -1,32 +1,14 @@
-import { useEffect, useState } from 'react'
 import { Player, DefaultUi, Hls } from '@vime/react';
+import '@vime/core/themes/default.css';
 
-export default function VideoPlayer({ src, headers }) {
-  const [source, setSource] = useState(null)
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const config = {
-    xhrSetup: function (xhr, _url) {
-      console.log(headers)
-      headers.forEach(header => {
-        header = header.split(" ")
-        xhr.setRequestHeader(header[0], header[1])
-      });
-    }
-  }
-
-  useEffect(() => {
-    setSource(src)
-  }, [src])
-
+export default function VideoPlayer({ src, poster }) {
   return (
     <Player>
-      <Hls version="latest" config={config} poster="/media/poster.png">
-        <source src={source} type="application/x-mpegURL" />
+      <Hls version="latest" poster={poster}>
+        <source src={src} type="application/x-mpegURL" />
       </Hls>
 
-      <DefaultUi>
-      </DefaultUi>
+      <DefaultUi />
     </Player>
   );
 }

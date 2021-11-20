@@ -1,28 +1,58 @@
-import Header from "../../components/Header"
-import absoluteUrl from "next-absolute-url"
-import { progress } from "../_app"
+import Header from "@components/Header"
+import { progress } from "@pages/_app"
+import client from "@utility/client"
+import getAnime from "@utility/gogoanime"
 
 import dynamic from 'next/dynamic'
-const VideoPlayer = dynamic(() => import("../../components/VideoPlayer"), { ssr: false })
+const VideoPlayer = dynamic(() => import("@components/VideoPlayer"), { ssr: false })
 
-function Video({ videoLink, headers }) {
+function Video({ videoLink, poster }) {
   progress.finish()
+  const errMessage = "The requested anime couldn't be found"
 
   return (
     <>
       <Header />
-      <VideoPlayer src={videoLink} headers={headers} />
+
+      {videoLink ?
+        <VideoPlayer src={videoLink} poster={poster} />
+        :
+        <p className='font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'>
+          {errMessage}
+        </p>
+      }
     </>
   )
 }
 
 export async function getServerSideProps(context) {
-  let { anime, episode } = context.query
-  episode = episode || "1"
+  const { anime, episode } = context.query
 
-  const { origin } = absoluteUrl(context.req)
+  const query = `
+  {
+    anime: Media(id: ${anime}) {
+      title {
+        english
+        romaji
+      }
+      bannerImage
+    }
+  }
+  `
 
-  return await (await fetch(`${origin}/api/watch?anime=${anime}&episode=1`)).json()
+  const data = await client.request(query)
+  const { english, romaji } = data.anime.title
+
+  const slug = (romaji || english).replace(/[^\w-]/g, " ").split(/ +/).join("-")
+
+  const videoLink = await getAnime(slug, episode)
+
+  return {
+    props: {
+      videoLink: `/api/video/${videoLink.replace("https://", "")}`,
+      poster: data.anime.bannerImage
+    }
+  }
 }
 
 export default Video

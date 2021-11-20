@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import useMediaQuery from '../../hooks/useMediaQuery'
+import useMediaQuery from '@hooks/useMediaQuery'
 import { PlayIcon } from "@heroicons/react/solid";
 import { ClockIcon, ThumbUpIcon } from "@heroicons/react/outline";
-import Icon from '../Icon'
+import Icon from '@components/Icon'
 
 function Banner({ anime, onLoadingComplete }) {
   const router = useRouter()
