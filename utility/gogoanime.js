@@ -18,7 +18,11 @@ const getAnime = async (slug, episode) => {
   // get the page soup
   const soup = await res.text()
 
-  return await getVideoLink(getEmbedLink(soup))
+  try {
+    return await getVideoLink(getEmbedLink(soup))
+  } catch(e) {
+    return
+  }
 }
 
 const getEmbedLink = soup => {

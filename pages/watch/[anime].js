@@ -2,6 +2,7 @@ import Header from "@components/Header"
 import { progress } from "@pages/_app"
 import client from "@utility/client"
 import getAnime from "@utility/gogoanime"
+import { slugify } from "@utility/utils"
 
 import dynamic from 'next/dynamic'
 const VideoPlayer = dynamic(() => import("@components/VideoPlayer"), { ssr: false })
@@ -45,13 +46,16 @@ export async function getServerSideProps(context) {
   const data = await client.request(query)
   const { english, romaji } = data.anime.title
 
-  const slug = (romaji || english).replace(/[^\w-]/g, " ").split(/ +/).join("-")
+  let videoLink = (
+    await getAnime(slugify(romaji), episode) ||
+    await getAnime(slugify(english), episode)
+  )
 
-  const videoLink = await getAnime(slug, episode)
+  videoLink = videoLink ? `/api/video/${videoLink.replace("https://", "")}` : null
 
   return {
     props: {
-      videoLink: `/api/video/${videoLink.replace("https://", "")}`,
+      videoLink,
       poster: data.anime.bannerImage
     }
   }
