@@ -9,6 +9,7 @@ import {
 } from '@vime/react';
 import '@vime/core/themes/default.css';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/solid';
+import useMediaQuery from '@hooks/useMediaQuery'
 
 function ControlIcon({ icon, onClick }) {
   const HeroIcon = icon
@@ -20,6 +21,8 @@ function ControlIcon({ icon, onClick }) {
 }
 
 export default function VideoPlayer({ src, poster, previousCallback, nextCallback }) {
+  const isSmall = useMediaQuery('(min-width: 640px)')
+
   return (
     <Player>
       <Hls version="latest" poster={poster} key={src}>
@@ -32,7 +35,10 @@ export default function VideoPlayer({ src, poster, previousCallback, nextCallbac
         <Controls fullwidth pin="center" hideOnMouseLeave activeDuration={1500}>
           <div className="flex space-x-32 items-center mx-auto">
             <ControlIcon icon={ChevronDoubleLeftIcon} onClick={previousCallback} />
-            <PlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />            
+            {isSmall ? 
+              <PlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
+              : null
+            }
             <ControlIcon icon={ChevronDoubleRightIcon} onClick={nextCallback} />
           </div>
         </Controls>
