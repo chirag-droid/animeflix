@@ -102,6 +102,10 @@ export async function getServerSideProps(context) {
 
   videoLink = videoLink ? `/api/video/${videoLink.replace("https://", "")}` : null
 
+  // gogoanime for some reason only shows 720p video links
+  // replace the videolink so that all qualities can be streamed
+  videoLink = videoLink.replace(/\.[\d]{3,4}\.m3u8/, ".m3u8")
+
   return {
     props: {
       videoLink,
