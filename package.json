@@ -9,7 +9,7 @@
   "dependencies": {
     "@badrap/bar-of-progress": "^0.1.2",
     "@heroicons/react": "^1.0.5",
-    "@vime/react": "^5.0.35",
+    "@vime/react": "^5.3.0",
     "graphql-request": "^3.6.1",
     "next": "latest",
     "react": "^17.0.2",
