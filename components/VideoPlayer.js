@@ -27,7 +27,7 @@ export default function VideoPlayer({ src, poster, previousCallback, nextCallbac
         <source src={src} type="application/x-mpegURL" />
       </Hls>
 
-      <DefaultUi noLoadingScreen noCaptions noControls>
+      <DefaultUi noCaptions noControls>
         <DefaultControls hideOnMouseLeave activeDuration={1500} />
 
         <Controls fullWidth pin='center' style={{ '--vm-control-scale': 1.5 }} hideOnMouseLeave activeDuration={1500}>
