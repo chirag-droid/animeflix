@@ -43,8 +43,12 @@ function Video({ videoLink, anime, recommended }) {
           }
 
           <p className='m-2 font-semibold text-white mt-4 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'>
-            {anime.title.romaji || anime.title.english}
+            {`${anime.title.romaji || anime.title.english} | Episode ${episode}`}
           </p>
+
+          <div className='ml-3 grid grid-cols-4 gap-x-1 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2 md:flex'>
+            {anime.genres.map(genre => <p key={genre} className='p-1 rounded text-xs sm:text-sm bg-white text-black'>{genre}</p>)}
+          </div>
 
           {anime.description ?
            <p
@@ -76,12 +80,14 @@ export async function getServerSideProps(context) {
       }
       bannerImage
       description
+      genres
     }
 
     recommended: Page(perPage: 20) {
       recommendations(mediaId: ${id}, sort: RATING_DESC) {
         mediaRecommendation {
           bannerImage
+          description
           ...animeInfoFragment
         }
       }
