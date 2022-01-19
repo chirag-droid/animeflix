@@ -17,6 +17,7 @@ const options2 = {
 }
 
 const getAnime = async (slug, episode) => {
+  if (slug == "") return
   // Get the response from the gogoanime site
   const res = await fetch(`${gogoEndpoint}/${slug}-episode-${episode}`, options)
 
@@ -66,7 +67,8 @@ const getVideoLink = async(embedLink) => {
 
   let sourcesLink = "http://gogoplay.io/encrypt-ajax.php?id=" + encrypted_id + "&time=00000000000000000000"
   var sources_result = await fetch(sourcesLink, options2)
-  var sources = JSON.parse(await sources_result.text())
+  var sources_text = await sources_result.text()
+  var sources = JSON.parse(sources_text)
 
   let videoLinks = sources.source
   if (videoLinks.length < 2) {
