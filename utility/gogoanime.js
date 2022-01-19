@@ -37,9 +37,10 @@ const getAnime = async (slug, episode) => {
 
 const getEmbedLink = soup => {
   const $ = cheerio.load(soup)
-  let embedLink = "https:" + $("div.anime_muti_link > ul > li.vidcdn > a").attr("data-video")
+  let embedLink = $("div.anime_muti_link > ul > li.vidcdn > a").attr("data-video")
+  if (embedLink == undefined) return
 
-  return embedLink
+  return "https:" + embedLink
 }
 
 const getVideoLink = async(embedLink) => {

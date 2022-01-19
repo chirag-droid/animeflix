@@ -102,11 +102,11 @@ export async function getServerSideProps(context) {
   const recommended = data.recommended.recommendations.map(anime => anime.mediaRecommendation)
 
   let videoLink = await Promise.all([
-    getAnime(slugify(romaji), episode),
-    getAnime(slugify(english), episode)
+    getAnime(await slugify(romaji), episode),
+    getAnime(await slugify(english), episode)
   ]).then(results => results[0] || results[1])
 
-  // videoLink = videoLink ? `/api/video/${videoLink.replace("https://", "")}` : null
+  videoLink = videoLink ? videoLink : null
 
   return {
     props: {
