@@ -2,7 +2,6 @@ import { gogoEndpoint } from "../constants"
 const cheerio = require("cheerio")
 const aesjs = require("aes-js")
 const base64url = require("base64url")
-const querystring = require('querystring')
 
 const options = {
   headers: {
