@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
-  const { proxy } = req.query
-  const url = `https://${proxy.join("/")}`
+  const url = req.url.replace("/api/video/", "https://")
+  console.log(url)
 
   const options = {
     headers: {

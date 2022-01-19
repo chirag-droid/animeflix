@@ -1,7 +1,7 @@
 import {
   Player,
   DefaultUi,
-  Hls,
+  Video,
   Controls,
   DefaultControls,
   PlaybackControl,
@@ -23,9 +23,9 @@ function ControlIcon({ icon, onClick }) {
 export default function VideoPlayer({ src, poster, previousCallback, nextCallback }) {
   return (
     <Player>
-      <Hls version="latest" poster={poster} key={src}>
-        <source src={src} type="application/x-mpegURL" />
-      </Hls>
+      <Video version="latest" poster={poster} key={src}>
+        <source src={src} type="video/mp4" />
+      </Video>
 
       <DefaultUi noCaptions noControls>
         <DefaultControls hideOnMouseLeave activeDuration={1500} />
