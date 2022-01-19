@@ -31,7 +31,6 @@ const getAnime = async (slug, episode) => {
   try {
     return await getVideoLink(getEmbedLink(soup))
   } catch(e) {
-    console.log(e)
     return
   }
 }
@@ -39,7 +38,6 @@ const getAnime = async (slug, episode) => {
 const getEmbedLink = soup => {
   const $ = cheerio.load(soup)
   let embedLink = "https:" + $("div.anime_muti_link > ul > li.vidcdn > a").attr("data-video")
-  console.log(embedLink)
 
   return embedLink
 }
@@ -68,7 +66,6 @@ const getVideoLink = async(embedLink) => {
   let sourcesLink = "http://gogoplay.io/encrypt-ajax.php?id=" + encrypted_id + "&time=00000000000000000000"
   var sources_result = await fetch(sourcesLink, options2)
   var sources = JSON.parse(await sources_result.text())
-  console.log(sources)
 
   let videoLinks = sources.source
   if (videoLinks.length < 2) {
