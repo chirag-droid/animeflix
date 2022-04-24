@@ -1,7 +1,8 @@
 import {
   Player,
-  DefaultUi,
   Hls,
+  Video,
+  DefaultUi,
   Controls,
   DefaultControls,
   PlaybackControl,
@@ -20,12 +21,19 @@ function ControlIcon({ icon, onClick }) {
   )
 }
 
-export default function VideoPlayer({ src, poster, previousCallback, nextCallback }) {
+export default function VideoPlayer({ src, referrer, poster, previousCallback, nextCallback }) {
+
   return (
     <Player>
-      <Hls version="latest" poster={poster} key={src}>
-        <source src={src} type="application/x-mpegURL" />
+      {src.includes("m3u8") ? 
+      <Hls version="latest" poster={poster}>
+        <source data-src={`/api/video/proxy?src=${encodeURIComponent(src)}&referrer=${encodeURIComponent(referrer)}`} type="application/x-mpegURL" />
       </Hls>
+        :
+      <Video version="latest" poster={poster} key={src}>
+        <source data-src={`/api/video/proxy?src=${encodeURIComponent(src)}&referrer=${encodeURIComponent(referrer)}`} type="video/mp4" />
+      </Video>
+      }
 
       <DefaultUi noCaptions noControls>
         <DefaultControls hideOnMouseLeave activeDuration={1500} />
