@@ -10,7 +10,7 @@ import { useRouter } from "next/router"
 
 const VideoPlayer = dynamic(() => import("@components/VideoPlayer"), { ssr: false })
 
-function Video({ videoLink, anime, recommended }) {
+function Video({ videoLink, referrer, anime, recommended }) {
   const router = useRouter()
   progress.finish()
 
@@ -33,6 +33,7 @@ function Video({ videoLink, anime, recommended }) {
           {videoLink ?
             <VideoPlayer
               src={videoLink}
+              referrer={referrer}
               poster={anime.bannerImage}
               nextCallback={nextEpisode}
               previousCallback={previousEpisode} 
@@ -101,20 +102,20 @@ export async function getServerSideProps(context) {
   const { english, romaji } = data.anime.title
   const recommended = data.recommended.recommendations.map(anime => anime.mediaRecommendation)
 
-  let videoLink = await Promise.all([
-    getAnime(slugify(romaji), episode),
-    getAnime(slugify(english), episode)
-  ]).then(results => results[0] || results[1])
+  let res = await Promise.all([
+    getAnime(await slugify(romaji), episode),
+    getAnime(await slugify(english), episode)
+  ]).then(results => results[0] || results[1] )
 
-  videoLink = videoLink ? `/api/video/${videoLink.replace("https://", "")}` : null
-
-  // gogoanime for some reason only shows 720p video links
-  // replace the videolink so that all qualities can be streamed
-  videoLink = videoLink ? videoLink.replace(/\.[\d]{3,4}\.m3u8/, ".m3u8") : null
+  let videoLink, referrer = null
+  if (res !== undefined) {
+    ({videoLink, referrer} = res)
+  }
 
   return {
     props: {
       videoLink,
+      referrer,
       anime: data.anime,
       recommended
     }

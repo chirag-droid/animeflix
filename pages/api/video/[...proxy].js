@@ -1,15 +1,14 @@
 export default async function handler(req, res) {
-  const { proxy } = req.query
-  const url = `https://${proxy.join("/")}`
+  const { src, referrer } = req.query
 
   const options = {
     headers: {
-      'Referer': 'https://gogoplay1.com/'
+      'Referer': referrer
     }
   }
 
   // fetch the data from the url
-  const response = await fetch(url, options)
+  const response = await fetch(src, options)
 
   const setHeader = header => {
     res.setHeader(header, response.headers.get(header.toLowerCase()))

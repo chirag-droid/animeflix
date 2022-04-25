@@ -1,4 +1,5 @@
-import { gogoEndpoint } from "../constants"
+import { scrapeMP4 } from "gogoanime-api/lib/anime_parser"
+const cheerio = require("cheerio")
 
 const options = {
   headers: {
@@ -6,46 +7,20 @@ const options = {
   }
 }
 
-const getAnime = async (slug, episode) => {
-  // Get the response from the gogoanime site
-  const res = await fetch(`${gogoEndpoint}/${slug}-episode-${episode}`, options)
-
-  // If the response is not 200 return err
-  if (res.status !== 200) {
-    return
-  }
-
-  // get the page soup
-  const soup = await res.text()
-
-  try {
-    return await getVideoLink(getEmbedLink(soup))
-  } catch(e) {
-    return
+const options2 = {
+  headers: {
+    'x-requested-with': 'XMLHttpRequest'
   }
 }
 
-const getEmbedLink = soup => {
-  let embedLink = soup.match(`.*<a href="#" rel="100" data-video=".*`)[0].trim()
-  embedLink = embedLink.replace(`<a href="#" rel="100" data-video="`, "https:")
-  embedLink = embedLink.substr(0, embedLink.search(`"`))
-
-  return embedLink
+async function getAnime(slug, episode) {
+  if (slug == "") return
+    const data = await scrapeMP4({id: `${slug}-episode-${episode}`})
+    return {
+      referrer: data.Referer,
+      videoLink: data.sources?.[0].file
+    }
 }
 
-const getVideoLink = async(embedLink) => {
-  const res = await fetch(embedLink, options)
-
-  if (res.status !== 200) {
-    return
-  }
-
-  const soup = await res.text()
-
-  let videoLink = soup.match("\s*sources.*")[0].trim()
-  videoLink = videoLink.substring(videoLink.search("https"), videoLink.search("',"))
-
-  return videoLink
-}
 
 export default getAnime
