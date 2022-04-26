@@ -10,7 +10,7 @@ function Header() {
   }
 
   return (
-    <header className="sticky top-0 bg-gray-900 w-full z-10 h-12 flex items-center shadow-md">
+    <header className="sticky top-0 bg-gray-900 w-full z-[51] h-12 flex items-center shadow-md">
       <div className="flex rounded ml-4 sm:ml-6 md:ml-10 bg-gray-50 py-[1px] items-center px-2">
         <SearchIcon className='w-4 h-4' />
         <input
