@@ -19,9 +19,11 @@ async function getAnime(slug, episode) {
   const findAnime = await scrapeSearch({ keyw: slug });
   const data = await scrapeMP4({ id: `${findAnime[0].animeId}-episode-${episode}` });
 
+  const bestQuality = data.sources?.[data.sources.length - 1].file;
+
   return {
     referrer: data.Referer,
-    videoLink: data.sources?.[data.sources.length - 1].file,
+    videoLink: bestQuality,
   };
 }
 
