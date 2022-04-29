@@ -1,5 +1,4 @@
 import { scrapeMP4, scrapeSearch } from "gogoanime-api/lib/anime_parser";
-const cheerio = require("cheerio");
 
 async function getAnime(slug, episode) {
   if (slug == "") return;
