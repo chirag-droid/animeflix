@@ -29,7 +29,7 @@ function Video({ videoLink, referrer, anime, recommended }) {
       <Header />
 
       <div className='lg:flex mt-4 space-x-4'>
-        <div className='max-w-[800px] mx-auto sm:p-4 lg:p-0 lg:ml-4 lg:mx-0 lg:max-w-full lg:w-[65%]'>
+        <div className='flex-shrink-0 max-w-[800px] mx-auto sm:p-4 lg:p-0 lg:ml-4 lg:mx-0 lg:max-w-full lg:w-[65%]'>
           {videoLink ?
             <VideoPlayer
               src={videoLink}
