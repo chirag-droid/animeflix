@@ -17,9 +17,9 @@ function Card({ anime }) {
 
   return (
     <div
-      className="flex space-x-4 ml-2 text-white py-2 h-30 cursor-pointer hover:scale-105 transform transition duration-300 ease-out"
+      className="flex space-x-4 ml-2 mr-4 text-white py-2 h-30 cursor-pointer hover:scale-105 transform transition duration-300 ease-out"
       onClick={changeRoute}>
-      <div className="relative w-24 h-32">
+      <div className="relative min-w-[6rem] min-h-[8rem] flex-shrink-1">
         <Image
           alt={anime.title.english || anime.title.romaji}
           src={anime.coverImage.large || anime.coverImage.medium || anime.bannerImage}
@@ -31,12 +31,16 @@ function Card({ anime }) {
         />
       </div>
 
-      <p className="w-48">{anime.title.english || anime.title.romaji}</p>
+      <div className="flex flex-col">
+        <p>{anime.title.english || anime.title.romaji}</p>
 
-      <div className="flex space-x-2 text-white text-xs bottom-0 right-0">
-        <Icon icon={PlayIcon} text={anime.format} className="hidden sm:flex" />
-        <Icon icon={ClockIcon} text={`${anime.duration} Min`} />
-        <Icon icon={ThumbUpIcon} text={`${anime.meanScore}%`} />
+        <p className="text-gray-400">{anime.description.slice(0, 70) + "..."}</p>
+
+        <div className="justify-end m-4 flex space-x-2 text-white text-xs">
+          <Icon icon={PlayIcon} text={anime.format} className="hidden sm:flex" />
+          <Icon icon={ClockIcon} text={`${anime.duration} Min`} />
+          <Icon icon={ThumbUpIcon} text={`${anime.meanScore}%`} />
+        </div>
       </div>
     </div>
   );
