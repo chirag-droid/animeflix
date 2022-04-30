@@ -7,6 +7,7 @@ import { animeInfoFragment } from '@utility/fragments'
 import RecommendationCard from '@components/watch/Card'
 import dynamic from 'next/dynamic'
 import { useRouter } from "next/router"
+import Genre from "@components/Genre"
 
 const VideoPlayer = dynamic(() => import("@components/VideoPlayer"), { ssr: false })
 
@@ -48,7 +49,7 @@ function Video({ videoLink, referrer, anime, recommended }) {
           </p>
 
           <div className='ml-3 grid grid-cols-4 gap-x-1 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2 md:flex'>
-            {anime.genres.map(genre => <p key={genre} className='p-1 rounded text-xs sm:text-sm bg-white text-black'>{genre}</p>)}
+            {anime.genres.map(genre => <Genre key={genre} genre={genre} />)}
           </div>
 
           {anime.description ?

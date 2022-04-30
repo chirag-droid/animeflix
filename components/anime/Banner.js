@@ -4,6 +4,7 @@ import useMediaQuery from '@hooks/useMediaQuery'
 import { PlayIcon } from "@heroicons/react/solid";
 import { ClockIcon, ThumbUpIcon } from "@heroicons/react/outline";
 import Icon from '@components/Icon'
+import Genre from '@components/Genre';
 
 function Banner({ anime, onLoadingComplete }) {
   const router = useRouter()
@@ -61,7 +62,7 @@ function Banner({ anime, onLoadingComplete }) {
         </div>
 
         <div className='grid grid-cols-4 gap-x-1 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2 md:flex'>
-          {anime.genres.map(genre => <p key={genre} className='p-1 rounded text-xs sm:text-sm bg-white text-black'>{genre}</p>)}
+          {anime.genres.map(genre => <Genre key={genre} genre={genre} />)}
         </div>
 
         {/* todo, find a safer way */}
