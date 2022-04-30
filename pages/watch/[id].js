@@ -11,7 +11,7 @@ import Genre from "@components/Genre"
 
 const VideoPlayer = dynamic(() => import("@components/VideoPlayer"), { ssr: false })
 
-function Video({ videoLink, referrer, anime, recommended }) {
+function Video({ videoLink, anime, recommended }) {
   const router = useRouter()
   progress.finish()
 
@@ -34,7 +34,6 @@ function Video({ videoLink, referrer, anime, recommended }) {
           {videoLink ?
             <VideoPlayer
               src={videoLink}
-              referrer={referrer}
               poster={anime.bannerImage}
               nextCallback={nextEpisode}
               previousCallback={previousEpisode} 
@@ -104,19 +103,18 @@ export async function getServerSideProps(context) {
   const recommended = data.recommended.recommendations.map(anime => anime.mediaRecommendation)
 
   let res = await Promise.all([
-    getAnime(await slugify(romaji), episode),
-    getAnime(await slugify(english), episode)
+    getAnime(romaji, episode),
+    getAnime(english, episode)
   ]).then(results => results[0] || results[1] )
 
-  let videoLink, referrer = null
+  let videoLink = null
   if (res !== undefined) {
-    ({videoLink, referrer} = res)
+    ({videoLink} = res)
   }
 
   return {
     props: {
       videoLink,
-      referrer,
       anime: data.anime,
       recommended
     }
