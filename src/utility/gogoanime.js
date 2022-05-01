@@ -1,9 +1,10 @@
 import { scrapeMP4, scrapeSearch } from 'gogoanime-api/lib/anime_parser';
 
 async function getAnime(slug, episode) {
+  if (!slug || slug === '') return {};
+
   const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
 
-  if (newSlug === '') return {};
   const findAnime = await scrapeSearch({ keyw: newSlug });
 
   if (findAnime.length === 0) return {};
