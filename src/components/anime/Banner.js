@@ -20,8 +20,11 @@ function Banner({ anime, onLoadingComplete }) {
 
   let description = '';
 
-  if (isLarge) description = anime.description.substr(0, 320);
-  else if (isMedium) description = anime.description.substr(0, 300);
+  if (isLarge) description = `${anime.description.substr(0, 380)}...`;
+  else if (isMedium) description = `${anime.description.substr(0, 300)}...`;
+
+  // remove all the html tags
+  description = description.replace(/<\w*\\?>/g, '');
 
   const changeRoute = () => {
     if (router.route === '/') {
@@ -70,13 +73,7 @@ function Banner({ anime, onLoadingComplete }) {
           ))}
         </div>
 
-        {/* todo, find a safer way */}
-        {description ? (
-          <p
-            className="max-w-3xl"
-            dangerouslySetInnerHTML={{ __html: `${description}...` }}
-          ></p>
-        ) : null}
+        <p className="max-w-3xl">{description}</p>
 
         <button
           className="flex items-center px-2 py-1 rounded-lg text-xs sm:text-sm md:text-base bg-[#C3073F] text-white active:scale-90 transform transition duration-300 ease-in"

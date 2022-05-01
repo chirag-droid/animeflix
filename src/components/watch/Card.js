@@ -44,7 +44,7 @@ function Card({ anime }) {
         <p>{anime.title.english || anime.title.romaji}</p>
 
         <p className="text-gray-400">
-          {`${anime.description.slice(0, 70)}...`}
+          {`${anime.description.replace(/<\w*\\?>/g, '').slice(0, 70)}...`}
         </p>
 
         <div className="justify-end m-4 flex space-x-2 text-white text-xs">
