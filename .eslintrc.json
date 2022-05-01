@@ -53,5 +53,15 @@
     "react/require-default-props": "off", // Allow non-defined react props as undefined
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
-  }
+  },
+
+  "overrides": [
+    // disable global-require rule for config files
+    {
+      "files": ["*.config.js"],
+      "rules": {
+        "global-require": "off"
+      }
+    }
+  ]
 }
