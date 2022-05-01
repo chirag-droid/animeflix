@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",
-    "eslint": "8.6.0",
+    "eslint": "8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-next": "12.1.5",
     "eslint-config-prettier": "^8.5.0",
