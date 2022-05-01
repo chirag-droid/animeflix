@@ -52,9 +52,6 @@
     "react/jsx-props-no-spreading": "off", // _app.tsx uses spread operator and also, react-hook-form
     "react/require-default-props": "off", // Allow non-defined react props as undefined
     "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": [
-      "error",
-      { "argsIgnorePattern": "^_" }
-    ]
+    "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   }
 }
