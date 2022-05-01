@@ -2,30 +2,40 @@
     "name": "animeflix",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "lint": "next lint",
-        "build": "next build",
-        "start": "next start"
+      "dev": "next dev",
+      "lint": "next lint",
+      "build": "next build",
+      "start": "next start"
     },
     "dependencies": {
-        "@badrap/bar-of-progress": "^0.1.2",
-        "@heroicons/react": "^1.0.6",
-        "@vime/core": "^5.3.0",
-        "@vime/react": "^5.3.0",
-        "gogoanime-api": "git+https://github.com/riimuru/gogoanime.git",
-        "graphql": "^16.4.0",
-        "graphql-request": "^4.2.0",
-        "next": "latest",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "sharp": "^0.30.4",
-        "tailwind-scrollbar-hide": "^1.1.6"
+      "@badrap/bar-of-progress": "^0.1.2",
+      "@heroicons/react": "^1.0.6",
+      "@vime/core": "^5.3.0",
+      "@vime/react": "^5.3.0",
+      "gogoanime-api": "git+https://github.com/riimuru/gogoanime.git",
+      "graphql": "^16.4.0",
+      "graphql-request": "^4.2.0",
+      "next": "latest",
+      "react": "^17.0.2",
+      "react-dom": "^17.0.2",
+      "sharp": "^0.30.4",
+      "tailwind-scrollbar-hide": "^1.1.6"
     },
     "devDependencies": {
-        "autoprefixer": "^10.2.6",
-        "eslint": "7.32.0",
-        "eslint-config-next": "12.1.5",
-        "postcss": "^8.4.4",
-        "tailwindcss": "^3.0.24"
+      "autoprefixer": "^10.2.6",
+      "eslint": "8.6.0",
+      "eslint-config-airbnb-base": "^15.0.0",
+      "eslint-config-next": "12.1.5",
+      "eslint-config-prettier": "^8.5.0",
+      "eslint-import-resolver-jsconfig": "^1.1.0",
+      "eslint-plugin-import": "^2.26.0",
+      "eslint-plugin-jsx-a11y": "^6.5.1",
+      "eslint-plugin-prettier": "^4.0.0",
+      "eslint-plugin-react": "^7.29.4",
+      "eslint-plugin-react-hooks": "^4.5.0",
+      "eslint-plugin-unused-imports": "^2.0.0",
+      "postcss": "^8.4.4",
+      "tailwindcss": "^3.0.24"
     }
-}
+  }
+  

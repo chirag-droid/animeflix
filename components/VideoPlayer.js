@@ -1,4 +1,8 @@
 import {
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+} from '@heroicons/react/solid';
+import {
   Player,
   Hls,
   Video,
@@ -7,10 +11,8 @@ import {
   DefaultControls,
   PlaybackControl,
   Control,
-  DefaultSettings,
-} from "@vime/react";
-import "@vime/core/themes/default.css";
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/solid";
+} from '@vime/react';
+import '@vime/core/themes/default.css';
 
 function ControlIcon({ icon, onClick }) {
   const HeroIcon = icon;
@@ -21,20 +23,30 @@ function ControlIcon({ icon, onClick }) {
   );
 }
 
-export default function VideoPlayer({ src, poster, referrer, previousCallback, nextCallback }) {
+export default function VideoPlayer({
+  src,
+  poster,
+  referrer,
+  previousCallback,
+  nextCallback,
+}) {
   return (
     <Player>
-      {src.includes("m3u8") ? (
+      {src.includes('m3u8') ? (
         <Hls version="latest" poster={poster}>
           <source
-            data-src={`/api/video/proxy?src=${encodeURIComponent(src)}&referrer=${encodeURIComponent(referrer)}`}
+            data-src={`/api/video/proxy?src=${encodeURIComponent(
+              src
+            )}&referrer=${encodeURIComponent(referrer)}`}
             type="application/x-mpegURL"
           />
         </Hls>
       ) : (
         <Video version="latest" poster={poster} key={src}>
           <source
-            data-src={`/api/video/proxy?src=${encodeURIComponent(src)}&referrer=${encodeURIComponent(referrer)}`}
+            data-src={`/api/video/proxy?src=${encodeURIComponent(
+              src
+            )}&referrer=${encodeURIComponent(referrer)}`}
             type="video/mp4"
           />
         </Video>
@@ -46,11 +58,15 @@ export default function VideoPlayer({ src, poster, referrer, previousCallback, n
         <Controls
           fullWidth
           pin="center"
-          style={{ "--vm-control-scale": 1.5 }}
+          style={{ '--vm-control-scale': 1.5 }}
           hideOnMouseLeave
-          activeDuration={1500}>
+          activeDuration={1500}
+        >
           <div className="flex mx-auto items-center space-x-24 md:space-x-32">
-            <ControlIcon icon={ChevronDoubleLeftIcon} onClick={previousCallback} />
+            <ControlIcon
+              icon={ChevronDoubleLeftIcon}
+              onClick={previousCallback}
+            />
             <PlaybackControl hideTooltip />
             <ControlIcon icon={ChevronDoubleRightIcon} onClick={nextCallback} />
           </div>

@@ -14,7 +14,7 @@ export const animeInfoFragment = `
     duration
     meanScore
   }
-`
+`;
 
 export const animeBannerFragment = `
   fragment animeBannerFragment on Media {
@@ -30,4 +30,4 @@ export const animeBannerFragment = `
     meanScore
     genres
   }
-`
+`;

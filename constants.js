@@ -1,1 +1,1 @@
-export const apiEndpoint = "https://graphql.anilist.co"
+export const apiEndpoint = 'https://graphql.anilist.co';

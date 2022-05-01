@@ -1,9 +1,10 @@
-import Header from "../components/Header"
-import Banner from "../components/anime/Banner"
-import Section from "@components/anime/Section"
-import { progress } from "@pages/_app"
-import { animeBannerFragment, animeInfoFragment } from "@utility/fragments"
-import client from "@utility/client"
+import Section from '@components/anime/Section';
+import { progress } from '@pages/_app';
+import client from '@utility/client';
+import { animeBannerFragment, animeInfoFragment } from '@utility/fragments';
+
+import Banner from '../components/anime/Banner';
+import Header from '../components/Header';
 
 export default function Home({ banner, trending, popular, topRated }) {
   return (
@@ -16,14 +17,16 @@ export default function Home({ banner, trending, popular, topRated }) {
       <Section title="Popular" animeList={popular} />
       <Section title="Top Rated (All time)" animeList={topRated} />
 
-      <div className='w-full h-8 text-white flex justify-center bg-gray-900 items-center font-bold'>
-        <p>Created by <a href='https://github.com/chirag-droid'>Chirag Singla</a></p>
+      <div className="w-full h-8 text-white flex justify-center bg-gray-900 items-center font-bold">
+        <p>
+          Created by <a href="https://github.com/chirag-droid">Chirag Singla</a>
+        </p>
       </div>
     </>
-  )
+  );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const query = `
   {
     banner: Media(type: ANIME, sort: POPULARITY_DESC, seasonYear: ${new Date().getFullYear()}) {
@@ -51,16 +54,16 @@ export async function getServerSideProps(context) {
 
   ${animeBannerFragment}
   ${animeInfoFragment}
-  `
+  `;
 
-  const data = await client.request(query)
+  const data = await client.request(query);
 
   return {
     props: {
       banner: data.banner,
       trending: data.trending.media,
       popular: data.popular.media,
-      topRated: data.topRated.media
-    }
-  }
+      topRated: data.topRated.media,
+    },
+  };
 }

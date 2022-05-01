@@ -1,15 +1,17 @@
-import Header from "@components/Header";
-import { progress } from "@pages/_app";
-import client from "@utility/client";
-import getAnime from "@utility/gogoanime";
-import { slugify } from "@utility/utils";
-import { animeInfoFragment } from "@utility/fragments";
-import RecommendationCard from "@components/watch/Card";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
-import Genre from "@components/Genre";
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
-const VideoPlayer = dynamic(() => import("@components/VideoPlayer"), { ssr: false });
+import Genre from '@components/Genre';
+import Header from '@components/Header';
+import RecommendationCard from '@components/watch/Card';
+import { progress } from '@pages/_app';
+import client from '@utility/client';
+import { animeInfoFragment } from '@utility/fragments';
+import getAnime from '@utility/gogoanime';
+
+const VideoPlayer = dynamic(() => import('@components/VideoPlayer'), {
+  ssr: false,
+});
 
 function Video({ videoLink, referrer, anime, recommended }) {
   const router = useRouter();
@@ -18,11 +20,11 @@ function Video({ videoLink, referrer, anime, recommended }) {
   const { id, episode } = router.query;
 
   const previousEpisode = () => {
-    router.push(`/watch/${id}?episode=${parseInt(episode) - 1}`);
+    router.push(`/watch/${id}?episode=${parseInt(episode, 10) - 1}`);
   };
 
   const nextEpisode = () => {
-    router.push(`/watch/${id}?episode=${parseInt(episode) + 1}`);
+    router.push(`/watch/${id}?episode=${parseInt(episode, 10) + 1}`);
   };
 
   return (
@@ -46,7 +48,9 @@ function Video({ videoLink, referrer, anime, recommended }) {
           )}
 
           <p className="m-2 font-semibold text-white mt-4 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
-            {`${anime.title.romaji || anime.title.english} | Episode ${episode}`}
+            {`${
+              anime.title.romaji || anime.title.english
+            } | Episode ${episode}`}
           </p>
 
           <div className="ml-3 grid grid-cols-4 gap-x-1 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2 md:flex">
@@ -56,7 +60,10 @@ function Video({ videoLink, referrer, anime, recommended }) {
           </div>
 
           {anime.description ? (
-            <p className="text-gray-400 p-2 mt-2" dangerouslySetInnerHTML={{ __html: anime.description }} />
+            <p
+              className="text-gray-400 p-2 mt-2"
+              dangerouslySetInnerHTML={{ __html: anime.description }}
+            />
           ) : null}
         </div>
 
@@ -64,8 +71,11 @@ function Video({ videoLink, referrer, anime, recommended }) {
           <p className="lg:mt-0 font-semibold text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
             Recommended animes
           </p>
-          {recommended.map((anime) => (
-            <RecommendationCard anime={anime} key={anime.id} />
+          {recommended.map((recommendation) => (
+            <RecommendationCard
+              anime={recommendation}
+              key={recommendation.id}
+            />
           ))}
         </div>
       </div>
@@ -104,14 +114,17 @@ export async function getServerSideProps(context) {
 
   const data = await client.request(query);
   const { english, romaji } = data.anime.title;
-  const recommended = data.recommended.recommendations.map((anime) => anime.mediaRecommendation);
-
-  let res = await Promise.all([getAnime(romaji, episode), getAnime(english, episode)]).then(
-    (results) => results[0] || results[1]
+  const recommended = data.recommended.recommendations.map(
+    (anime) => anime.mediaRecommendation
   );
 
-  let videoLink,
-    referrer = null;
+  const res = await Promise.all([
+    getAnime(romaji, episode),
+    getAnime(english, episode),
+  ]).then((results) => results[0] || results[1]);
+
+  let videoLink;
+  let referrer = null;
   if (res !== undefined) {
     ({ videoLink, referrer } = res);
   }

@@ -1,6 +1,7 @@
-import { GraphQLClient } from "graphql-request";
-import { apiEndpoint } from "../constants";
+import { GraphQLClient } from 'graphql-request';
 
-const client = new GraphQLClient(apiEndpoint, { headers: {} })
+import { apiEndpoint } from '../constants';
 
-export default client
+const client = new GraphQLClient(apiEndpoint, { headers: {} });
+
+export default client;

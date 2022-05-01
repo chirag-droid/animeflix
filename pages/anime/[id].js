@@ -1,10 +1,11 @@
-import { EmojiSadIcon } from "@heroicons/react/solid";
-import { progress } from "@pages/_app";
-import Banner from "@components/anime/Banner"
-import Header from "@components/Header"
-import Section from "@components/anime/Section"
-import { animeBannerFragment, animeInfoFragment } from "@utility/fragments";
-import client from "@utility/client";
+import { EmojiSadIcon } from '@heroicons/react/solid';
+
+import Banner from '@components/anime/Banner';
+import Section from '@components/anime/Section';
+import Header from '@components/Header';
+import { progress } from '@pages/_app';
+import client from '@utility/client';
+import { animeBannerFragment, animeInfoFragment } from '@utility/fragments';
 
 function Anime({ anime, recommended }) {
   return (
@@ -12,20 +13,20 @@ function Anime({ anime, recommended }) {
       <Header />
       <Banner anime={anime} onLoadingComplete={progress.finish} />
 
-      {recommended.length > 0 ?
+      {recommended.length > 0 ? (
         <Section animeList={recommended} title="Recommended" />
-        :
-        <p className='flex items-center justify-center font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'>
+      ) : (
+        <p className="flex items-center justify-center font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
           no recommendations found
-          <EmojiSadIcon className='w-8' />
+          <EmojiSadIcon className="w-8" />
         </p>
-      }
+      )}
     </>
-  )
+  );
 }
 
 export async function getServerSideProps(context) {
-  const { id } = context.params
+  const { id } = context.params;
 
   const query = `
   {
@@ -44,24 +45,26 @@ export async function getServerSideProps(context) {
 
   ${animeBannerFragment}
   ${animeInfoFragment}
-  `
+  `;
 
-  const data = await client.request(query)
+  const data = await client.request(query);
 
   if (!data.Media) {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
 
-  const recommended = data.recommended.recommendations.map(anime => anime.mediaRecommendation)
+  const recommended = data.recommended.recommendations.map(
+    (anime) => anime.mediaRecommendation
+  );
 
   return {
     props: {
       anime: data.Media,
-      recommended
-    }
-  }
+      recommended,
+    },
+  };
 }
 
-export default Anime
+export default Anime;
