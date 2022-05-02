@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { ClockIcon, ThumbUpIcon } from '@heroicons/react/outline';
@@ -25,14 +26,6 @@ function Banner({ anime, onLoadingComplete }) {
 
   // remove all the html tags
   description = description.replace(/<\w*\\?>/g, '');
-
-  const changeRoute = () => {
-    if (router.route === '/') {
-      router.push(`/anime/${anime.id}`);
-    } else {
-      router.push(`/watch/${anime.id}?episode=1`);
-    }
-  };
 
   return (
     <div className="relative h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] 2xl:h-[450px]">
@@ -75,13 +68,21 @@ function Banner({ anime, onLoadingComplete }) {
 
         <p className="max-w-3xl">{description}</p>
 
-        <button
-          className="flex items-center px-2 py-1 rounded-lg text-xs sm:text-sm md:text-base bg-[#C3073F] text-white active:scale-90 transform transition duration-300 ease-in"
-          onClick={changeRoute}
+        <Link
+          href={
+            router.route === '/'
+              ? `/anime/${anime.id}`
+              : `/watch/${anime.id}?episode=1`
+          }
+          passHref
         >
-          <PlayIcon className="w-5 mr-1" />
-          {router.route === '/' ? 'Read More' : 'Watch Now'}
-        </button>
+          <a>
+            <button className="flex-wra cursor-pointer flex items-center px-2 py-1 rounded-lg text-xs sm:text-sm md:text-base bg-[#C3073F] text-white active:scale-90 transform transition duration-300 ease-in">
+              <PlayIcon className="w-5 mr-1" />
+              {router.route === '/' ? 'Read More' : 'Watch Now'}
+            </button>
+          </a>
+        </Link>
       </div>
     </div>
   );
