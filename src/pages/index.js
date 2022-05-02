@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Section from '@components/anime/Section';
 import { progress } from '@pages/_app';
 import client from '@utility/client';
@@ -7,6 +9,10 @@ import Banner from '../components/anime/Banner';
 import Header from '../components/Header';
 
 export default function Home({ banner, trending, popular, topRated }) {
+  useEffect(() => {
+    progress.finish();
+  });
+
   return (
     <>
       <Header />
