@@ -35,10 +35,15 @@ function Video({ videoLink, referer, anime, recommended }) {
   }, []);
 
   const [shouldUseProxy, setProxy] = useState(() => {
+    if (!videoLink) return true;
     return !videoLink.match(urls);
   });
 
   useEffect(() => {
+    if (!videoLink) {
+      setProxy(true);
+      return;
+    }
     setProxy(!videoLink.match(urls));
   }, [videoLink, urls]);
 
@@ -158,9 +163,9 @@ export async function getServerSideProps(context) {
     getAnime(english, episode),
   ]).then((results) => results[0] || results[1]);
 
-  let videoLink;
+  let videoLink = null;
   let referer = null;
-  if (res !== undefined) {
+  if (res.videoLink !== undefined) {
     ({ videoLink, referer } = res);
   }
 
