@@ -1,6 +1,10 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { SearchIcon } from '@heroicons/react/outline';
+
+import AnimeflixIcon from '@public/animeflix.svg';
 
 function Header() {
   const router = useRouter();
@@ -12,7 +16,18 @@ function Header() {
 
   return (
     <header className="sticky top-0 bg-gray-900 w-full z-[51] h-12 flex items-center shadow-md">
-      <div className="flex rounded ml-4 sm:ml-6 md:ml-10 bg-gray-50 py-[1px] items-center px-2">
+      <Link href="/" passHref>
+        <a className="relative w-7 h-7 ml-4 sm:ml-6 cursor-pointer">
+          <Image
+            src={AnimeflixIcon}
+            alt="Animeflix Application Icon"
+            layout="fill"
+            objectPosition="left"
+          />
+        </a>
+      </Link>
+
+      <div className="flex rounded ml-4 sm:ml-6 bg-gray-50 py-[1px] items-center px-2">
         <SearchIcon className="w-4 h-4" />
         <input
           className="outline-none w-44 sm:w-56 md:w-64 lg:w-72 p-1 text-black bg-transparent text-sm placeholder-gray-400"
