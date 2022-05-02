@@ -1,7 +1,5 @@
-export const slugify = (text) => {
-  if (!text) return '';
-  return text
-    .toLowerCase()
-    .replace(/[^\w-]+/g, ' ')
-    .replace(/ /g, '-');
+export const proxyUrl = (url, referer) => {
+  return `/api/video/proxy?src=${encodeURIComponent(
+    url
+  )}&referrer=${encodeURIComponent(referer)}`;
 };

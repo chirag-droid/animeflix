@@ -26,29 +26,18 @@ function ControlIcon({ icon, onClick }) {
 export default function VideoPlayer({
   src,
   poster,
-  referrer,
   previousCallback,
   nextCallback,
 }) {
   return (
     <Player>
       {src.includes('m3u8') ? (
-        <Hls version="latest" poster={poster}>
-          <source
-            data-src={`/api/video/proxy?src=${encodeURIComponent(
-              src
-            )}&referrer=${encodeURIComponent(referrer)}`}
-            type="application/x-mpegURL"
-          />
+        <Hls version="latest" poster={poster} key={src}>
+          <source data-src={src} type="application/x-mpegURL" />
         </Hls>
       ) : (
         <Video version="latest" poster={poster} key={src}>
-          <source
-            data-src={`/api/video/proxy?src=${encodeURIComponent(
-              src
-            )}&referrer=${encodeURIComponent(referrer)}`}
-            type="video/mp4"
-          />
+          <source data-src={src} type="video/mp4" />
         </Video>
       )}
 
