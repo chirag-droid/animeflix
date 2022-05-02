@@ -16,7 +16,7 @@ async function getAnime(slug, episode) {
   const bestQuality = data.sources?.[data.sources.length - 1].file;
 
   return {
-    referrer: data.Referer,
+    referer: data.Referer,
     videoLink: bestQuality,
   };
 }
