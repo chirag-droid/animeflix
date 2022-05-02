@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -30,13 +30,17 @@ function Video({ videoLink, referer, anime, recommended }) {
     router.push(`/watch/${id}?episode=${parseInt(episode, 10) + 1}`);
   };
 
+  const urls = useMemo(() => {
+    return /(gogocdn\.stream)|(manifest\.prod\.boltdns\.net)/;
+  }, []);
+
   const [shouldUseProxy, setProxy] = useState(() => {
-    return !videoLink.match('gogocdn.stream');
+    return !videoLink.match(urls);
   });
 
   useEffect(() => {
-    setProxy(!videoLink.match('gogocdn.stream'));
-  }, [videoLink]);
+    setProxy(!videoLink.match(urls));
+  }, [videoLink, urls]);
 
   return (
     <>
