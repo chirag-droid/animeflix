@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
@@ -13,7 +15,6 @@ import {
   Control,
 } from '@vime/react';
 import '@vime/core/themes/default.css';
-import { useRef } from 'react';
 
 function ControlIcon({ icon, onClick }) {
   const HeroIcon = icon;
@@ -31,54 +32,49 @@ export default function VideoPlayer({
   nextCallback,
 }) {
   const videoplayer = useRef(null);
-  
-  document.addEventListener( 'keydown', function( event ) {
 
+  document.addEventListener('keydown', (e) => {
     // play-toggle
-    if ( event.key === ' ' || event.key === 'k' ) {
-      if(videoplayer.current.paused) {
-        videoplayer.current.play()
-      }
-      else {
-        videoplayer.current.pause()
+    if (e.key === ' ' || e.key === 'k') {
+      if (videoplayer.current.paused) {
+        videoplayer.current.play();
+      } else {
+        videoplayer.current.pause();
       }
     }
 
     // fullscreen
-    if ( event.key === 'f' ) {
-      if(videoplayer.isFullscreenActive) {
+    if (e.key === 'f') {
+      if (videoplayer.isFullscreenActive) {
         videoplayer.current.exitFullscreen();
-      }
-      else {
+      } else {
         videoplayer.current.enterFullscreen();
       }
     }
 
     // volume up
-    if ( event.key === 'ArrowUp' ) {
-      let vol = videoplayer.current.volume;
+    if (e.key === 'ArrowUp') {
+      const vol = videoplayer.current.volume;
       let nextVol = vol + 10;
-      if( nextVol > 100) 
-        nextVol = 100;
+      if (nextVol > 100) nextVol = 100;
       videoplayer.current.volume = nextVol;
     }
 
     // volume down
-    if ( event.key === 'ArrowDown' ) {
-      let vol = videoplayer.current.volume;
+    if (e.key === 'ArrowDown') {
+      const vol = videoplayer.current.volume;
       let nextVol = vol - 10;
-      if( nextVol < 0) 
-        nextVol = 0;
+      if (nextVol < 0) nextVol = 0;
       videoplayer.current.volume = nextVol;
     }
 
     // previous episode
-    if ( event.key === 'ArrowLeft' ) {
+    if (e.key === 'ArrowLeft') {
       previousCallback();
     }
 
     // next episode
-    if ( event.key === 'ArrowRight' ) {
+    if (e.key === 'ArrowRight') {
       nextCallback();
     }
   });
