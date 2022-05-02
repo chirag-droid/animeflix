@@ -22,12 +22,6 @@ export default function Home({ banner, trending, popular, topRated }) {
       <Section title="Trending Now" animeList={trending} />
       <Section title="Popular" animeList={popular} />
       <Section title="Top Rated (All time)" animeList={topRated} />
-
-      <div className="w-full h-8 text-white flex justify-center bg-gray-900 items-center font-bold">
-        <p>
-          Created by <a href="https://github.com/chirag-droid">Chirag Singla</a>
-        </p>
-      </div>
     </>
   );
 }
