@@ -60,7 +60,7 @@ function Banner({ anime, onLoadingComplete }) {
           <Icon icon={ThumbUpIcon} text={`${anime.meanScore}%`} />
         </div>
 
-        <div className="flex gap-x-2 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2">
+        <div className="flex flex-wrap gap-x-2 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2">
           {anime.genres.map((genre) => (
             <Genre key={genre} genre={genre} />
           ))}
