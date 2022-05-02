@@ -61,7 +61,7 @@ function Video({ videoLink, referer, anime, recommended }) {
             </p>
           )}
 
-          <div className="flex w-full justify-between">
+          <div className="flex w-full justify-between items-center">
             <p className="m-2 font-semibold text-white mt-4 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
               {`${
                 anime.title.romaji || anime.title.english
@@ -69,7 +69,7 @@ function Video({ videoLink, referer, anime, recommended }) {
             </p>
 
             {/* Toggle button, whether to use proxy or not */}
-            <label className="relative text-white flex justify-between items-center p2">
+            <label className="mr-2 relative text-white flex justify-between items-center p2">
               Use proxy?
               <input
                 type="checkbox"
