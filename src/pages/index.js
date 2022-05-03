@@ -33,19 +33,19 @@ export async function getServerSideProps() {
       ...animeBannerFragment
     }
 
-    trending: Page(perPage: 8) {
+    trending: Page(perPage: 7) {
       media(sort: TRENDING_DESC, type: ANIME) {
         ...animeInfoFragment
       }
     }
 
-    popular: Page(perPage: 8) {
+    popular: Page(perPage: 7) {
       media(sort: POPULARITY_DESC, type: ANIME) {
         ...animeInfoFragment
       }
     }
 
-    topRated: Page(perPage: 8) {
+    topRated: Page(perPage: 7) {
       media(sort: SCORE_DESC, type: ANIME) {
         ...animeInfoFragment
       }
