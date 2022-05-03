@@ -16,15 +16,6 @@ import {
 } from '@vime/react';
 import '@vime/core/themes/default.css';
 
-function ControlIcon({ icon, onClick }) {
-  const HeroIcon = icon;
-  return (
-    <Control onClick={onClick}>
-      <HeroIcon className="text-white w-7" />
-    </Control>
-  );
-}
-
 export default function VideoPlayer({
   src,
   poster,
@@ -112,24 +103,31 @@ export default function VideoPlayer({
         </Video>
       )}
 
-      <DefaultUi noCaptions noControls>
+      <DefaultUi noControls>
         <DefaultControls hideOnMouseLeave activeDuration={1500} />
 
         <Controls
+          justify="center"
+          align="center"
           fullWidth
           pin="center"
-          style={{ '--vm-control-scale': 1.5 }}
+          style={{
+            '--vm-control-scale': 1.3,
+            '--vm-controls-spacing': '80px',
+          }}
           hideOnMouseLeave
           activeDuration={1500}
+          waitForPlaybackStart
         >
-          <div className="flex mx-auto items-center space-x-24 md:space-x-32">
-            <ControlIcon
-              icon={ChevronDoubleLeftIcon}
-              onClick={previousCallback}
-            />
-            <PlaybackControl hideTooltip />
-            <ControlIcon icon={ChevronDoubleRightIcon} onClick={nextCallback} />
-          </div>
+          <Control>
+            <ChevronDoubleLeftIcon className="text-white w-7" />
+          </Control>
+
+          <PlaybackControl hideTooltip />
+
+          <Control>
+            <ChevronDoubleRightIcon className="text-white w-7" />
+          </Control>
         </Controls>
       </DefaultUi>
     </Player>
