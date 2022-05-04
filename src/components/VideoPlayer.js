@@ -1,27 +1,9 @@
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-} from '@heroicons/react/solid';
-import {
-  Player,
-  Hls,
-  Video,
-  DefaultUi,
-  Controls,
-  DefaultControls,
-  PlaybackControl,
-  Control,
-} from '@vime/react';
-import '@vime/core/themes/default.css';
+import { useRef, useEffect } from 'react';
 
-function ControlIcon({ icon, onClick }) {
-  const HeroIcon = icon;
-  return (
-    <Control onClick={onClick}>
-      <HeroIcon className="text-white w-7" />
-    </Control>
-  );
-}
+import { Player, Hls, Video } from '@vime/react';
+
+import '@vime/core/themes/default.css';
+import VideoControls from './VideoControls';
 
 export default function VideoPlayer({
   src,
@@ -29,8 +11,45 @@ export default function VideoPlayer({
   previousCallback,
   nextCallback,
 }) {
+  const videoplayer = useRef(null);
+
+  useEffect(() => {
+    // focus on videoplayer by default
+    videoplayer.current.focus();
+
+    // prevent default actions
+    videoplayer.current.addEventListener('keydown', (e) => {
+      e.preventDefault();
+    });
+
+    // Refocus on the videoplayer on fullscreen change
+    videoplayer.current.onfullscreenchange = () => {
+      videoplayer.current.focus();
+    };
+
+    // Enable fullscreen keyboard shortcuts in fullscreen
+    document.addEventListener('keydown', (e) => {
+      if (
+        videoplayer.current.isFullscreenActive &&
+        e.target !== videoplayer.current
+      ) {
+        // Create a new keyboard event
+        const keyboardEvent = new KeyboardEvent('keydown', {
+          key: e.key,
+          code: e.code,
+          shiftKey: e.shiftKey,
+          ctrlKey: e.ctrlKey,
+          metaKey: e.metaKey,
+        });
+
+        // dispatch it to the videoplayer
+        videoplayer.current.dispatchEvent(keyboardEvent);
+      }
+    });
+  });
+
   return (
-    <Player>
+    <Player ref={videoplayer} tabIndex="0" style={{ outline: 'none' }}>
       {src.includes('m3u8') ? (
         <Hls version="latest" poster={poster} key={src}>
           <source data-src={src} type="application/x-mpegURL" />
@@ -41,26 +60,10 @@ export default function VideoPlayer({
         </Video>
       )}
 
-      <DefaultUi noCaptions noControls>
-        <DefaultControls hideOnMouseLeave activeDuration={1500} />
-
-        <Controls
-          fullWidth
-          pin="center"
-          style={{ '--vm-control-scale': 1.5 }}
-          hideOnMouseLeave
-          activeDuration={1500}
-        >
-          <div className="flex mx-auto items-center space-x-24 md:space-x-32">
-            <ControlIcon
-              icon={ChevronDoubleLeftIcon}
-              onClick={previousCallback}
-            />
-            <PlaybackControl hideTooltip />
-            <ControlIcon icon={ChevronDoubleRightIcon} onClick={nextCallback} />
-          </div>
-        </Controls>
-      </DefaultUi>
+      <VideoControls
+        nextCallback={nextCallback}
+        previousCallback={previousCallback}
+      />
     </Player>
   );
 }
