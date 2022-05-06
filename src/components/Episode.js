@@ -63,7 +63,7 @@ function Episode({ id, episodes }) {
         </div>
       </div>
 
-      <div className="my-1 gap-x-2 gap-y-1 grid  xl:grid-cols-[repeat(21,_minmax(0,_1fr))]">
+      <div className="py-1 gap-x-2 gap-y-1 grid grid-cols-11 sm:grid-cols-[repeat(16,_minmax(0,_1fr))] lg:grid-cols-[repeat(20,_minmax(0,_1fr))]  xl:grid-cols-[repeat(25,_minmax(0,_1fr))]">
         {episodeArray
           .slice((currentPage - 1) * 100, currentPage * 100)
           .map((v) => (
