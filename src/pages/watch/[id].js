@@ -94,7 +94,7 @@ function Video({ videoLink, referer, anime, recommended }) {
             </label>
           </div>
 
-          <div className="ml-3 grid grid-cols-4 gap-x-1 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2 md:flex">
+          <div className="flex flex-wrap mx-3 gap-x-1 sm:gap-x-2 gap-y-1">
             {anime.genres.map((genre) => (
               <Genre key={genre} genre={genre} />
             ))}
