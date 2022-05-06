@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
+import Episode from '@components/Episode';
 import Genre from '@components/Genre';
 import Header from '@components/Header';
 import RecommendationCard from '@components/watch/Card';
@@ -99,6 +100,8 @@ function Video({ videoLink, referer, anime, recommended }) {
             ))}
           </div>
 
+          <Episode id={id} episodes={anime.episodes} />
+
           {anime.description ? (
             <p
               className="text-gray-400 p-2 mt-2"
@@ -133,6 +136,7 @@ export async function getServerSideProps(context) {
         english
         romaji
       }
+      episodes
       bannerImage
       description
       genres
