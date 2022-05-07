@@ -1,4 +1,8 @@
-import { scrapeMP4, scrapeSearch } from 'gogoanime-api/lib/anime_parser';
+import {
+  scrapeMP4,
+  scrapeSearch,
+  scrapeAnimeDetails,
+} from 'gogoanime-api/lib/anime_parser';
 
 async function getAnime(slug, episode) {
   if (!slug || slug === '') return {};
@@ -9,8 +13,13 @@ async function getAnime(slug, episode) {
 
   if (findAnime.length === 0) return {};
 
+  const gogoEpisodes = (await scrapeAnimeDetails({ id: findAnime[0].animeId }))
+    .episodesList;
+
+  const episodeSlugId = gogoEpisodes[0]?.episodeId.split('-episode')[0];
+
   const data = await scrapeMP4({
-    id: `${findAnime[0].animeId}-episode-${episode}`,
+    id: `${episodeSlugId}-episode-${episode}`,
   });
 
   const bestQuality = data.sources?.[data.sources.length - 1].file;
@@ -18,6 +27,7 @@ async function getAnime(slug, episode) {
   return {
     referer: data.Referer,
     videoLink: bestQuality,
+    episodes: gogoEpisodes,
   };
 }
 
