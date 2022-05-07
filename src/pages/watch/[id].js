@@ -169,8 +169,11 @@ export async function getServerSideProps(context) {
 
   let videoLink = null;
   let referer = null;
+  let episodes = null;
   if (res.videoLink !== undefined) {
-    ({ videoLink, referer } = res);
+    ({ videoLink, referer, episodes } = res);
+
+    if (episodes.length !== 0) data.anime.episodes = episodes.length;
   }
 
   return {

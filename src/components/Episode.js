@@ -69,7 +69,9 @@ function Episode({ id, episodes }) {
           .map((v) => (
             <Link key={v} passHref href={`/watch/${id}/?episode=${v}`}>
               <a className="text-gray-800">
-                <div className="bg-gray-100 py-[1px] px-1 rounded-sm">{v}</div>
+                <div className="bg-gray-100 py-[1px] px-1 rounded-sm hover:bg-gray-400">
+                  {v}
+                </div>
               </a>
             </Link>
           ))}

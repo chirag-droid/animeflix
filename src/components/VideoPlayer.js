@@ -30,7 +30,7 @@ export default function VideoPlayer({
     // Enable fullscreen keyboard shortcuts in fullscreen
     document.addEventListener('keydown', (e) => {
       if (
-        videoplayer.current.isFullscreenActive &&
+        videoplayer.current?.isFullscreenActive &&
         e.target !== videoplayer.current
       ) {
         // Create a new keyboard event
