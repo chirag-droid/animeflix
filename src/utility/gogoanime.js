@@ -6,9 +6,9 @@ import {
 import { kitsuApiEndpoint } from "../constants";
 
 async function getAnime(slug, episode) {
-  if (!slug || slug === "") return {};
+  if (!slug || slug === '') return {};
 
-  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, " ");
+  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
 
   const findAnime = await scrapeSearch({ keyw: newSlug });
 
@@ -40,9 +40,9 @@ async function getAnime(slug, episode) {
  *
  */
 async function getKitsuEpisodes(slug, startDate, season) {
-  if (!slug || slug === "") return {};
+  if (!slug || slug === '') return {};
 
-  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, " ");
+  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
 
   const findAnime = await scrapeSearch({ keyw: newSlug });
 
@@ -56,8 +56,8 @@ async function getKitsuEpisodes(slug, startDate, season) {
     .episodesList;
 
   let kitsuEpisodes = await fetch(kitsuEndpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: `query {
         searchAnimeByTitle(first: 5, title: "${newSlug}") {
@@ -97,31 +97,31 @@ async function getKitsuEpisodes(slug, startDate, season) {
       nodes.forEach((node) => {
         if (
           node.season === season &&
-          node.startDate.trim().split("-")[0] === startDate.trim().split("-")[0]
+          node.startDate.trim().split('-')[0] === startDate
         ) {
           const episodes = node.episodes.nodes;
 
           episodes.forEach((episode) => {
             if (episode) {
-              const i = episode.number.toString().replace('"', "");
+              const i = episode.number.toString().replace('"', '');
               let name = null;
               let description = null;
               let thumbnail = null;
 
               if (episode.titles?.canonical)
-                name = episode.titles.canonical.toString().replace('"', "");
+                name = episode.titles.canonical.toString().replace('"', '');
               if (episode.description?.en)
                 description = episode.description.en
                   .toString()
-                  .replace('"', "")
-                  .replace("\\n", "\n");
+                  .replace('"', '')
+                  .replace("\\n", '\n');
               if (episode.thumbnail)
                 thumbnail = episode.thumbnail.original.url
                   .toString()
-                  .replace('"', "");
+                  .replace('"', '');
 
               episodesList.set(i, {
-                episodeNum: episode.number.toString().replace('"', ""),
+                episodeNum: episode.number.toString().replace('"', ''),
                 title: name,
                 description,
                 thumbnail,
