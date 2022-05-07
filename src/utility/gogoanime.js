@@ -2,12 +2,13 @@ import {
   scrapeMP4,
   scrapeSearch,
   scrapeAnimeDetails,
-} from 'gogoanime-api/lib/anime_parser';
+} from "gogoanime-api/lib/anime_parser";
+import { kitsuApiEndpoint } from "../constants";
 
 async function getAnime(slug, episode) {
-  if (!slug || slug === '') return {};
+  if (!slug || slug === "") return {};
 
-  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
+  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, " ");
 
   const findAnime = await scrapeSearch({ keyw: newSlug });
 
@@ -16,7 +17,7 @@ async function getAnime(slug, episode) {
   const gogoEpisodes = (await scrapeAnimeDetails({ id: findAnime[0].animeId }))
     .episodesList;
 
-  const episodeSlugId = gogoEpisodes[0]?.episodeId.split('-episode')[0];
+  const episodeSlugId = gogoEpisodes[0]?.episodeId.split("-episode")[0];
 
   const data = await scrapeMP4({
     id: `${episodeSlugId}-episode-${episode}`,
@@ -39,9 +40,9 @@ async function getAnime(slug, episode) {
  *
  */
 async function getKitsuEpisodes(slug, startDate, season) {
-  if (!slug || slug === '') return {};
+  if (!slug || slug === "") return {};
 
-  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
+  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, " ");
 
   const findAnime = await scrapeSearch({ keyw: newSlug });
 
@@ -54,11 +55,37 @@ async function getKitsuEpisodes(slug, startDate, season) {
   const gogoEpisodes = (await scrapeAnimeDetails({ id: anime.animeId }))
     .episodesList;
 
-  let kitsuEpisodes = await fetch('https://kitsu.io/api/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  let kitsuEpisodes = await fetch(kitsuEndpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      query: `query{searchAnimeByTitle(first:5,title:"${newSlug}"){nodes{id season startDate titles{localized}episodes(first:2000){nodes{number titles{canonical}description thumbnail{original{url}}}}}}}`,
+      query: `query {
+        searchAnimeByTitle(first: 5, title: "${newSlug}") {
+          nodes {
+            id
+            season
+            startDate
+            titles {
+              localized
+            }
+            episodes(first: 2000) {
+              nodes {
+                number
+                titles {
+                  canonical
+                }
+                description
+                thumbnail {
+                  original {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
     }),
   });
 
@@ -70,31 +97,31 @@ async function getKitsuEpisodes(slug, startDate, season) {
       nodes.forEach((node) => {
         if (
           node.season === season &&
-          node.startDate.trim().split('-')[0] === startDate.trim().split('-')[0]
+          node.startDate.trim().split("-")[0] === startDate.trim().split("-")[0]
         ) {
           const episodes = node.episodes.nodes;
 
           episodes.forEach((episode) => {
             if (episode) {
-              const i = episode.number.toString().replace('"', '');
+              const i = episode.number.toString().replace('"', "");
               let name = null;
               let description = null;
               let thumbnail = null;
 
               if (episode.titles?.canonical)
-                name = episode.titles.canonical.toString().replace('"', '');
+                name = episode.titles.canonical.toString().replace('"', "");
               if (episode.description?.en)
                 description = episode.description.en
                   .toString()
-                  .replace('"', '')
-                  .replace('\\n', '\n');
+                  .replace('"', "")
+                  .replace("\\n", "\n");
               if (episode.thumbnail)
                 thumbnail = episode.thumbnail.original.url
                   .toString()
-                  .replace('"', '');
+                  .replace('"', "");
 
               episodesList.set(i, {
-                episodeNum: episode.number.toString().replace('"', ''),
+                episodeNum: episode.number.toString().replace('"', ""),
                 title: name,
                 description,
                 thumbnail,
