@@ -140,12 +140,15 @@ export async function getKitsuEpisodes(slug, startDate, season) {
     gogoEpisodes.reverse();
     gogoEpisodes.forEach((gogoEp, i) => {
       const j = (i + 1).toString();
+      const ep = episodesList.get(j);
       newEpisodeList.push({
         episodeId: gogoEp.episodeId,
-        episodeTitle: episodesList.get(j).title,
-        episodeThumbnail: episodesList.get(j).thumbnail,
+        episodeTitle: ep
+          ? episodesList.get(j).title
+          : `Episode: ${gogoEp.episodeNum}`,
+        episodeThumbnail: ep ? episodesList.get(j).thumbnail : null,
         episodeNum: gogoEp.episodeNum,
-        episodeDescription: episodesList.get(j).description,
+        episodeDescription: ep ? episodesList.get(j).description : null,
       });
     });
   }
