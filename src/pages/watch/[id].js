@@ -10,7 +10,7 @@ import RecommendationCard from '@components/watch/Card';
 import { progress } from '@pages/_app';
 import client from '@utility/client';
 import { animeInfoFragment } from '@utility/fragments';
-import getAnime from '@utility/gogoanime';
+import { getAnime } from '@utility/gogoanime';
 import { proxyUrl } from '@utility/utils';
 
 const VideoPlayer = dynamic(() => import('@components/VideoPlayer'), {

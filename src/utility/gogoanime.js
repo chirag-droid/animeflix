@@ -2,10 +2,11 @@ import {
   scrapeMP4,
   scrapeSearch,
   scrapeAnimeDetails,
-} from "gogoanime-api/lib/anime_parser";
-import { kitsuApiEndpoint } from "../constants";
+} from 'gogoanime-api/lib/anime_parser';
 
-async function getAnime(slug, episode) {
+import { kitsuApiEndpoint } from '../constants';
+
+export async function getAnime(slug, episode) {
   if (!slug || slug === '') return {};
 
   const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
@@ -17,7 +18,7 @@ async function getAnime(slug, episode) {
   const gogoEpisodes = (await scrapeAnimeDetails({ id: findAnime[0].animeId }))
     .episodesList;
 
-  const episodeSlugId = gogoEpisodes[0]?.episodeId.split("-episode")[0];
+  const episodeSlugId = gogoEpisodes[0]?.episodeId.split('-episode')[0];
 
   const data = await scrapeMP4({
     id: `${episodeSlugId}-episode-${episode}`,
@@ -39,7 +40,7 @@ async function getAnime(slug, episode) {
  * @example 'naruto', startDate: '2019', season: 'WINTER'
  *
  */
-async function getKitsuEpisodes(slug, startDate, season) {
+export async function getKitsuEpisodes(slug, startDate, season) {
   if (!slug || slug === '') return {};
 
   const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
@@ -55,7 +56,7 @@ async function getKitsuEpisodes(slug, startDate, season) {
   const gogoEpisodes = (await scrapeAnimeDetails({ id: anime.animeId }))
     .episodesList;
 
-  let kitsuEpisodes = await fetch(kitsuEndpoint, {
+  let kitsuEpisodes = await fetch(kitsuApiEndpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -114,7 +115,7 @@ async function getKitsuEpisodes(slug, startDate, season) {
                 description = episode.description.en
                   .toString()
                   .replace('"', '')
-                  .replace("\\n", '\n');
+                  .replace('\\n', '\n');
               if (episode.thumbnail)
                 thumbnail = episode.thumbnail.original.url
                   .toString()
@@ -151,5 +152,3 @@ async function getKitsuEpisodes(slug, startDate, season) {
 
   return newEpisodeList;
 }
-
-export default { getAnime, getKitsuEpisodes };
