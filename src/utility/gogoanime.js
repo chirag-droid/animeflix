@@ -98,7 +98,7 @@ export async function getKitsuEpisodes(slug, startDate, season) {
       nodes.forEach((node) => {
         if (
           node.season === season &&
-          node.startDate.trim().split('-')[0] === startDate
+          node.startDate.trim().split('-')[0] === startDate.toString()
         ) {
           const episodes = node.episodes.nodes;
 
