@@ -29,5 +29,9 @@ export const animeBannerFragment = `
     duration
     meanScore
     genres
+    season
+    startDate {
+      year
+    }
   }
 `;
