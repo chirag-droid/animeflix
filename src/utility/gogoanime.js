@@ -4,33 +4,65 @@ import {
   scrapeAnimeDetails,
 } from 'gogoanime-api/lib/anime_parser';
 
+import client from '@utility/client';
+
 import { kitsuApiEndpoint } from '../constants';
 
-export async function getAnime(slug, episode) {
-  if (!slug || slug === '') return {};
+export async function getTitle(id) {
+  const query = `
+  {
+    anime: Media(id: ${id}) {
+      title {
+        english
+        romaji
+      }
+    }
+  }
+  `;
 
-  const newSlug = slug.replace(/[^0-9a-zA-Z]+/g, ' ');
+  const data = await client.request(query);
 
-  const findAnime = await scrapeSearch({ keyw: newSlug });
+  return data.anime.title;
+}
+
+export async function getAnimeSlug(title, episode) {
+  if (!title || title === '') return {};
+
+  const slug = title.replace(/[^0-9a-zA-Z]+/g, ' ');
+
+  const findAnime = await scrapeSearch({ keyw: slug });
 
   if (findAnime.length === 0) return {};
 
   const gogoEpisodes = (await scrapeAnimeDetails({ id: findAnime[0].animeId }))
     .episodesList;
 
-  const episodeSlugId = gogoEpisodes[0]?.episodeId.split('-episode')[0];
+  const episodeSlug = gogoEpisodes[0]?.episodeId.split('-episode')[0];
 
   const data = await scrapeMP4({
-    id: `${episodeSlugId}-episode-${episode}`,
+    id: `${episodeSlug}-episode-${episode}`,
   });
 
   const bestQuality = data.sources?.[data.sources.length - 1].file;
 
   return {
-    referer: data.Referer,
-    videoLink: bestQuality,
-    episodes: gogoEpisodes,
+    referer: data.Referer || null,
+    videoLink: bestQuality || null,
+    episodes: gogoEpisodes.length || null,
   };
+}
+
+export async function getAnime(id, episode) {
+  const { english, romaji } = await getTitle(id);
+
+  const romajiAnime = getAnimeSlug(romaji, episode);
+  const englishAnime = getAnimeSlug(english, episode);
+
+  const anime = await Promise.all([romajiAnime, englishAnime]).then(
+    (r) => r[0] || r[1]
+  );
+
+  return anime;
 }
 
 /**
