@@ -7,21 +7,23 @@ import Episode from '@components/Episode';
 import Genre from '@components/Genre';
 import Header from '@components/Header';
 import RecommendationCard from '@components/watch/Card';
+import useAnime from '@hooks/useAnime';
 import { progress } from '@pages/_app';
 import client from '@utility/client';
 import { animeInfoFragment } from '@utility/fragments';
-import { getAnime } from '@utility/gogoanime';
 import { proxyUrl } from '@utility/utils';
 
 const VideoPlayer = dynamic(() => import('@components/VideoPlayer'), {
   ssr: false,
 });
 
-function Video({ videoLink, referer, anime, recommended }) {
+function Video({ anime, recommended }) {
   const router = useRouter();
   progress.finish();
 
   const { id, episode } = router.query;
+
+  const { videoLink, referer, episodes, isError } = useAnime(id, episode);
 
   const previousEpisode = () => {
     router.push(`/watch/${id}?episode=${parseInt(episode, 10) - 1}`);
@@ -35,14 +37,11 @@ function Video({ videoLink, referer, anime, recommended }) {
     return /(gogocdn\.stream)|(manifest\.prod\.boltdns\.net)/;
   }, []);
 
-  const [shouldUseProxy, setProxy] = useState(() => {
-    if (!videoLink) return true;
-    return !videoLink.match(urls);
-  });
+  const [shouldUseProxy, setProxy] = useState(false);
 
   useEffect(() => {
     if (!videoLink) {
-      setProxy(true);
+      setProxy(false);
       return;
     }
     setProxy(!videoLink.match(urls));
@@ -54,7 +53,7 @@ function Video({ videoLink, referer, anime, recommended }) {
 
       <div className="lg:flex mt-4 space-x-4">
         <div className="flex-shrink-0 max-w-[800px] mx-auto sm:p-4 lg:p-0 lg:ml-4 lg:mx-0 lg:max-w-full lg:w-[65%]">
-          {videoLink ? (
+          {!isError ? (
             <VideoPlayer
               src={shouldUseProxy ? proxyUrl(videoLink, referer) : videoLink}
               poster={anime.bannerImage}
@@ -63,7 +62,7 @@ function Video({ videoLink, referer, anime, recommended }) {
             />
           ) : (
             <p className="font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
-              {"Sorry, the anime video couldn't be found"}
+              Sorry, the anime video couldn&apos;t be found
             </p>
           )}
 
@@ -100,7 +99,7 @@ function Video({ videoLink, referer, anime, recommended }) {
             ))}
           </div>
 
-          <Episode id={id} episodes={anime.episodes} />
+          <Episode id={id} episodes={episodes} />
 
           {anime.description ? (
             <p
@@ -127,7 +126,7 @@ function Video({ videoLink, referer, anime, recommended }) {
 }
 
 export async function getServerSideProps(context) {
-  const { id, episode } = context.query;
+  const { id } = context.query;
 
   const query = `
   {
@@ -157,29 +156,12 @@ export async function getServerSideProps(context) {
   `;
 
   const data = await client.request(query);
-  const { english, romaji } = data.anime.title;
   const recommended = data.recommended.recommendations.map(
     (anime) => anime.mediaRecommendation
   );
 
-  const res = await Promise.all([
-    getAnime(romaji, episode),
-    getAnime(english, episode),
-  ]).then((results) => results[0] || results[1]);
-
-  let videoLink = null;
-  let referer = null;
-  let episodes = null;
-  if (res.videoLink !== undefined) {
-    ({ videoLink, referer, episodes } = res);
-
-    if (episodes.length !== 0) data.anime.episodes = episodes.length;
-  }
-
   return {
     props: {
-      videoLink,
-      referer,
       anime: data.anime,
       recommended,
     },

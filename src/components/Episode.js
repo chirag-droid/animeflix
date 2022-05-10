@@ -29,8 +29,14 @@ function Episode({ id, episodes }) {
       });
   };
 
-  if (!episodes) {
-    return (
+  // Show 100 episodes per page.
+  // for 123 episodes there should be 2 pages
+  const pages = Math.ceil(episodes / 100);
+
+  const episodeArray = Array.from({ length: episodes }, (_, i) => i + 1);
+
+  return (
+    <div>
       <div className="flex m-2">
         <span className="text-gray-300 md:text-lg">Go to episode: </span>
         <input
@@ -39,43 +45,37 @@ function Episode({ id, episodes }) {
           onKeyDown={handleKeyPress}
         ></input>
       </div>
-    );
-  }
 
-  // Show 100 episodes per page.
-  // for 123 episodes there should be 2 pages
-  const pages = Math.ceil(episodes / 100);
+      {episodes && (
+        <div className="m-2">
+          <div className="flex space-x-2">
+            <span className="text-gray-300 text-lg">Episodes: </span>
+            <div className="flex flex-wrap space-x-2">
+              {new Array(pages).fill(1).map((_v, i) => (
+                <PageButton
+                  key={i + 1}
+                  page={i + 1}
+                  onClick={() => setPage(i + 1)}
+                />
+              ))}
+            </div>
+          </div>
 
-  const episodeArray = Array.from({ length: episodes }, (_, i) => i + 1);
-
-  return (
-    <div className="m-2">
-      <div className="flex space-x-2">
-        <span className="text-gray-300 text-lg">Episodes: </span>
-        <div className="flex flex-wrap space-x-2">
-          {new Array(pages).fill(1).map((_v, i) => (
-            <PageButton
-              key={i + 1}
-              page={i + 1}
-              onClick={() => setPage(i + 1)}
-            />
-          ))}
+          <div className="py-1 gap-x-2 gap-y-1 grid grid-cols-11 sm:grid-cols-[repeat(16,_minmax(0,_1fr))] lg:grid-cols-[repeat(20,_minmax(0,_1fr))]  xl:grid-cols-[repeat(25,_minmax(0,_1fr))]">
+            {episodeArray
+              .slice((currentPage - 1) * 100, currentPage * 100)
+              .map((v) => (
+                <Link key={v} passHref href={`/watch/${id}/?episode=${v}`}>
+                  <a className="text-gray-800">
+                    <div className="bg-gray-100 py-[1px] px-1 rounded-sm hover:bg-gray-400">
+                      {v}
+                    </div>
+                  </a>
+                </Link>
+              ))}
+          </div>
         </div>
-      </div>
-
-      <div className="py-1 gap-x-2 gap-y-1 grid grid-cols-11 sm:grid-cols-[repeat(16,_minmax(0,_1fr))] lg:grid-cols-[repeat(20,_minmax(0,_1fr))]  xl:grid-cols-[repeat(25,_minmax(0,_1fr))]">
-        {episodeArray
-          .slice((currentPage - 1) * 100, currentPage * 100)
-          .map((v) => (
-            <Link key={v} passHref href={`/watch/${id}/?episode=${v}`}>
-              <a className="text-gray-800">
-                <div className="bg-gray-100 py-[1px] px-1 rounded-sm hover:bg-gray-400">
-                  {v}
-                </div>
-              </a>
-            </Link>
-          ))}
-      </div>
+      )}
     </div>
   );
 }
