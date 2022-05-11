@@ -24,7 +24,7 @@ function Section({ anime, episodes }) {
               key={i + 1}
               anime={anime}
               number={i + 1}
-              episode={episodes.list[i + 1]}
+              episode={episodes.list[i]}
             />
           ))}
       </div>

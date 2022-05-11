@@ -125,7 +125,7 @@ export async function getKitsuEpisodes(title, startDate, season) {
           node.startDate.trim().split('-')[0] === startDate.toString()
         ) {
           list = node.episodes.nodes;
-          count = node.episodeCount;
+          count = node.episodeCount ? node.episodeCount : list.length;
         }
       });
     }
