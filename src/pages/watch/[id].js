@@ -23,6 +23,10 @@ function Video({ anime, recommended }) {
 
   const { id, episode } = router.query;
 
+  if (typeof window !== 'undefined' && !episode) {
+    router?.push(`/watch/${id}?episode=${1}`);
+  }
+
   const { videoLink, referer, episodes, isError } = useAnime(id, episode);
 
   const previousEpisode = () => {
