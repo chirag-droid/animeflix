@@ -51,7 +51,7 @@ export async function getServerSideProps(context) {
       ...animeInfoFragment
     }
 
-    recommended: Page(perPage: 8) {
+    recommended: Page(perPage: 12) {
       recommendations(mediaId: ${id}, sort: RATING_DESC) {
         mediaRecommendation {
         ...animeInfoFragment
@@ -77,10 +77,18 @@ export async function getServerSideProps(context) {
   );
 
   // fetch episode list
-  const episodes = await getKitsuEpisodes(
+  const episodesEnglish = getKitsuEpisodes(
+    data.Media.title.english,
+    data.Media.startDate.year,
+    data.Media.season
+  );
+  const episodesRomaji = getKitsuEpisodes(
     data.Media.title.romaji,
     data.Media.startDate.year,
     data.Media.season
+  );
+  const episodes = await Promise.all([episodesEnglish, episodesRomaji]).then(
+    (r) => (r[0].length > 0 ? r[0] : r[1])
   );
 
   return {
