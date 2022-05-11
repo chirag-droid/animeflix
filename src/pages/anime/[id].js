@@ -16,17 +16,15 @@ function Anime({ anime, recommended, episodes }) {
       <Banner anime={anime} onLoadingComplete={progress.finish} />
 
       {/* Don't show episode section if format is movie */}
-      {anime.format !== 'TV' ? null : (
-        <>
-          {episodes.length > 0 ? (
-            <EpisodeSection anime={anime} episodeList={episodes} />
-          ) : (
-            <p className="flex items-center justify-center font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
-              no episodes found
-              <EmojiSadIcon className="w-8" />
-            </p>
-          )}
-        </>
+      {anime.format !== 'MOVIE' && episodes.count > 0 && (
+        <EpisodeSection anime={anime} episodes={episodes} />
+      )}
+
+      {anime.format !== 'MOVIE' && episodes.count === 0 && (
+        <p className="flex items-center justify-center font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
+          no episodes found
+          <EmojiSadIcon className="w-8" />
+        </p>
       )}
 
       {recommended.length > 0 ? (
@@ -51,7 +49,7 @@ export async function getServerSideProps(context) {
       ...animeInfoFragment
     }
 
-    recommended: Page(perPage: 8) {
+    recommended: Page(perPage: 12) {
       recommendations(mediaId: ${id}, sort: RATING_DESC) {
         mediaRecommendation {
         ...animeInfoFragment
@@ -77,10 +75,18 @@ export async function getServerSideProps(context) {
   );
 
   // fetch episode list
-  const episodes = await getKitsuEpisodes(
+  const episodesEnglish = getKitsuEpisodes(
+    data.Media.title.english,
+    data.Media.startDate.year,
+    data.Media.season
+  );
+  const episodesRomaji = getKitsuEpisodes(
     data.Media.title.romaji,
     data.Media.startDate.year,
     data.Media.season
+  );
+  const episodes = await Promise.all([episodesEnglish, episodesRomaji]).then(
+    (r) => (r[0].count > 0 ? r[0] : r[1])
   );
 
   return {

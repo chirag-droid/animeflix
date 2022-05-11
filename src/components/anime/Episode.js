@@ -3,20 +3,20 @@ import Link from 'next/link';
 
 import { base64SolidImage } from '@utility/image';
 
-function Card({ anime, episode }) {
-  let title = episode.episodeTitle;
+function Card({ anime, number, episode }) {
+  let title = episode ? episode.titles.canonical : `Episode No. ${number}`;
 
   if (title.length > 35) title = `${title.substr(0, 35)}...`;
 
   return (
-    <Link href={`/watch/${anime.id}?episode=${episode.episodeNum}`} passHref>
+    <Link href={`/watch/${anime.id}?episode=${number}`} passHref>
       <a className="cursor-pointer w-64 sm:w-80 p-2 hover:scale-105 transform transition duration-300 ease-out">
         <div className="relative">
           <div className="relative w-64 sm:w-80 h-40 sm:h-52">
             <Image
               alt="Cover Image"
               src={
-                episode.episodeThumbnail ||
+                (episode?.thumbnail && episode.thumbnail.original.url) ||
                 anime.coverImage.large ||
                 anime.coverImage.medium
               }
@@ -26,12 +26,12 @@ function Card({ anime, episode }) {
               className="rounded-md"
               placeholder="blur"
               blurDataURL={`data:image/svg+xml;base64,${base64SolidImage(
-                episode.episodeThumbnail?.color
+                episode?.episodeThumbnail?.color
               )}`}
             />
           </div>
           <p className="h-12 text-xl mt-2 text-white font-bold absolute top-0 right-0">
-            {episode.episodeNum}
+            {number}
           </p>
         </div>
 
