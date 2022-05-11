@@ -90,6 +90,7 @@ export async function getKitsuEpisodes(title, startDate, season) {
             titles {
               localized
             }
+            episodeCount
             episodes(first: 8) {
               nodes {
                 number
@@ -112,7 +113,8 @@ export async function getKitsuEpisodes(title, startDate, season) {
 
   kitsuEpisodes = await kitsuEpisodes.json();
 
-  let episodes = [];
+  let list = [];
+  let count = 0;
 
   if (kitsuEpisodes?.data) {
     const { nodes } = kitsuEpisodes.data.searchAnimeByTitle;
@@ -122,11 +124,15 @@ export async function getKitsuEpisodes(title, startDate, season) {
           node.season === season &&
           node.startDate.trim().split('-')[0] === startDate.toString()
         ) {
-          episodes = node.episodes.nodes;
+          list = node.episodes.nodes;
+          count = node.episodeCount;
         }
       });
     }
   }
 
-  return episodes;
+  return {
+    count,
+    list,
+  };
 }

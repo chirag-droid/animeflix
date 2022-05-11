@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import EpisodeCard from '@components/anime/Episode';
 
-function Section({ anime, episodeList }) {
+function Section({ anime, episodes }) {
   const animeListRef = useRef(null);
 
   return (
@@ -17,9 +17,16 @@ function Section({ anime, episodeList }) {
         ref={animeListRef}
         onMouseEnter={() => animeListRef.current.focus()}
       >
-        {episodeList.map((episode, i) => (
-          <EpisodeCard key={i + 1} anime={anime} episode={episode} />
-        ))}
+        {new Array(episodes.count > 8 ? 8 : episodes.count)
+          .fill(1)
+          .map((_v, i) => (
+            <EpisodeCard
+              key={i + 1}
+              anime={anime}
+              number={i + 1}
+              episode={episodes.list[i + 1]}
+            />
+          ))}
       </div>
     </>
   );

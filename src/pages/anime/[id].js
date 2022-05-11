@@ -16,17 +16,15 @@ function Anime({ anime, recommended, episodes }) {
       <Banner anime={anime} onLoadingComplete={progress.finish} />
 
       {/* Don't show episode section if format is movie */}
-      {anime.format !== 'TV' ? null : (
-        <>
-          {episodes.length > 0 ? (
-            <EpisodeSection anime={anime} episodeList={episodes} />
-          ) : (
-            <p className="flex items-center justify-center font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
-              no episodes found
-              <EmojiSadIcon className="w-8" />
-            </p>
-          )}
-        </>
+      {anime.format !== 'MOVIE' && episodes.count > 0 && (
+        <EpisodeSection anime={anime} episodes={episodes} />
+      )}
+
+      {anime.format !== 'MOVIE' && episodes.count === 0 && (
+        <p className="flex items-center justify-center font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
+          no episodes found
+          <EmojiSadIcon className="w-8" />
+        </p>
       )}
 
       {recommended.length > 0 ? (
@@ -88,7 +86,7 @@ export async function getServerSideProps(context) {
     data.Media.season
   );
   const episodes = await Promise.all([episodesEnglish, episodesRomaji]).then(
-    (r) => (r[0].length > 0 ? r[0] : r[1])
+    (r) => (r[0].count > 0 ? r[0] : r[1])
   );
 
   return {
