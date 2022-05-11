@@ -3,13 +3,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-function PageButton({ page, onClick }) {
+function PageButton({ start, end, onClick }) {
   return (
     <button
       onClick={onClick}
       className="active:scale-90 duration-75 transition ease-out px-2 py-1 hover:bg-gray-800 rounded-md bg-gray-700 text-gray-300"
     >
-      {page}
+      {start}-{end}
     </button>
   );
 }
@@ -54,7 +54,8 @@ function Episode({ id, episodes }) {
               {new Array(pages).fill(1).map((_v, i) => (
                 <PageButton
                   key={i + 1}
-                  page={i + 1}
+                  start={i * 100 + 1}
+                  end={i * 100 + 100 > episodes ? episodes : i * 100 + 100}
                   onClick={() => setPage(i + 1)}
                 />
               ))}
