@@ -10,6 +10,8 @@ export default function VideoPlayer({
   poster,
   previousCallback,
   nextCallback,
+  saveProgressCallback,
+  startTime,
 }) {
   const videoplayer = useRef(null);
 
@@ -48,8 +50,23 @@ export default function VideoPlayer({
     });
   });
 
+  // save episode progress every 2 minutes
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      saveProgressCallback(videoplayer.current.currentTime);
+    }, 1000 * 60 * 2);
+    return () => clearInterval(intervalID);
+  }, [saveProgressCallback]);
+
   return (
-    <Player ref={videoplayer} tabIndex="0" style={{ outline: 'none' }}>
+    <Player
+      ref={videoplayer}
+      tabIndex="0"
+      style={{ outline: 'none' }}
+      onVmPlaybackReady={() => {
+        videoplayer.current.currentTime = startTime;
+      }}
+    >
       {src.includes('m3u8') ? (
         <Hls version="latest" poster={poster} key={src}>
           <source data-src={src} type="application/x-mpegURL" />
