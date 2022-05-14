@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Section from '@components/anime/Section';
 import { progress } from '@pages/_app';
@@ -13,6 +13,29 @@ export default function Home({ banner, trending, popular, topRated }) {
     progress.finish();
   });
 
+  const [recentlyWatched, setRecentlyWatched] = useState([]);
+
+  // populate recentlyWatched
+  useEffect(() => {
+    const anime = Object.keys(localStorage)
+      .filter((key) => key.startsWith('Anime'))
+      .map((key) => parseInt(key.replace('Anime', ''), 10));
+
+    const query = `
+      {
+        media: Page(perPage: 12) {
+          media(id_in: [${anime.join(', ')}]) {
+          ...animeInfoFragment
+          }
+        }
+      }
+      ${animeInfoFragment}
+    `;
+    client.request(query).then((data) => {
+      setRecentlyWatched(data.media.media);
+    });
+  }, []);
+
   return (
     <>
       <Header />
@@ -20,6 +43,10 @@ export default function Home({ banner, trending, popular, topRated }) {
       <Banner anime={banner} onLoadingComplete={progress.finish} />
 
       <Section title="Trending Now" animeList={trending} />
+      {/* only show */}
+      {recentlyWatched.length > 0 ? (
+        <Section title="Continue watching" animeList={recentlyWatched} />
+      ) : null}
       <Section title="Popular" animeList={popular} />
       <Section title="Top Rated (All time)" animeList={topRated} />
     </>

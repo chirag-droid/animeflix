@@ -23,8 +23,20 @@ function Video({ anime, recommended }) {
 
   const { id, episode } = router.query;
 
-  if (typeof window !== 'undefined' && !episode) {
-    router?.push(`/watch/${id}?episode=${1}`);
+  let startTime = 0;
+
+  if (typeof window !== 'undefined') {
+    const savedState = localStorage.getItem(`Anime${id}`) || '1-0';
+    const [savedEpisode, savedTime] = savedState.split('-');
+
+    if (!episode) {
+      router?.push(`/watch/${id}?episode=${savedEpisode || 1}`);
+    }
+    // check if last watched episode in localstorage
+
+    if (episode === savedEpisode) {
+      startTime = parseInt(savedTime, 10);
+    }
   }
 
   const { videoLink, referer, episodes, isError } = useAnime(id, episode);
@@ -35,6 +47,10 @@ function Video({ anime, recommended }) {
 
   const nextEpisode = () => {
     router.push(`/watch/${id}?episode=${parseInt(episode, 10) + 1}`);
+  };
+
+  const saveProgress = (time) => {
+    localStorage.setItem(`Anime${id}`, `${episode}-${time}`);
   };
 
   const urls = useMemo(() => {
@@ -63,6 +79,8 @@ function Video({ anime, recommended }) {
               poster={anime.bannerImage}
               nextCallback={nextEpisode}
               previousCallback={previousEpisode}
+              saveProgressCallback={saveProgress}
+              startTime={startTime}
             />
           ) : (
             <p className="font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">

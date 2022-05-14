@@ -70,9 +70,7 @@ function Banner({ anime, onLoadingComplete }) {
 
         <Link
           href={
-            router.route === '/'
-              ? `/anime/${anime.id}`
-              : `/watch/${anime.id}?episode=1`
+            router.route === '/' ? `/anime/${anime.id}` : `/watch/${anime.id}`
           }
           passHref
         >

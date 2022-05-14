@@ -9,7 +9,7 @@ import { base64SolidImage } from '@utility/image';
 
 function Card({ anime }) {
   return (
-    <Link href={`/watch/${anime.id}?episode=1`} passHref>
+    <Link href={`/watch/${anime.id}`} passHref>
       <a className="flex space-x-4 ml-2 mr-4 text-white py-2 h-30 cursor-pointer hover:scale-105 transform transition duration-300 ease-out">
         <div className="relative min-w-[6rem] min-h-[8rem] flex-shrink-1">
           <Image
