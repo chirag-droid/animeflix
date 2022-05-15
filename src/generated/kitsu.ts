@@ -1,12 +1,18 @@
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
-import { print } from 'graphql'
 import gql from 'graphql-tag';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -69,7 +75,6 @@ export type AccountMutations = {
   sendPasswordReset?: Maybe<AccountSendPasswordResetPayload>;
 };
 
-
 export type AccountMutationsSendPasswordResetArgs = {
   email: Scalars['String'];
 };
@@ -88,7 +93,7 @@ export enum AgeRatingEnum {
   /** Possible lewd or intense themes; should be safe for teens and older */
   R = 'R',
   /** Contains adult content or themes; should only be viewed by adults */
-  R18 = 'R18'
+  R18 = 'R18',
 }
 
 /** Generic Amount Consumed based on Media */
@@ -106,96 +111,97 @@ export type AmountConsumed = {
   units: Scalars['Int'];
 };
 
-export type Anime = Episodic & Media & WithTimestamps & {
-  __typename?: 'Anime';
-  /** The recommended minimum age group for this media */
-  ageRating?: Maybe<AgeRatingEnum>;
-  /** An explanation of why this received the age rating it did */
-  ageRatingGuide?: Maybe<Scalars['String']>;
-  /** The average rating of this media amongst all Kitsu users */
-  averageRating?: Maybe<Scalars['Float']>;
-  /** The rank of this media by rating */
-  averageRatingRank?: Maybe<Scalars['Int']>;
-  /** A large banner image for this media */
-  bannerImage?: Maybe<Image>;
-  /** A list of categories for this media */
-  categories: CategoryConnection;
-  /** The characters who starred in this media */
-  characters: MediaCharacterConnection;
-  createdAt: Scalars['ISO8601DateTime'];
-  /** A brief (mostly spoiler free) summary or description of the media. */
-  description: Scalars['Map'];
-  /** the day that this media made its final release */
-  endDate?: Maybe<Scalars['Date']>;
-  /** The number of episodes in this series */
-  episodeCount?: Maybe<Scalars['Int']>;
-  /** The general length (in seconds) of each episode */
-  episodeLength?: Maybe<Scalars['Int']>;
-  /** Episodes for this media */
-  episodes: EpisodeConnection;
-  /** The number of users with this in their favorites */
-  favoritesCount?: Maybe<Scalars['Int']>;
-  id: Scalars['ID'];
-  /** A list of mappings for this media */
-  mappings: MappingConnection;
-  /** Your library entry related to this media. */
-  myLibraryEntry?: Maybe<LibraryEntry>;
-  /** A list of your wiki submissions for this media */
-  myWikiSubmissions: WikiSubmissionConnection;
-  /** The time of the next release of this media */
-  nextRelease?: Maybe<Scalars['ISO8601DateTime']>;
-  /** The countries in which the media was originally primarily produced */
-  originCountries: Array<Scalars['String']>;
-  /** The languages the media was originally produced in */
-  originLanguages: Array<Scalars['String']>;
-  /**
-   * The country in which the media was primarily produced
-   * @deprecated Replaced with originCountries and originLanguages
-   */
-  originalLocale?: Maybe<Scalars['String']>;
-  /** The poster image of this media */
-  posterImage?: Maybe<Image>;
-  /** All posts that tag this media. */
-  posts: PostConnection;
-  /** The companies which helped to produce this media */
-  productions: MediaProductionConnection;
-  /** A list of quotes from this media */
-  quotes: QuoteConnection;
-  /** A list of reactions for this media */
-  reactions: MediaReactionConnection;
-  /** The season this was released in */
-  season?: Maybe<ReleaseSeasonEnum>;
-  /** Whether the media is Safe-for-Work */
-  sfw: Scalars['Boolean'];
-  /** The URL-friendly identifier of this media */
-  slug: Scalars['String'];
-  /** The staff members who worked on this media */
-  staff: MediaStaffConnection;
-  /** The day that this media first released */
-  startDate?: Maybe<Scalars['Date']>;
-  /** The current releasing status of this media */
-  status: ReleaseStatusEnum;
-  /** The stream links. */
-  streamingLinks: StreamingLinkConnection;
-  /** A secondary type for categorizing Anime. */
-  subtype: AnimeSubtypeEnum;
-  /** Description of when this media is expected to release */
-  tba?: Maybe<Scalars['String']>;
-  /** The titles for this media in various locales */
-  titles: TitlesList;
-  /** The total length (in seconds) of the entire series */
-  totalLength?: Maybe<Scalars['Int']>;
-  /** Anime or Manga. */
-  type: Scalars['String'];
-  updatedAt: Scalars['ISO8601DateTime'];
-  /** The number of users with this in their library */
-  userCount?: Maybe<Scalars['Int']>;
-  /** The rank of this media by popularity */
-  userCountRank?: Maybe<Scalars['Int']>;
-  /** Video id for a trailer on YouTube */
-  youtubeTrailerVideoId?: Maybe<Scalars['String']>;
-};
-
+export type Anime = Episodic &
+  Media &
+  WithTimestamps & {
+    __typename?: 'Anime';
+    /** The recommended minimum age group for this media */
+    ageRating?: Maybe<AgeRatingEnum>;
+    /** An explanation of why this received the age rating it did */
+    ageRatingGuide?: Maybe<Scalars['String']>;
+    /** The average rating of this media amongst all Kitsu users */
+    averageRating?: Maybe<Scalars['Float']>;
+    /** The rank of this media by rating */
+    averageRatingRank?: Maybe<Scalars['Int']>;
+    /** A large banner image for this media */
+    bannerImage?: Maybe<Image>;
+    /** A list of categories for this media */
+    categories: CategoryConnection;
+    /** The characters who starred in this media */
+    characters: MediaCharacterConnection;
+    createdAt: Scalars['ISO8601DateTime'];
+    /** A brief (mostly spoiler free) summary or description of the media. */
+    description: Scalars['Map'];
+    /** the day that this media made its final release */
+    endDate?: Maybe<Scalars['Date']>;
+    /** The number of episodes in this series */
+    episodeCount?: Maybe<Scalars['Int']>;
+    /** The general length (in seconds) of each episode */
+    episodeLength?: Maybe<Scalars['Int']>;
+    /** Episodes for this media */
+    episodes: EpisodeConnection;
+    /** The number of users with this in their favorites */
+    favoritesCount?: Maybe<Scalars['Int']>;
+    id: Scalars['ID'];
+    /** A list of mappings for this media */
+    mappings: MappingConnection;
+    /** Your library entry related to this media. */
+    myLibraryEntry?: Maybe<LibraryEntry>;
+    /** A list of your wiki submissions for this media */
+    myWikiSubmissions: WikiSubmissionConnection;
+    /** The time of the next release of this media */
+    nextRelease?: Maybe<Scalars['ISO8601DateTime']>;
+    /** The countries in which the media was originally primarily produced */
+    originCountries: Array<Scalars['String']>;
+    /** The languages the media was originally produced in */
+    originLanguages: Array<Scalars['String']>;
+    /**
+     * The country in which the media was primarily produced
+     * @deprecated Replaced with originCountries and originLanguages
+     */
+    originalLocale?: Maybe<Scalars['String']>;
+    /** The poster image of this media */
+    posterImage?: Maybe<Image>;
+    /** All posts that tag this media. */
+    posts: PostConnection;
+    /** The companies which helped to produce this media */
+    productions: MediaProductionConnection;
+    /** A list of quotes from this media */
+    quotes: QuoteConnection;
+    /** A list of reactions for this media */
+    reactions: MediaReactionConnection;
+    /** The season this was released in */
+    season?: Maybe<ReleaseSeasonEnum>;
+    /** Whether the media is Safe-for-Work */
+    sfw: Scalars['Boolean'];
+    /** The URL-friendly identifier of this media */
+    slug: Scalars['String'];
+    /** The staff members who worked on this media */
+    staff: MediaStaffConnection;
+    /** The day that this media first released */
+    startDate?: Maybe<Scalars['Date']>;
+    /** The current releasing status of this media */
+    status: ReleaseStatusEnum;
+    /** The stream links. */
+    streamingLinks: StreamingLinkConnection;
+    /** A secondary type for categorizing Anime. */
+    subtype: AnimeSubtypeEnum;
+    /** Description of when this media is expected to release */
+    tba?: Maybe<Scalars['String']>;
+    /** The titles for this media in various locales */
+    titles: TitlesList;
+    /** The total length (in seconds) of the entire series */
+    totalLength?: Maybe<Scalars['Int']>;
+    /** Anime or Manga. */
+    type: Scalars['String'];
+    updatedAt: Scalars['ISO8601DateTime'];
+    /** The number of users with this in their library */
+    userCount?: Maybe<Scalars['Int']>;
+    /** The rank of this media by popularity */
+    userCountRank?: Maybe<Scalars['Int']>;
+    /** Video id for a trailer on YouTube */
+    youtubeTrailerVideoId?: Maybe<Scalars['String']>;
+  };
 
 export type AnimeCategoriesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -205,7 +211,6 @@ export type AnimeCategoriesArgs = {
   sort?: InputMaybe<Array<InputMaybe<MediaCategorySortOption>>>;
 };
 
-
 export type AnimeCharactersArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -214,11 +219,9 @@ export type AnimeCharactersArgs = {
   sort?: InputMaybe<Array<InputMaybe<MediaCharacterSortOption>>>;
 };
 
-
 export type AnimeDescriptionArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
-
 
 export type AnimeEpisodesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -228,14 +231,12 @@ export type AnimeEpisodesArgs = {
   sort?: InputMaybe<Array<InputMaybe<EpisodeSortOption>>>;
 };
 
-
 export type AnimeMappingsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AnimeMyWikiSubmissionsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -245,7 +246,6 @@ export type AnimeMyWikiSubmissionsArgs = {
   sort?: InputMaybe<Array<InputMaybe<WikiSubmissionSortOption>>>;
 };
 
-
 export type AnimePostsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -254,7 +254,6 @@ export type AnimePostsArgs = {
   sort?: InputMaybe<Array<InputMaybe<PostSortOption>>>;
 };
 
-
 export type AnimeProductionsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -262,14 +261,12 @@ export type AnimeProductionsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type AnimeQuotesArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AnimeReactionsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -279,14 +276,12 @@ export type AnimeReactionsArgs = {
   sort?: InputMaybe<Array<InputMaybe<MediaReactionSortOption>>>;
 };
 
-
 export type AnimeStaffArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AnimeStreamingLinksArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -386,16 +381,13 @@ export type AnimeMutations = {
   update?: Maybe<AnimeUpdatePayload>;
 };
 
-
 export type AnimeMutationsCreateArgs = {
   input: AnimeCreateInput;
 };
 
-
 export type AnimeMutationsDeleteArgs = {
   input: GenericDeleteInput;
 };
-
 
 export type AnimeMutationsUpdateArgs = {
   input: AnimeUpdateInput;
@@ -410,7 +402,7 @@ export enum AnimeSubtypeEnum {
   Ova = 'OVA',
   /** Spinoffs or Extras of the original. */
   Special = 'SPECIAL',
-  Tv = 'TV'
+  Tv = 'TV',
 }
 
 export type AnimeUpdateInput = {
@@ -458,7 +450,6 @@ export type Category = WithTimestamps & {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
-
 /** Information about a specific Category */
 export type CategoryChildrenArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -467,12 +458,10 @@ export type CategoryChildrenArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 /** Information about a specific Category */
 export type CategoryDescriptionArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
-
 
 /** Information about a specific Category */
 export type CategoryTitleArgs = {
@@ -515,27 +504,27 @@ export type CategoryEdge = {
 };
 
 /** A single chapter of a manga */
-export type Chapter = Unit & WithTimestamps & {
-  __typename?: 'Chapter';
-  createdAt: Scalars['ISO8601DateTime'];
-  /** A brief summary or description of the unit */
-  description: Scalars['Map'];
-  id: Scalars['ID'];
-  /** The manga this chapter is in. */
-  manga: Manga;
-  /** The sequence number of this unit */
-  number: Scalars['Int'];
-  /** When this chapter was released */
-  releasedAt?: Maybe<Scalars['ISO8601Date']>;
-  /** A thumbnail image for the unit */
-  thumbnail?: Maybe<Image>;
-  /** The titles for this unit in various locales */
-  titles: TitlesList;
-  updatedAt: Scalars['ISO8601DateTime'];
-  /** The volume this chapter is in. */
-  volume?: Maybe<Volume>;
-};
-
+export type Chapter = Unit &
+  WithTimestamps & {
+    __typename?: 'Chapter';
+    createdAt: Scalars['ISO8601DateTime'];
+    /** A brief summary or description of the unit */
+    description: Scalars['Map'];
+    id: Scalars['ID'];
+    /** The manga this chapter is in. */
+    manga: Manga;
+    /** The sequence number of this unit */
+    number: Scalars['Int'];
+    /** When this chapter was released */
+    releasedAt?: Maybe<Scalars['ISO8601Date']>;
+    /** A thumbnail image for the unit */
+    thumbnail?: Maybe<Image>;
+    /** The titles for this unit in various locales */
+    titles: TitlesList;
+    updatedAt: Scalars['ISO8601DateTime'];
+    /** The volume this chapter is in. */
+    volume?: Maybe<Volume>;
+  };
 
 /** A single chapter of a manga */
 export type ChapterDescriptionArgs = {
@@ -584,12 +573,10 @@ export type Character = WithTimestamps & {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
-
 /** Information about a Character in the Kitsu database */
 export type CharacterDescriptionArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
-
 
 /** Information about a Character in the Kitsu database */
 export type CharacterMediaArgs = {
@@ -607,7 +594,7 @@ export enum CharacterRoleEnum {
   /** A character who appears throughout a series and is a focal point of the media */
   Main = 'MAIN',
   /** A character who appears in multiple episodes but is not a main character */
-  Recurring = 'RECURRING'
+  Recurring = 'RECURRING',
 }
 
 /** Information about a VA (Person) voicing a Character in a Media */
@@ -650,7 +637,7 @@ export type CharacterVoiceEdge = {
 
 export enum CharacterVoiceSortEnum {
   CreatedAt = 'CREATED_AT',
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 export type CharacterVoiceSortOption = {
@@ -680,7 +667,6 @@ export type Comment = WithTimestamps & {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
-
 /** A comment on a post */
 export type CommentLikesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -689,7 +675,6 @@ export type CommentLikesArgs = {
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<CommentLikeSortOption>>>;
 };
-
 
 /** A comment on a post */
 export type CommentRepliesArgs = {
@@ -724,7 +709,7 @@ export type CommentEdge = {
 
 export enum CommentLikeSortEnum {
   CreatedAt = 'CREATED_AT',
-  Following = 'FOLLOWING'
+  Following = 'FOLLOWING',
 }
 
 export type CommentLikeSortOption = {
@@ -735,7 +720,7 @@ export type CommentLikeSortOption = {
 export enum CommentSortEnum {
   CreatedAt = 'CREATED_AT',
   Following = 'FOLLOWING',
-  LikesCount = 'LIKES_COUNT'
+  LikesCount = 'LIKES_COUNT',
 }
 
 export type CommentSortOption = {
@@ -744,27 +729,27 @@ export type CommentSortOption = {
 };
 
 /** An Episode of a Media */
-export type Episode = Unit & WithTimestamps & {
-  __typename?: 'Episode';
-  /** The anime this episode is in */
-  anime: Anime;
-  createdAt: Scalars['ISO8601DateTime'];
-  /** A brief summary or description of the unit */
-  description: Scalars['Map'];
-  id: Scalars['ID'];
-  /** The length of the episode in seconds */
-  length?: Maybe<Scalars['Int']>;
-  /** The sequence number of this unit */
-  number: Scalars['Int'];
-  /** When this episode aired */
-  releasedAt?: Maybe<Scalars['ISO8601DateTime']>;
-  /** A thumbnail image for the unit */
-  thumbnail?: Maybe<Image>;
-  /** The titles for this unit in various locales */
-  titles: TitlesList;
-  updatedAt: Scalars['ISO8601DateTime'];
-};
-
+export type Episode = Unit &
+  WithTimestamps & {
+    __typename?: 'Episode';
+    /** The anime this episode is in */
+    anime: Anime;
+    createdAt: Scalars['ISO8601DateTime'];
+    /** A brief summary or description of the unit */
+    description: Scalars['Map'];
+    id: Scalars['ID'];
+    /** The length of the episode in seconds */
+    length?: Maybe<Scalars['Int']>;
+    /** The sequence number of this unit */
+    number: Scalars['Int'];
+    /** When this episode aired */
+    releasedAt?: Maybe<Scalars['ISO8601DateTime']>;
+    /** A thumbnail image for the unit */
+    thumbnail?: Maybe<Image>;
+    /** The titles for this unit in various locales */
+    titles: TitlesList;
+    updatedAt: Scalars['ISO8601DateTime'];
+  };
 
 /** An Episode of a Media */
 export type EpisodeDescriptionArgs = {
@@ -828,16 +813,13 @@ export type EpisodeMutations = {
   update?: Maybe<EpisodeUpdatePayload>;
 };
 
-
 export type EpisodeMutationsCreateArgs = {
   input: EpisodeCreateInput;
 };
 
-
 export type EpisodeMutationsDeleteArgs = {
   input: GenericDeleteInput;
 };
-
 
 export type EpisodeMutationsUpdateArgs = {
   input: EpisodeUpdateInput;
@@ -846,7 +828,7 @@ export type EpisodeMutationsUpdateArgs = {
 export enum EpisodeSortEnum {
   CreatedAt = 'CREATED_AT',
   Number = 'NUMBER',
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 export type EpisodeSortOption = {
@@ -882,7 +864,6 @@ export type Episodic = {
   /** The total length (in seconds) of the entire series */
   totalLength?: Maybe<Scalars['Int']>;
 };
-
 
 /** An episodic media in the Kitsu database */
 export type EpisodicEpisodesArgs = {
@@ -943,7 +924,7 @@ export type FavoriteItemUnion = Anime | Character | Manga | Person;
 export enum FollowSortEnum {
   CreatedAt = 'CREATED_AT',
   FollowingFollowed = 'FOLLOWING_FOLLOWED',
-  FollowingFollower = 'FOLLOWING_FOLLOWER'
+  FollowingFollower = 'FOLLOWING_FOLLOWER',
 }
 
 export type FollowSortOption = {
@@ -962,7 +943,6 @@ export type Franchise = WithTimestamps & {
   titles: TitlesList;
   updatedAt: Scalars['ISO8601DateTime'];
 };
-
 
 /** Related media grouped together */
 export type FranchiseInstallmentsArgs = {
@@ -1024,7 +1004,6 @@ export type Image = {
   views: Array<ImageView>;
 };
 
-
 export type ImageViewsArgs = {
   names?: InputMaybe<Array<Scalars['String']>>;
 };
@@ -1083,7 +1062,7 @@ export type InstallmentEdge = {
 
 export enum InstallmentSortEnum {
   AlternativeOrder = 'ALTERNATIVE_ORDER',
-  ReleaseOrder = 'RELEASE_ORDER'
+  ReleaseOrder = 'RELEASE_ORDER',
 }
 
 export type InstallmentSortOption = {
@@ -1103,7 +1082,7 @@ export enum InstallmentTagEnum {
   /** Takes place sometime during the main storyline. */
   SideStory = 'SIDE_STORY',
   /** Uses characters of a different series, but is not an alternate setting or story. */
-  Spinoff = 'SPINOFF'
+  Spinoff = 'SPINOFF',
 }
 
 /** The user library filterable by media_type and status */
@@ -1125,7 +1104,6 @@ export type Library = {
   randomMedia?: Maybe<Media>;
 };
 
-
 /** The user library filterable by media_type and status */
 export type LibraryAllArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1136,7 +1114,6 @@ export type LibraryAllArgs = {
   status?: InputMaybe<Array<LibraryEntryStatusEnum>>;
 };
 
-
 /** The user library filterable by media_type and status */
 export type LibraryCompletedArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1145,7 +1122,6 @@ export type LibraryCompletedArgs = {
   last?: InputMaybe<Scalars['Int']>;
   mediaType: MediaTypeEnum;
 };
-
 
 /** The user library filterable by media_type and status */
 export type LibraryCurrentArgs = {
@@ -1156,7 +1132,6 @@ export type LibraryCurrentArgs = {
   mediaType: MediaTypeEnum;
 };
 
-
 /** The user library filterable by media_type and status */
 export type LibraryDroppedArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1165,7 +1140,6 @@ export type LibraryDroppedArgs = {
   last?: InputMaybe<Scalars['Int']>;
   mediaType: MediaTypeEnum;
 };
-
 
 /** The user library filterable by media_type and status */
 export type LibraryOnHoldArgs = {
@@ -1176,7 +1150,6 @@ export type LibraryOnHoldArgs = {
   mediaType: MediaTypeEnum;
 };
 
-
 /** The user library filterable by media_type and status */
 export type LibraryPlannedArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1185,7 +1158,6 @@ export type LibraryPlannedArgs = {
   last?: InputMaybe<Scalars['Int']>;
   mediaType: MediaTypeEnum;
 };
-
 
 /** The user library filterable by media_type and status */
 export type LibraryRandomMediaArgs = {
@@ -1235,7 +1207,6 @@ export type LibraryEntry = WithTimestamps & {
   /** Volumes that the profile owns (physically or digital). */
   volumesOwned: Scalars['Int'];
 };
-
 
 /** Information about a specific media entry for a user */
 export type LibraryEntryEventsArgs = {
@@ -1319,46 +1290,37 @@ export type LibraryEntryMutations = {
   updateStatusByMedia?: Maybe<LibraryEntryUpdateStatusByMediaPayload>;
 };
 
-
 export type LibraryEntryMutationsCreateArgs = {
   input: LibraryEntryCreateInput;
 };
-
 
 export type LibraryEntryMutationsDeleteArgs = {
   input: GenericDeleteInput;
 };
 
-
 export type LibraryEntryMutationsUpdateArgs = {
   input: LibraryEntryUpdateInput;
 };
-
 
 export type LibraryEntryMutationsUpdateProgressByIdArgs = {
   input: LibraryEntryUpdateProgressByIdInput;
 };
 
-
 export type LibraryEntryMutationsUpdateProgressByMediaArgs = {
   input: LibraryEntryUpdateProgressByMediaInput;
 };
-
 
 export type LibraryEntryMutationsUpdateRatingByIdArgs = {
   input: LibraryEntryUpdateRatingByIdInput;
 };
 
-
 export type LibraryEntryMutationsUpdateRatingByMediaArgs = {
   input: LibraryEntryUpdateRatingByMediaInput;
 };
 
-
 export type LibraryEntryMutationsUpdateStatusByIdArgs = {
   input: LibraryEntryUpdateStatusByIdInput;
 };
-
 
 export type LibraryEntryMutationsUpdateStatusByMediaArgs = {
   input: LibraryEntryUpdateStatusByMediaInput;
@@ -1374,7 +1336,7 @@ export enum LibraryEntryStatusEnum {
   /** The user started but paused reading or watching this media. */
   OnHold = 'ON_HOLD',
   /** The user plans to read or watch this media in future. */
-  Planned = 'PLANNED'
+  Planned = 'PLANNED',
 }
 
 export type LibraryEntryUpdateInput = {
@@ -1525,12 +1487,12 @@ export enum LibraryEventKindEnum {
   /** Reaction was added/updated. */
   Reacted = 'REACTED',
   /** Status or Reconsuming was added/updated. */
-  Updated = 'UPDATED'
+  Updated = 'UPDATED',
 }
 
 export enum LibraryEventSortEnum {
   CreatedAt = 'CREATED_AT',
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 export type LibraryEventSortOption = {
@@ -1541,93 +1503,93 @@ export type LibraryEventSortOption = {
 export enum LockedReasonEnum {
   Closed = 'CLOSED',
   Spam = 'SPAM',
-  TooHeated = 'TOO_HEATED'
+  TooHeated = 'TOO_HEATED',
 }
 
-export type Manga = Media & WithTimestamps & {
-  __typename?: 'Manga';
-  /** The recommended minimum age group for this media */
-  ageRating?: Maybe<AgeRatingEnum>;
-  /** An explanation of why this received the age rating it did */
-  ageRatingGuide?: Maybe<Scalars['String']>;
-  /** The average rating of this media amongst all Kitsu users */
-  averageRating?: Maybe<Scalars['Float']>;
-  /** The rank of this media by rating */
-  averageRatingRank?: Maybe<Scalars['Int']>;
-  /** A large banner image for this media */
-  bannerImage?: Maybe<Image>;
-  /** A list of categories for this media */
-  categories: CategoryConnection;
-  /** The number of chapters in this manga. */
-  chapterCount?: Maybe<Scalars['Int']>;
-  /** The estimated number of chapters in this manga. */
-  chapterCountGuess?: Maybe<Scalars['Int']>;
-  /** The chapters in the manga. */
-  chapters?: Maybe<ChapterConnection>;
-  /** The characters who starred in this media */
-  characters: MediaCharacterConnection;
-  createdAt: Scalars['ISO8601DateTime'];
-  /** A brief (mostly spoiler free) summary or description of the media. */
-  description: Scalars['Map'];
-  /** the day that this media made its final release */
-  endDate?: Maybe<Scalars['Date']>;
-  /** The number of users with this in their favorites */
-  favoritesCount?: Maybe<Scalars['Int']>;
-  id: Scalars['ID'];
-  /** A list of mappings for this media */
-  mappings: MappingConnection;
-  /** Your library entry related to this media. */
-  myLibraryEntry?: Maybe<LibraryEntry>;
-  /** A list of your wiki submissions for this media */
-  myWikiSubmissions: WikiSubmissionConnection;
-  /** The time of the next release of this media */
-  nextRelease?: Maybe<Scalars['ISO8601DateTime']>;
-  /** The countries in which the media was originally primarily produced */
-  originCountries: Array<Scalars['String']>;
-  /** The languages the media was originally produced in */
-  originLanguages: Array<Scalars['String']>;
-  /**
-   * The country in which the media was primarily produced
-   * @deprecated Replaced with originCountries and originLanguages
-   */
-  originalLocale?: Maybe<Scalars['String']>;
-  /** The poster image of this media */
-  posterImage?: Maybe<Image>;
-  /** All posts that tag this media. */
-  posts: PostConnection;
-  /** The companies which helped to produce this media */
-  productions: MediaProductionConnection;
-  /** A list of quotes from this media */
-  quotes: QuoteConnection;
-  /** A list of reactions for this media */
-  reactions: MediaReactionConnection;
-  /** Whether the media is Safe-for-Work */
-  sfw: Scalars['Boolean'];
-  /** The URL-friendly identifier of this media */
-  slug: Scalars['String'];
-  /** The staff members who worked on this media */
-  staff: MediaStaffConnection;
-  /** The day that this media first released */
-  startDate?: Maybe<Scalars['Date']>;
-  /** The current releasing status of this media */
-  status: ReleaseStatusEnum;
-  /** A secondary type for categorizing Manga. */
-  subtype: MangaSubtypeEnum;
-  /** Description of when this media is expected to release */
-  tba?: Maybe<Scalars['String']>;
-  /** The titles for this media in various locales */
-  titles: TitlesList;
-  /** Anime or Manga. */
-  type: Scalars['String'];
-  updatedAt: Scalars['ISO8601DateTime'];
-  /** The number of users with this in their library */
-  userCount?: Maybe<Scalars['Int']>;
-  /** The rank of this media by popularity */
-  userCountRank?: Maybe<Scalars['Int']>;
-  /** The number of volumes in this manga. */
-  volumeCount?: Maybe<Scalars['Int']>;
-};
-
+export type Manga = Media &
+  WithTimestamps & {
+    __typename?: 'Manga';
+    /** The recommended minimum age group for this media */
+    ageRating?: Maybe<AgeRatingEnum>;
+    /** An explanation of why this received the age rating it did */
+    ageRatingGuide?: Maybe<Scalars['String']>;
+    /** The average rating of this media amongst all Kitsu users */
+    averageRating?: Maybe<Scalars['Float']>;
+    /** The rank of this media by rating */
+    averageRatingRank?: Maybe<Scalars['Int']>;
+    /** A large banner image for this media */
+    bannerImage?: Maybe<Image>;
+    /** A list of categories for this media */
+    categories: CategoryConnection;
+    /** The number of chapters in this manga. */
+    chapterCount?: Maybe<Scalars['Int']>;
+    /** The estimated number of chapters in this manga. */
+    chapterCountGuess?: Maybe<Scalars['Int']>;
+    /** The chapters in the manga. */
+    chapters?: Maybe<ChapterConnection>;
+    /** The characters who starred in this media */
+    characters: MediaCharacterConnection;
+    createdAt: Scalars['ISO8601DateTime'];
+    /** A brief (mostly spoiler free) summary or description of the media. */
+    description: Scalars['Map'];
+    /** the day that this media made its final release */
+    endDate?: Maybe<Scalars['Date']>;
+    /** The number of users with this in their favorites */
+    favoritesCount?: Maybe<Scalars['Int']>;
+    id: Scalars['ID'];
+    /** A list of mappings for this media */
+    mappings: MappingConnection;
+    /** Your library entry related to this media. */
+    myLibraryEntry?: Maybe<LibraryEntry>;
+    /** A list of your wiki submissions for this media */
+    myWikiSubmissions: WikiSubmissionConnection;
+    /** The time of the next release of this media */
+    nextRelease?: Maybe<Scalars['ISO8601DateTime']>;
+    /** The countries in which the media was originally primarily produced */
+    originCountries: Array<Scalars['String']>;
+    /** The languages the media was originally produced in */
+    originLanguages: Array<Scalars['String']>;
+    /**
+     * The country in which the media was primarily produced
+     * @deprecated Replaced with originCountries and originLanguages
+     */
+    originalLocale?: Maybe<Scalars['String']>;
+    /** The poster image of this media */
+    posterImage?: Maybe<Image>;
+    /** All posts that tag this media. */
+    posts: PostConnection;
+    /** The companies which helped to produce this media */
+    productions: MediaProductionConnection;
+    /** A list of quotes from this media */
+    quotes: QuoteConnection;
+    /** A list of reactions for this media */
+    reactions: MediaReactionConnection;
+    /** Whether the media is Safe-for-Work */
+    sfw: Scalars['Boolean'];
+    /** The URL-friendly identifier of this media */
+    slug: Scalars['String'];
+    /** The staff members who worked on this media */
+    staff: MediaStaffConnection;
+    /** The day that this media first released */
+    startDate?: Maybe<Scalars['Date']>;
+    /** The current releasing status of this media */
+    status: ReleaseStatusEnum;
+    /** A secondary type for categorizing Manga. */
+    subtype: MangaSubtypeEnum;
+    /** Description of when this media is expected to release */
+    tba?: Maybe<Scalars['String']>;
+    /** The titles for this media in various locales */
+    titles: TitlesList;
+    /** Anime or Manga. */
+    type: Scalars['String'];
+    updatedAt: Scalars['ISO8601DateTime'];
+    /** The number of users with this in their library */
+    userCount?: Maybe<Scalars['Int']>;
+    /** The rank of this media by popularity */
+    userCountRank?: Maybe<Scalars['Int']>;
+    /** The number of volumes in this manga. */
+    volumeCount?: Maybe<Scalars['Int']>;
+  };
 
 export type MangaCategoriesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1637,7 +1599,6 @@ export type MangaCategoriesArgs = {
   sort?: InputMaybe<Array<InputMaybe<MediaCategorySortOption>>>;
 };
 
-
 export type MangaChaptersArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -1645,7 +1606,6 @@ export type MangaChaptersArgs = {
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<CharacterVoiceSortOption>>>;
 };
-
 
 export type MangaCharactersArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1655,11 +1615,9 @@ export type MangaCharactersArgs = {
   sort?: InputMaybe<Array<InputMaybe<MediaCharacterSortOption>>>;
 };
 
-
 export type MangaDescriptionArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
-
 
 export type MangaMappingsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1667,7 +1625,6 @@ export type MangaMappingsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type MangaMyWikiSubmissionsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1677,7 +1634,6 @@ export type MangaMyWikiSubmissionsArgs = {
   sort?: InputMaybe<Array<InputMaybe<WikiSubmissionSortOption>>>;
 };
 
-
 export type MangaPostsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -1686,14 +1642,12 @@ export type MangaPostsArgs = {
   sort?: InputMaybe<Array<InputMaybe<PostSortOption>>>;
 };
 
-
 export type MangaProductionsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type MangaQuotesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1702,7 +1656,6 @@ export type MangaQuotesArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type MangaReactionsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -1710,7 +1663,6 @@ export type MangaReactionsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<MediaReactionSortOption>>>;
 };
-
 
 export type MangaStaffArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1780,7 +1732,7 @@ export enum MangaSubtypeEnum {
   Novel = 'NOVEL',
   /** Original English Language. */
   Oel = 'OEL',
-  Oneshot = 'ONESHOT'
+  Oneshot = 'ONESHOT',
 }
 
 /** Media Mappings from External Sites (MAL, Anilist, etc..) to Kitsu. */
@@ -1858,7 +1810,7 @@ export enum MappingExternalSiteEnum {
   Thetvdb = 'THETVDB',
   ThetvdbSeason = 'THETVDB_SEASON',
   ThetvdbSeries = 'THETVDB_SERIES',
-  Trakt = 'TRAKT'
+  Trakt = 'TRAKT',
 }
 
 export enum MappingItemEnum {
@@ -1868,11 +1820,18 @@ export enum MappingItemEnum {
   Episode = 'EPISODE',
   Manga = 'MANGA',
   Person = 'PERSON',
-  Producer = 'PRODUCER'
+  Producer = 'PRODUCER',
 }
 
 /** Objects which are Mappable */
-export type MappingItemUnion = Anime | Category | Character | Episode | Manga | Person | Producer;
+export type MappingItemUnion =
+  | Anime
+  | Category
+  | Character
+  | Episode
+  | Manga
+  | Person
+  | Producer;
 
 export type MappingMutations = {
   __typename?: 'MappingMutations';
@@ -1884,16 +1843,13 @@ export type MappingMutations = {
   update?: Maybe<MappingUpdatePayload>;
 };
 
-
 export type MappingMutationsCreateArgs = {
   input: MappingCreateInput;
 };
 
-
 export type MappingMutationsDeleteArgs = {
   input: GenericDeleteInput;
 };
-
 
 export type MappingMutationsUpdateArgs = {
   input: MappingUpdateInput;
@@ -1986,7 +1942,6 @@ export type Media = {
   userCountRank?: Maybe<Scalars['Int']>;
 };
 
-
 /** A media in the Kitsu database */
 export type MediaCategoriesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1995,7 +1950,6 @@ export type MediaCategoriesArgs = {
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<MediaCategorySortOption>>>;
 };
-
 
 /** A media in the Kitsu database */
 export type MediaCharactersArgs = {
@@ -2006,12 +1960,10 @@ export type MediaCharactersArgs = {
   sort?: InputMaybe<Array<InputMaybe<MediaCharacterSortOption>>>;
 };
 
-
 /** A media in the Kitsu database */
 export type MediaDescriptionArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
-
 
 /** A media in the Kitsu database */
 export type MediaMappingsArgs = {
@@ -2020,7 +1972,6 @@ export type MediaMappingsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** A media in the Kitsu database */
 export type MediaMyWikiSubmissionsArgs = {
@@ -2031,7 +1982,6 @@ export type MediaMyWikiSubmissionsArgs = {
   sort?: InputMaybe<Array<InputMaybe<WikiSubmissionSortOption>>>;
 };
 
-
 /** A media in the Kitsu database */
 export type MediaPostsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2041,7 +1991,6 @@ export type MediaPostsArgs = {
   sort?: InputMaybe<Array<InputMaybe<PostSortOption>>>;
 };
 
-
 /** A media in the Kitsu database */
 export type MediaProductionsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2049,7 +1998,6 @@ export type MediaProductionsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** A media in the Kitsu database */
 export type MediaQuotesArgs = {
@@ -2059,7 +2007,6 @@ export type MediaQuotesArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 /** A media in the Kitsu database */
 export type MediaReactionsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2068,7 +2015,6 @@ export type MediaReactionsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<MediaReactionSortOption>>>;
 };
-
 
 /** A media in the Kitsu database */
 export type MediaStaffArgs = {
@@ -2080,7 +2026,7 @@ export type MediaStaffArgs = {
 
 export enum MediaCategorySortEnum {
   Ancestry = 'ANCESTRY',
-  CreatedAt = 'CREATED_AT'
+  CreatedAt = 'CREATED_AT',
 }
 
 export type MediaCategorySortOption = {
@@ -2103,7 +2049,6 @@ export type MediaCharacter = WithTimestamps & {
   /** The voices of this character */
   voices?: Maybe<CharacterVoiceConnection>;
 };
-
 
 /** Information about a Character starring in a Media */
 export type MediaCharacterVoicesArgs = {
@@ -2140,7 +2085,7 @@ export type MediaCharacterEdge = {
 export enum MediaCharacterSortEnum {
   CreatedAt = 'CREATED_AT',
   Role = 'ROLE',
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 export type MediaCharacterSortOption = {
@@ -2208,7 +2153,7 @@ export enum MediaProductionRoleEnum {
   Licensor = 'LICENSOR',
   Producer = 'PRODUCER',
   Serialization = 'SERIALIZATION',
-  Studio = 'STUDIO'
+  Studio = 'STUDIO',
 }
 
 /** A simple review that is 140 characters long expressing how you felt about a media */
@@ -2232,7 +2177,6 @@ export type MediaReaction = WithTimestamps & {
   reaction: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
 };
-
 
 /** A simple review that is 140 characters long expressing how you felt about a media */
 export type MediaReactionLikesArgs = {
@@ -2268,7 +2212,7 @@ export type MediaReactionEdge = {
 export enum MediaReactionSortEnum {
   CreatedAt = 'CREATED_AT',
   UpdatedAt = 'UPDATED_AT',
-  UpVotesCount = 'UP_VOTES_COUNT'
+  UpVotesCount = 'UP_VOTES_COUNT',
 }
 
 export type MediaReactionSortOption = {
@@ -2278,7 +2222,7 @@ export type MediaReactionSortOption = {
 
 export enum MediaReactionVoteSortEnum {
   CreatedAt = 'CREATED_AT',
-  Following = 'FOLLOWING'
+  Following = 'FOLLOWING',
 }
 
 export type MediaReactionVoteSortOption = {
@@ -2325,7 +2269,7 @@ export type MediaStaffEdge = {
 /** これはアニメやマンガです */
 export enum MediaTypeEnum {
   Anime = 'ANIME',
-  Manga = 'MANGA'
+  Manga = 'MANGA',
 }
 
 export type Mutation = {
@@ -2377,12 +2321,10 @@ export type Person = WithTimestamps & {
   voices?: Maybe<CharacterVoiceConnection>;
 };
 
-
 /** A Voice Actor, Director, Animator, or other person who works in the creation and localization of media */
 export type PersonDescriptionArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
-
 
 /** A Voice Actor, Director, Animator, or other person who works in the creation and localization of media */
 export type PersonMediaStaffArgs = {
@@ -2391,7 +2333,6 @@ export type PersonMediaStaffArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** A Voice Actor, Director, Animator, or other person who works in the creation and localization of media */
 export type PersonVoicesArgs = {
@@ -2433,7 +2374,6 @@ export type Post = WithTimestamps & {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
-
 /** A post that is visible to your followers and globally in the news-feed. */
 export type PostCommentsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2443,7 +2383,6 @@ export type PostCommentsArgs = {
   sort?: InputMaybe<Array<InputMaybe<CommentSortOption>>>;
 };
 
-
 /** A post that is visible to your followers and globally in the news-feed. */
 export type PostFollowsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2451,7 +2390,6 @@ export type PostFollowsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** A post that is visible to your followers and globally in the news-feed. */
 export type PostLikesArgs = {
@@ -2486,7 +2424,7 @@ export type PostEdge = {
 
 export enum PostLikeSortEnum {
   CreatedAt = 'CREATED_AT',
-  Following = 'FOLLOWING'
+  Following = 'FOLLOWING',
 }
 
 export type PostLikeSortOption = {
@@ -2514,18 +2452,16 @@ export type PostMutations = {
   unlock?: Maybe<PostUnlockPayload>;
 };
 
-
 export type PostMutationsLockArgs = {
   input: PostLockInput;
 };
-
 
 export type PostMutationsUnlockArgs = {
   input: PostUnlockInput;
 };
 
 export enum PostSortEnum {
-  CreatedAt = 'CREATED_AT'
+  CreatedAt = 'CREATED_AT',
 }
 
 export type PostSortOption = {
@@ -2554,11 +2490,9 @@ export type ProMutations = {
   unsubscribe?: Maybe<ProUnsubscribePayload>;
 };
 
-
 export type ProMutationsSetDiscordArgs = {
   discord: Scalars['String'];
 };
-
 
 export type ProMutationsSetMessageArgs = {
   message: Scalars['String'];
@@ -2603,7 +2537,7 @@ export enum ProTierEnum {
   /** Top tier of Kitsu Pro */
   Patron = 'PATRON',
   /** Basic tier of Kitsu Pro */
-  Pro = 'PRO'
+  Pro = 'PRO',
 }
 
 /** Autogenerated return type of ProUnsubscribe */
@@ -2682,7 +2616,6 @@ export type Profile = WithTimestamps & {
   wikiSubmissions: WikiSubmissionConnection;
 };
 
-
 /** A user profile on Kitsu */
 export type ProfileCommentsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2691,7 +2624,6 @@ export type ProfileCommentsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 /** A user profile on Kitsu */
 export type ProfileFavoritesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2699,7 +2631,6 @@ export type ProfileFavoritesArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** A user profile on Kitsu */
 export type ProfileFollowersArgs = {
@@ -2710,7 +2641,6 @@ export type ProfileFollowersArgs = {
   sort?: InputMaybe<Array<InputMaybe<FollowSortOption>>>;
 };
 
-
 /** A user profile on Kitsu */
 export type ProfileFollowingArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2719,7 +2649,6 @@ export type ProfileFollowingArgs = {
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<FollowSortOption>>>;
 };
-
 
 /** A user profile on Kitsu */
 export type ProfileLibraryEventsArgs = {
@@ -2731,7 +2660,6 @@ export type ProfileLibraryEventsArgs = {
   sort?: InputMaybe<Array<InputMaybe<LibraryEventSortOption>>>;
 };
 
-
 /** A user profile on Kitsu */
 export type ProfileMediaReactionsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2740,7 +2668,6 @@ export type ProfileMediaReactionsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<MediaReactionSortOption>>>;
 };
-
 
 /** A user profile on Kitsu */
 export type ProfilePostsArgs = {
@@ -2751,7 +2678,6 @@ export type ProfilePostsArgs = {
   sort?: InputMaybe<Array<InputMaybe<PostSortOption>>>;
 };
 
-
 /** A user profile on Kitsu */
 export type ProfileReviewsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2761,7 +2687,6 @@ export type ProfileReviewsArgs = {
   sort?: InputMaybe<Array<InputMaybe<WikiSubmissionSortOption>>>;
 };
 
-
 /** A user profile on Kitsu */
 export type ProfileSiteLinksArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2769,7 +2694,6 @@ export type ProfileSiteLinksArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** A user profile on Kitsu */
 export type ProfileWikiSubmissionsArgs = {
@@ -2898,14 +2822,12 @@ export type Query = {
   wikiSubmissionsByStatuses?: Maybe<WikiSubmissionConnection>;
 };
 
-
 export type QueryAnimeArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type QueryAnimeByStatusArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2915,7 +2837,6 @@ export type QueryAnimeByStatusArgs = {
   status: ReleaseStatusEnum;
 };
 
-
 export type QueryCategoriesArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -2923,91 +2844,73 @@ export type QueryCategoriesArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryFindAnimeByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFindAnimeBySlugArgs = {
   slug: Scalars['String'];
 };
 
-
 export type QueryFindCategoryByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFindCategoryBySlugArgs = {
   slug: Scalars['String'];
 };
 
-
 export type QueryFindCharacterByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFindCharacterBySlugArgs = {
   slug: Scalars['String'];
 };
 
-
 export type QueryFindLibraryEntryByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFindLibraryEventByIdArgs = {
   id: Scalars['ID'];
 };
 
-
 export type QueryFindMangaByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFindMangaBySlugArgs = {
   slug: Scalars['String'];
 };
 
-
 export type QueryFindPersonByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFindPersonBySlugArgs = {
   slug: Scalars['String'];
 };
 
-
 export type QueryFindPostByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFindProfileByIdArgs = {
   id: Scalars['ID'];
 };
 
-
 export type QueryFindProfileBySlugArgs = {
   slug: Scalars['String'];
 };
-
 
 export type QueryFindReportByIdArgs = {
   id: Scalars['ID'];
 };
 
-
 export type QueryFindWikiSubmissionByIdArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryFranchisesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3016,7 +2919,6 @@ export type QueryFranchisesArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryGlobalTrendingArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -3024,7 +2926,6 @@ export type QueryGlobalTrendingArgs = {
   last?: InputMaybe<Scalars['Int']>;
   mediaType: MediaTypeEnum;
 };
-
 
 export type QueryLibraryEntriesByMediaArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3035,7 +2936,6 @@ export type QueryLibraryEntriesByMediaArgs = {
   mediaType: MediaTypeEnum;
 };
 
-
 export type QueryLibraryEntriesByMediaTypeArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -3043,7 +2943,6 @@ export type QueryLibraryEntriesByMediaTypeArgs = {
   last?: InputMaybe<Scalars['Int']>;
   mediaType: MediaTypeEnum;
 };
-
 
 export type QueryLocalTrendingArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3053,12 +2952,10 @@ export type QueryLocalTrendingArgs = {
   mediaType: MediaTypeEnum;
 };
 
-
 export type QueryLookupMappingArgs = {
   externalId: Scalars['ID'];
   externalSite: MappingExternalSiteEnum;
 };
-
 
 export type QueryMangaArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3066,7 +2963,6 @@ export type QueryMangaArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type QueryMangaByStatusArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3076,7 +2972,6 @@ export type QueryMangaByStatusArgs = {
   status: ReleaseStatusEnum;
 };
 
-
 export type QueryPatronsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -3084,12 +2979,10 @@ export type QueryPatronsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryRandomMediaArgs = {
   ageRatings: Array<AgeRatingEnum>;
   mediaType: MediaTypeEnum;
 };
-
 
 export type QueryReportsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3097,7 +2990,6 @@ export type QueryReportsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type QueryReportsByStatusArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3107,7 +2999,6 @@ export type QueryReportsByStatusArgs = {
   statuses?: InputMaybe<Array<ReportStatusEnum>>;
 };
 
-
 export type QuerySearchAnimeByTitleArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -3116,7 +3007,6 @@ export type QuerySearchAnimeByTitleArgs = {
   title: Scalars['String'];
 };
 
-
 export type QuerySearchMangaByTitleArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -3124,7 +3014,6 @@ export type QuerySearchMangaByTitleArgs = {
   last?: InputMaybe<Scalars['Int']>;
   title: Scalars['String'];
 };
-
 
 export type QuerySearchMediaByTitleArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3135,7 +3024,6 @@ export type QuerySearchMediaByTitleArgs = {
   title: Scalars['String'];
 };
 
-
 export type QuerySearchProfileByUsernameArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -3143,7 +3031,6 @@ export type QuerySearchProfileByUsernameArgs = {
   last?: InputMaybe<Scalars['Int']>;
   username: Scalars['String'];
 };
-
 
 export type QueryWikiSubmissionsByStatusesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3165,7 +3052,6 @@ export type Quote = WithTimestamps & {
   media: Media;
   updatedAt: Scalars['ISO8601DateTime'];
 };
-
 
 /** A quote from a media */
 export type QuoteLinesArgs = {
@@ -3239,7 +3125,7 @@ export enum RatingSystemEnum {
   /** 1-20 in increments of 2 displayed as 5 stars in 0.5 star increments */
   Regular = 'REGULAR',
   /** 1-20 displayed as 4 smileys - Awful (1), Meh (8), Good (14) and Great (20) */
-  Simple = 'SIMPLE'
+  Simple = 'SIMPLE',
 }
 
 export enum RecurringBillingServiceEnum {
@@ -3250,7 +3136,7 @@ export enum RecurringBillingServiceEnum {
   /** Bill a PayPal account */
   Paypal = 'PAYPAL',
   /** Bill a credit card via Stripe */
-  Stripe = 'STRIPE'
+  Stripe = 'STRIPE',
 }
 
 export enum ReleaseSeasonEnum {
@@ -3261,7 +3147,7 @@ export enum ReleaseSeasonEnum {
   /** Released during the Summer season */
   Summer = 'SUMMER',
   /** Released during the Winter season */
-  Winter = 'WINTER'
+  Winter = 'WINTER',
 }
 
 export enum ReleaseStatusEnum {
@@ -3274,7 +3160,7 @@ export enum ReleaseStatusEnum {
   /** This media is not released yet */
   Unreleased = 'UNRELEASED',
   /** This media is releasing soon */
-  Upcoming = 'UPCOMING'
+  Upcoming = 'UPCOMING',
 }
 
 /** A report made by a user */
@@ -3330,13 +3216,13 @@ export enum ReportReasonEnum {
   Offensive = 'OFFENSIVE',
   Other = 'OTHER',
   Spam = 'SPAM',
-  Spoiler = 'SPOILER'
+  Spoiler = 'SPOILER',
 }
 
 export enum ReportStatusEnum {
   Declined = 'DECLINED',
   Reported = 'REPORTED',
-  Resolved = 'RESOLVED'
+  Resolved = 'RESOLVED',
 }
 
 /** A media review made by a user */
@@ -3366,7 +3252,6 @@ export type Review = WithTimestamps & {
   source: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
 };
-
 
 /** A media review made by a user */
 export type ReviewLikesArgs = {
@@ -3449,12 +3334,12 @@ export enum SitePermissionEnum {
   /** Moderator of community behavior */
   CommunityMod = 'COMMUNITY_MOD',
   /** Maintainer of the Kitsu media database */
-  DatabaseMod = 'DATABASE_MOD'
+  DatabaseMod = 'DATABASE_MOD',
 }
 
 export enum SortDirection {
   Ascending = 'ASCENDING',
-  Descending = 'DESCENDING'
+  Descending = 'DESCENDING',
 }
 
 /** Media that is streamable. */
@@ -3483,7 +3368,6 @@ export type Streamer = WithTimestamps & {
   videos: VideoConnection;
 };
 
-
 /** The streaming company. */
 export type StreamerStreamingLinksArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3491,7 +3375,6 @@ export type StreamerStreamingLinksArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
-
 
 /** The streaming company. */
 export type StreamerVideosArgs = {
@@ -3502,24 +3385,25 @@ export type StreamerVideosArgs = {
 };
 
 /** The stream link. */
-export type StreamingLink = Streamable & WithTimestamps & {
-  __typename?: 'StreamingLink';
-  createdAt: Scalars['ISO8601DateTime'];
-  /** Spoken language is replaced by language of choice. */
-  dubs: Array<Scalars['String']>;
-  id: Scalars['ID'];
-  /** The media being streamed */
-  media: Media;
-  /** Which regions this video is available in. */
-  regions: Array<Scalars['String']>;
-  /** The site that is streaming this media. */
-  streamer: Streamer;
-  /** Languages this is translated to. Usually placed at bottom of media. */
-  subs: Array<Scalars['String']>;
-  updatedAt: Scalars['ISO8601DateTime'];
-  /** Fully qualified URL for the streaming link. */
-  url: Scalars['String'];
-};
+export type StreamingLink = Streamable &
+  WithTimestamps & {
+    __typename?: 'StreamingLink';
+    createdAt: Scalars['ISO8601DateTime'];
+    /** Spoken language is replaced by language of choice. */
+    dubs: Array<Scalars['String']>;
+    id: Scalars['ID'];
+    /** The media being streamed */
+    media: Media;
+    /** Which regions this video is available in. */
+    regions: Array<Scalars['String']>;
+    /** The site that is streaming this media. */
+    streamer: Streamer;
+    /** Languages this is translated to. Usually placed at bottom of media. */
+    subs: Array<Scalars['String']>;
+    updatedAt: Scalars['ISO8601DateTime'];
+    /** Fully qualified URL for the streaming link. */
+    url: Scalars['String'];
+  };
 
 /** The connection type for StreamingLink. */
 export type StreamingLinkConnection = {
@@ -3549,7 +3433,7 @@ export enum TitleLanguagePreferenceEnum {
   /** Prefer the localized title for media */
   Localized = 'LOCALIZED',
   /** Prefer the romanized title for media */
-  Romanized = 'ROMANIZED'
+  Romanized = 'ROMANIZED',
 }
 
 export type TitlesList = {
@@ -3578,7 +3462,6 @@ export type TitlesList = {
   translatedLocale?: Maybe<Scalars['String']>;
 };
 
-
 export type TitlesListLocalizedArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
@@ -3603,31 +3486,31 @@ export type Unit = {
   titles: TitlesList;
 };
 
-
 /** Media units such as episodes or chapters */
 export type UnitDescriptionArgs = {
   locales?: InputMaybe<Array<Scalars['String']>>;
 };
 
 /** The media video. */
-export type Video = Streamable & WithTimestamps & {
-  __typename?: 'Video';
-  createdAt: Scalars['ISO8601DateTime'];
-  /** Spoken language is replaced by language of choice. */
-  dubs: Array<Scalars['String']>;
-  /** The episode of this video */
-  episode: Episode;
-  id: Scalars['ID'];
-  /** Which regions this video is available in. */
-  regions: Array<Scalars['String']>;
-  /** The site that is streaming this media. */
-  streamer: Streamer;
-  /** Languages this is translated to. Usually placed at bottom of media. */
-  subs: Array<Scalars['String']>;
-  updatedAt: Scalars['ISO8601DateTime'];
-  /** The url of the video. */
-  url: Scalars['String'];
-};
+export type Video = Streamable &
+  WithTimestamps & {
+    __typename?: 'Video';
+    createdAt: Scalars['ISO8601DateTime'];
+    /** Spoken language is replaced by language of choice. */
+    dubs: Array<Scalars['String']>;
+    /** The episode of this video */
+    episode: Episode;
+    id: Scalars['ID'];
+    /** Which regions this video is available in. */
+    regions: Array<Scalars['String']>;
+    /** The site that is streaming this media. */
+    streamer: Streamer;
+    /** Languages this is translated to. Usually placed at bottom of media. */
+    subs: Array<Scalars['String']>;
+    updatedAt: Scalars['ISO8601DateTime'];
+    /** The url of the video. */
+    url: Scalars['String'];
+  };
 
 /** The connection type for Video. */
 export type VideoConnection = {
@@ -3670,7 +3553,6 @@ export type Volume = WithTimestamps & {
   titles: TitlesList;
   updatedAt: Scalars['ISO8601DateTime'];
 };
-
 
 /** A manga volume which can contain multiple chapters. */
 export type VolumeChaptersArgs = {
@@ -3743,16 +3625,13 @@ export type WikiSubmissionMutations = {
   updateDraft?: Maybe<WikiSubmissionUpdateDraftPayload>;
 };
 
-
 export type WikiSubmissionMutationsCreateDraftArgs = {
   input: WikiSubmissionCreateDraftInput;
 };
 
-
 export type WikiSubmissionMutationsSubmitDraftArgs = {
   input: WikiSubmissionSubmitDraftInput;
 };
-
 
 export type WikiSubmissionMutationsUpdateDraftArgs = {
   input: WikiSubmissionUpdateDraftInput;
@@ -3760,7 +3639,7 @@ export type WikiSubmissionMutationsUpdateDraftArgs = {
 
 export enum WikiSubmissionSortEnum {
   CreatedAt = 'CREATED_AT',
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
 }
 
 export type WikiSubmissionSortOption = {
@@ -3772,7 +3651,7 @@ export enum WikiSubmissionStatusEnum {
   Approved = 'APPROVED',
   Draft = 'DRAFT',
   Pending = 'PENDING',
-  Rejected = 'REJECTED'
+  Rejected = 'REJECTED',
 }
 
 export type WikiSubmissionSubmitDraftInput = {
@@ -3812,78 +3691,177 @@ export type GetAnimesKitsuQueryVariables = Exact<{
   title: Scalars['String'];
 }>;
 
-
-export type GetAnimesKitsuQuery = { __typename?: 'Query', searchAnimeByTitle: { __typename?: 'AnimeConnection', animes?: Array<{ __typename?: 'Anime', id: string, season?: ReleaseSeasonEnum | null, startDate?: any | null, episodeCount?: number | null, episodes: { __typename?: 'EpisodeConnection', nodes?: Array<{ __typename?: 'Episode', number: number, titles: { __typename?: 'TitlesList', canonical: string }, thumbnail?: { __typename?: 'Image', original: { __typename?: 'ImageView', url: string } } | null } | null> | null } } | null> | null } };
+export type GetAnimesKitsuQuery = {
+  __typename?: 'Query';
+  searchAnimeByTitle: {
+    __typename?: 'AnimeConnection';
+    animes?: Array<{
+      __typename?: 'Anime';
+      id: string;
+      season?: ReleaseSeasonEnum | null;
+      startDate?: any | null;
+      episodeCount?: number | null;
+      episodes: {
+        __typename?: 'EpisodeConnection';
+        nodes?: Array<{
+          __typename?: 'Episode';
+          number: number;
+          titles: { __typename?: 'TitlesList'; canonical: string };
+          thumbnail?: {
+            __typename?: 'Image';
+            original: { __typename?: 'ImageView'; url: string };
+          } | null;
+        } | null> | null;
+      };
+    } | null> | null;
+  };
+};
 
 export type GetEpisodeKitsuQueryVariables = Exact<{
   id: Scalars['ID'];
   first?: InputMaybe<Scalars['Int']>;
 }>;
 
+export type GetEpisodeKitsuQuery = {
+  __typename?: 'Query';
+  findAnimeById?: {
+    __typename?: 'Anime';
+    episodeCount?: number | null;
+    episodes: {
+      __typename?: 'EpisodeConnection';
+      nodes?: Array<{
+        __typename?: 'Episode';
+        number: number;
+        titles: { __typename?: 'TitlesList'; canonical: string };
+        thumbnail?: {
+          __typename?: 'Image';
+          original: { __typename?: 'ImageView'; url: string };
+        } | null;
+      } | null> | null;
+    };
+  } | null;
+};
 
-export type GetEpisodeKitsuQuery = { __typename?: 'Query', findAnimeById?: { __typename?: 'Anime', episodeCount?: number | null, episodes: { __typename?: 'EpisodeConnection', nodes?: Array<{ __typename?: 'Episode', number: number, titles: { __typename?: 'TitlesList', canonical: string }, thumbnail?: { __typename?: 'Image', original: { __typename?: 'ImageView', url: string } } | null } | null> | null } } | null };
+export type EpisodeInfoFragment = {
+  __typename?: 'Episode';
+  number: number;
+  titles: { __typename?: 'TitlesList'; canonical: string };
+  thumbnail?: {
+    __typename?: 'Image';
+    original: { __typename?: 'ImageView'; url: string };
+  } | null;
+};
 
-export type EpisodeInfoFragment = { __typename?: 'Episode', number: number, titles: { __typename?: 'TitlesList', canonical: string }, thumbnail?: { __typename?: 'Image', original: { __typename?: 'ImageView', url: string } } | null };
-
-export type EpisodesListFragment = { __typename?: 'Anime', episodeCount?: number | null, episodes: { __typename?: 'EpisodeConnection', nodes?: Array<{ __typename?: 'Episode', number: number, titles: { __typename?: 'TitlesList', canonical: string }, thumbnail?: { __typename?: 'Image', original: { __typename?: 'ImageView', url: string } } | null } | null> | null } };
+export type EpisodesListFragment = {
+  __typename?: 'Anime';
+  episodeCount?: number | null;
+  episodes: {
+    __typename?: 'EpisodeConnection';
+    nodes?: Array<{
+      __typename?: 'Episode';
+      number: number;
+      titles: { __typename?: 'TitlesList'; canonical: string };
+      thumbnail?: {
+        __typename?: 'Image';
+        original: { __typename?: 'ImageView'; url: string };
+      } | null;
+    } | null> | null;
+  };
+};
 
 export const EpisodeInfoFragmentDoc = gql`
-    fragment EpisodeInfo on Episode {
-  number
-  titles {
-    canonical
-  }
-  thumbnail {
-    original {
-      url
+  fragment EpisodeInfo on Episode {
+    number
+    titles {
+      canonical
+    }
+    thumbnail {
+      original {
+        url
+      }
     }
   }
-}
-    `;
+`;
 export const EpisodesListFragmentDoc = gql`
-    fragment EpisodesList on Anime {
-  episodeCount
-  episodes(first: $first) {
-    nodes {
-      ...EpisodeInfo
+  fragment EpisodesList on Anime {
+    episodeCount
+    episodes(first: $first) {
+      nodes {
+        ...EpisodeInfo
+      }
     }
   }
-}
-    ${EpisodeInfoFragmentDoc}`;
+  ${EpisodeInfoFragmentDoc}
+`;
 export const GetAnimesKitsuDocument = gql`
-    query getAnimesKitsu($first: Int, $title: String!) {
-  searchAnimeByTitle(title: $title, first: 5) {
-    animes: nodes {
-      id
-      season
-      startDate
+  query getAnimesKitsu($first: Int, $title: String!) {
+    searchAnimeByTitle(title: $title, first: 5) {
+      animes: nodes {
+        id
+        season
+        startDate
+        ...EpisodesList
+      }
+    }
+  }
+  ${EpisodesListFragmentDoc}
+`;
+export const GetEpisodeKitsuDocument = gql`
+  query getEpisodeKitsu($id: ID!, $first: Int) {
+    findAnimeById(id: $id) {
       ...EpisodesList
     }
   }
-}
-    ${EpisodesListFragmentDoc}`;
-export const GetEpisodeKitsuDocument = gql`
-    query getEpisodeKitsu($id: ID!, $first: Int) {
-  findAnimeById(id: $id) {
-    ...EpisodesList
-  }
-}
-    ${EpisodesListFragmentDoc}`;
+  ${EpisodesListFragmentDoc}
+`;
 
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+export type SdkFunctionWrapper = <T>(
+  action: (requestHeaders?: Record<string, string>) => Promise<T>,
+  operationName: string,
+  operationType?: string
+) => Promise<T>;
 
+const defaultWrapper: SdkFunctionWrapper = (
+  action,
+  _operationName,
+  _operationType
+) => action();
 
-const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
-const GetAnimesKitsuDocumentString = print(GetAnimesKitsuDocument);
-const GetEpisodeKitsuDocumentString = print(GetEpisodeKitsuDocument);
-export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+export function getSdk(
+  client: GraphQLClient,
+  withWrapper: SdkFunctionWrapper = defaultWrapper
+) {
   return {
-    getAnimesKitsu(variables: GetAnimesKitsuQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data: GetAnimesKitsuQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetAnimesKitsuQuery>(GetAnimesKitsuDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAnimesKitsu', 'query');
+    getAnimesKitsu(
+      variables: GetAnimesKitsuQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<GetAnimesKitsuQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetAnimesKitsuQuery>(
+            GetAnimesKitsuDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        'getAnimesKitsu',
+        'query'
+      );
     },
-    getEpisodeKitsu(variables: GetEpisodeKitsuQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data: GetEpisodeKitsuQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetEpisodeKitsuQuery>(GetEpisodeKitsuDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getEpisodeKitsu', 'query');
-    }
+    getEpisodeKitsu(
+      variables: GetEpisodeKitsuQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<GetEpisodeKitsuQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetEpisodeKitsuQuery>(
+            GetEpisodeKitsuDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        'getEpisodeKitsu',
+        'query'
+      );
+    },
   };
 }
 export type Sdk = ReturnType<typeof getSdk>;

@@ -7,7 +7,7 @@ import { EpisodeInfoFragment } from '@generated/kitsu';
 export interface CardProps {
   anime: AnimeBannerFragment & AnimeInfoFragment;
   number: number;
-  episode?: EpisodeInfoFragment;
+  episode?: EpisodeInfoFragment | null;
 }
 
 const Card: React.FC<CardProps> = ({ anime, number, episode }) => {
@@ -23,9 +23,10 @@ const Card: React.FC<CardProps> = ({ anime, number, episode }) => {
             <Image
               alt="Cover Image"
               src={
-                episode.thumbnail.original.url ||
+                (episode && episode.thumbnail?.original.url) ||
                 anime.coverImage.large ||
-                anime.coverImage.medium
+                anime.coverImage.medium ||
+                anime.bannerImage
               }
               objectFit="cover"
               layout="fill"
