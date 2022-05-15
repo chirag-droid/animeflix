@@ -27,7 +27,7 @@ interface WatchProps {
 export const getServerSideProps: GetServerSideProps<WatchProps> = async (
   context
 ) => {
-  let { id } = context.query;
+  let { id } = context.params;
 
   id = typeof id === 'string' ? id : id.join('');
 
@@ -53,18 +53,49 @@ const Video = ({
   recommended,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  progress.finish();
 
   let { id, episode } = router.query;
+
+  let startTime = 0;
+
+  if (typeof window === 'undefined') {
+    episode = episode || '1';
+  }
+
+  if (episode === undefined && typeof window !== 'undefined') {
+    // check if last watched episode in localstorage
+    const savedState = localStorage.getItem(`Anime${id}`) || '1-0';
+    const [savedEpisode, savedTime] = savedState.split('-');
+
+    if (savedEpisode) {
+      episode = savedEpisode;
+    } else {
+      episode = '1';
+    }
+
+    if (episode === savedEpisode) {
+      startTime = parseInt(savedTime, 10);
+    }
+
+    router.push(
+      {
+        pathname: '/watch/[id]',
+        query: { id, episode },
+      },
+      `/watch/${id}/?episode=${episode}`,
+      {
+        shallow: true,
+      }
+    );
+  }
+
+  progress.finish();
+
   id = typeof id === 'string' ? id : id.join('');
   episode = typeof episode === 'string' ? episode : episode.join('');
 
   const episodeInt = parseInt(episode, 10);
   const idInt = parseInt(id, 10);
-
-  if (typeof window !== 'undefined' && !episode) {
-    router?.push(`/watch/${id}?episode=${1}`);
-  }
 
   const { videoLink, referer, episodes, isError } = useAnime(idInt, episodeInt);
 
@@ -74,6 +105,15 @@ const Video = ({
 
   const nextEpisode = () => {
     router.push(`/watch/${id}?episode=${episodeInt + 1}`);
+  };
+
+  const saveProgress = (time) => {
+    // delete progress if on last episode
+    if (episode === episodes.toString() && time > 60 * 10) {
+      localStorage.removeItem(`Anime${id}`);
+      return;
+    }
+    localStorage.setItem(`Anime${id}`, `${episode}-${time}`);
   };
 
   const urls = useMemo(() => {
@@ -102,6 +142,8 @@ const Video = ({
               poster={anime.bannerImage}
               nextCallback={nextEpisode}
               previousCallback={previousEpisode}
+              saveProgressCallback={saveProgress}
+              startTime={startTime}
             />
           ) : (
             <p className="font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">

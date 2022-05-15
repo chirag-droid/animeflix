@@ -27,6 +27,7 @@ export const {
   getAnimeTitle,
   searchGenre,
   watchPage,
+  getAnimeByIds,
 } = aniSdk(aniListClient);
 
 // kitsu middleware to ignore error fields

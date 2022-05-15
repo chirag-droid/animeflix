@@ -10,6 +10,14 @@ query getAnimeInfo($id: Int) {
   }
 }
 
+query getAnimeByIds($perPage: Int, $page: Int, $ids: [Int]) {
+  Page(perPage: $perPage, page: $page) {
+    media(id_in: $ids) {
+      ...AnimeInfo
+    }
+  }
+}
+
 query getAnimeTitle($id: Int) {
   Media(id: $id, type: ANIME) {
     title {
