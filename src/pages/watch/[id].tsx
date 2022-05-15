@@ -62,31 +62,33 @@ const Video = ({
     episode = episode || '1';
   }
 
-  if (episode === undefined && typeof window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     // check if last watched episode in localstorage
     const savedState = localStorage.getItem(`Anime${id}`) || '1-0';
     const [savedEpisode, savedTime] = savedState.split('-');
 
-    if (savedEpisode) {
-      episode = savedEpisode;
-    } else {
-      episode = '1';
+    if (episode === undefined) {
+      if (savedEpisode) {
+        episode = savedEpisode;
+      } else {
+        episode = '1';
+      }
+
+      router.replace(
+        {
+          pathname: '/watch/[id]',
+          query: { id, episode },
+        },
+        `/watch/${id}/?episode=${episode}`,
+        {
+          shallow: true,
+        }
+      );
     }
 
     if (episode === savedEpisode) {
       startTime = parseInt(savedTime, 10);
     }
-
-    router.push(
-      {
-        pathname: '/watch/[id]',
-        query: { id, episode },
-      },
-      `/watch/${id}/?episode=${episode}`,
-      {
-        shallow: true,
-      }
-    );
   }
 
   progress.finish();
@@ -107,7 +109,7 @@ const Video = ({
     router.push(`/watch/${id}?episode=${episodeInt + 1}`);
   };
 
-  const saveProgress = (time) => {
+  const saveProgress = (time: number) => {
     // delete progress if on last episode
     if (episode === episodes.toString() && time > 60 * 10) {
       localStorage.removeItem(`Anime${id}`);
