@@ -1,0 +1,20 @@
+fragment EpisodeInfo on Episode {
+  number
+  titles {
+    canonical
+  }
+  thumbnail {
+    original {
+      url
+    }
+  }
+}
+
+fragment EpisodesList on Anime {
+  episodeCount
+  episodes(first: $first) {
+    nodes {
+      ...EpisodeInfo
+    }
+  }
+}

@@ -1,0 +1,8 @@
+projects:
+  aniList:
+    schema: "https://graphql.anilist.co/"
+    documents: "./src/graphql/aniList/**/*.gql"
+
+  kitsu:
+    schema: "https://kitsu.io/api/graphql"
+    documents: "./src/graphql/kitsu/**/*.gql"
