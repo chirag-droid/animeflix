@@ -50,6 +50,11 @@ function Video({ anime, recommended }) {
   };
 
   const saveProgress = (time) => {
+    // delete progress if on last episode
+    if (episode === episodes.toString() && time > 60 * 10) {
+      localStorage.removeItem(`Anime${id}`);
+      return;
+    }
     localStorage.setItem(`Anime${id}`, `${episode}-${time}`);
   };
 
