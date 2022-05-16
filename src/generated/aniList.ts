@@ -4765,6 +4765,12 @@ export type AnimeInfoFragment = {
     medium?: string | null;
     large?: string | null;
   } | null;
+  nextAiringEpisode?: {
+    __typename?: 'MediaAiringSchedule';
+    airingAt?: number | null;
+    timeUntilAiring?: number | null;
+    episode?: number | null;
+  } | null;
 };
 
 export type GetListQueryVariables = Exact<{
@@ -5039,6 +5045,11 @@ export const AnimeInfoFragmentDoc = gql`
     format
     duration
     meanScore
+    nextAiringEpisode {
+      airingAt
+      episode
+      timeUntilAiring
+    }
   }
 `;
 export const GetAnimeBannerDocument = gql`
@@ -5077,6 +5088,7 @@ export const GetAnimeTitleDocument = gql`
     }
   }
 `;
+
 export const GetPopularBannerDocument = gql`
   query getPopularBanner($seasonYear: Int) {
     Media(type: ANIME, sort: POPULARITY_DESC, seasonYear: $seasonYear) {

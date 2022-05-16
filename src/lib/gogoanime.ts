@@ -3,6 +3,7 @@ import {
   scrapeSearch,
   scrapeAnimeDetails,
 } from 'gogoanime-api/lib/anime_parser';
+import { AnimeList, GogoEpisode } from 'gogoanime-api/lib/types';
 
 import { getAnimeTitle } from '@lib/api';
 
@@ -11,12 +12,12 @@ export async function getAnimeSlug(title: string, episode: number) {
 
   const slug = title.replace(/[^0-9a-zA-Z]+/g, ' ');
 
-  const findAnime = await scrapeSearch({ keyw: slug });
+  const findAnime = (await scrapeSearch({ keyw: slug })) as AnimeList[];
 
   if (findAnime.length === 0) return {};
 
   const gogoEpisodes = (await scrapeAnimeDetails({ id: findAnime[0].animeId }))
-    .episodesList;
+    .episodesList as GogoEpisode[];
 
   const episodeSlug = gogoEpisodes[0]?.episodeId.split('-episode')[0];
 
