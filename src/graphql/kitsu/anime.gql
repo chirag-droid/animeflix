@@ -1,0 +1,16 @@
+query getAnimesKitsu($first: Int, $title: String!) {
+  searchAnimeByTitle(title: $title, first: 5) {
+    animes: nodes {
+      id
+      season
+      startDate
+      ...EpisodesList
+    }
+  }
+}
+
+query getEpisodeKitsu($id: ID!, $first: Int) {
+  findAnimeById(id: $id) {
+    ...EpisodesList
+  }
+}

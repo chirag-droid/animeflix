@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@generated/*": ["./src/generated/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utility/*": ["./src/utility/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@public/*": ["./public/*"]
+    },
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "sourceMap": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/VideoControls.jsx"
+  ],
+  "exclude": ["node_modules"]
+}

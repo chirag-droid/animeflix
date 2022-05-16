@@ -1,0 +1,17 @@
+fragment AnimeBanner on Media {
+  id
+  title {
+    english
+    romaji
+  }
+  bannerImage
+  description
+  format
+  duration
+  meanScore
+  genres
+  season
+  startDate {
+    year
+  }
+}

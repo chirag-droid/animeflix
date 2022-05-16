@@ -5,6 +5,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "build": "next build",
+    "generate": "graphql-codegen",
     "start": "next start",
     "prepare": "husky install"
   },
@@ -16,6 +17,7 @@
     "gogoanime-api": "git+https://github.com/riimuru/gogoanime.git",
     "graphql": "^16.5.0",
     "graphql-request": "^4.2.0",
+    "graphql-tag": "^2.12.6",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -24,12 +26,20 @@
     "tailwind-scrollbar-hide": "^1.1.6"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.11",
+    "@graphql-codegen/typescript-graphql-request": "^4.4.8",
+    "@graphql-codegen/typescript-operations": "^2.4.0",
+    "@types/node": "^17.0.32",
+    "@types/react": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
     "autoprefixer": "^10.4.6",
     "eslint": "8.15.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-jsconfig": "^1.1.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
@@ -40,6 +50,7 @@
     "lint-staged": "^12.4.1",
     "postcss": "^8.4.4",
     "prettier": "^2.6.2",
-    "tailwindcss": "^3.0.24"
+    "tailwindcss": "^3.0.24",
+    "typescript": "^4.6.4"
   }
 }

@@ -1,0 +1,50 @@
+query getAnimeBanner($id: Int) {
+  Media(id: $id, type: ANIME) {
+    ...AnimeBanner
+  }
+}
+
+query getAnimeInfo($id: Int) {
+  Media(id: $id, type: ANIME) {
+    ...AnimeInfo
+  }
+}
+
+query getAnimeByIds($perPage: Int, $page: Int, $ids: [Int]) {
+  Page(perPage: $perPage, page: $page) {
+    media(id_in: $ids) {
+      ...AnimeInfo
+    }
+  }
+}
+
+query getAnimeTitle($id: Int) {
+  Media(id: $id, type: ANIME) {
+    title {
+      romaji
+      english
+    }
+  }
+}
+
+query getPopularBanner($seasonYear: Int) {
+  Media(type: ANIME, sort: POPULARITY_DESC, seasonYear: $seasonYear) {
+    ...AnimeBanner
+  }
+}
+
+query searchAnime($page: Int, $perPage: Int, $keyword: String) {
+  Page(perPage: $perPage, page: $page) {
+    media(type: ANIME, search: $keyword) {
+      ...AnimeInfo
+    }
+  }
+}
+
+query searchGenre($page: Int, $perPage: Int, $genre: String) {
+  Page(perPage: $perPage, page: $page) {
+    media(type: ANIME, genre: $genre, sort: POPULARITY_DESC) {
+      ...AnimeInfo
+    }
+  }
+}

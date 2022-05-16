@@ -1,0 +1,17 @@
+schema: ""
+generates:
+  ./src/generated/aniList.ts:
+    schema: "https://graphql.anilist.co/"
+    documents: ./src/graphql/aniList/**/*.gql
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+
+  ./src/generated/kitsu.ts:
+    schema: "https://kitsu.io/api/graphql/"
+    documents: ./src/graphql/kitsu/**/*.gql
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
