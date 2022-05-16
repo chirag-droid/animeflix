@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { InferGetServerSidePropsType } from 'next';
 
+import Head from 'next/head';
+
 import Banner from '@components/anime/Banner';
 import Section from '@components/anime/Section';
 import Header from '@components/Header';
@@ -52,6 +54,9 @@ const Index = ({
 
   return (
     <>
+      <Head>
+        <title key="title">Animeflix</title>
+      </Head>
       <Header />
 
       <Banner anime={banner} onLoadingComplete={progress.finish} />
