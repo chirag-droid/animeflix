@@ -5,17 +5,17 @@ import { useRouter } from 'next/router';
 
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-import Episode from '@components/Episode';
 import Genre from '@components/Genre';
 import Header from '@components/Header';
 import RecommendationCard from '@components/watch/Card';
+import Episode from '@components/watch/Episode';
 import { AnimeBannerFragment, AnimeInfoFragment } from '@generated/aniList';
 import useAnime from '@hooks/useAnime';
 import { watchPage } from '@lib/api';
 import { progress } from '@pages/_app';
 import { proxyUrl } from '@utility/utils';
 
-const VideoPlayer = dynamic(() => import('@components/VideoPlayer'), {
+const VideoPlayer = dynamic(() => import('@components/watch/VideoPlayer'), {
   ssr: false,
 });
 

@@ -31,7 +31,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/VideoControls.jsx"
+    "src/components/watch/VideoControls.jsx"
   ],
   "exclude": ["node_modules"]
 }
