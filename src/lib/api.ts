@@ -54,10 +54,19 @@ export const { getAnimesKitsu, getEpisodeKitsu } = kitsuSdk(
  * @example 'naruto', startDate: '2019', season: 'WINTER'
  */
 export const getKitsuEpisodes = async (
-  title: string,
+  title: string | null,
   season: string,
   startDate: number
 ): Promise<EpisodesListFragment | null> => {
+  if (!title) {
+    return {
+      episodeCount: 0,
+      episodes: {
+        nodes: [],
+      },
+    };
+  }
+
   const kitsuAnimes = await getAnimesKitsu({
     title,
     first: 8,
