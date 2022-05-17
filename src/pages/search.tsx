@@ -1,4 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import Card from '@components/anime/Card';
@@ -38,6 +39,10 @@ const Search = ({
 
   return (
     <>
+      <Head>
+        <title key="title">Results for {keyword} | Animeflix</title>
+      </Head>
+
       <Header />
 
       <p className="text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
