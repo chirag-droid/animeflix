@@ -5160,6 +5160,7 @@ export const GetAnimeTitleDocument = gql`
     }
   }
 `;
+
 export const GetPopularBannerDocument = gql`
   query getPopularBanner($seasonYear: Int) {
     Media(type: ANIME, sort: POPULARITY_DESC, seasonYear: $seasonYear) {
