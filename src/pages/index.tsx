@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { InferGetServerSidePropsType } from 'next';
-
 import Head from 'next/head';
 
 import Banner from '@components/anime/Banner';

@@ -1,7 +1,7 @@
-import { EmojiSadIcon } from '@heroicons/react/solid';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-
 import Head from 'next/head';
+
+import { EmojiSadIcon } from '@heroicons/react/solid';
 
 import Banner from '@components/anime/Banner';
 import EpisodeSection from '@components/anime/EpisodeSection';

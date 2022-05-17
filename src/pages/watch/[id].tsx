@@ -1,11 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-
-import Head from 'next/head';
-
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import Genre from '@components/Genre';
 import Header from '@components/Header';

@@ -1,6 +1,5 @@
-import { useRouter } from 'next/router';
-
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useRouter } from 'next/router';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
