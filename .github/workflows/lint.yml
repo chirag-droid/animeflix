@@ -10,7 +10,6 @@ on:
 
 jobs:
   lint:
-    name: lint files
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,9 +17,20 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v3
         with:
+          node-version: 16.5.0
           cache: 'npm'
+      
+      - uses: actions/cache@v2
+        name: Cache dependencies
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
-      - run: npm ci
+      - name: Install packages
+        run: npm ci
 
-      - name: lint files
+      - name: Generate GraphQl
+        run: npm run generate
+
+      - name: Lint files
         run: npm run lint
