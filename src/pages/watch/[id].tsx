@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import Genre from '@components/Genre';
 import Header from '@components/Header';
@@ -183,6 +183,11 @@ const Video = ({
 
   return (
     <>
+      <Head>
+        <title key="title">{`${
+          anime.title.romaji || anime.title.english
+        } | Episode ${episode}`}</title>
+      </Head>
       <Header />
 
       <div className="lg:flex mt-4 space-x-4">
