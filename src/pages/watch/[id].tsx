@@ -186,7 +186,7 @@ const Video = ({
       <Head>
         <title key="title">{`${
           anime.title.romaji || anime.title.english
-        } | Animeflix`}</title>
+        } | Episode ${episode}`}</title>
       </Head>
       <Header />
 
