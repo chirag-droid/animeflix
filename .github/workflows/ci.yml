@@ -1,0 +1,36 @@
+name: lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.5.0
+          cache: 'npm'
+      
+      - uses: actions/cache@v2
+        name: Cache dependencies
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Generate GraphQl
+        run: npm run generate
+
+      - name: Lint files
+        run: npm run lint

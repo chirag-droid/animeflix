@@ -103,6 +103,8 @@ const Video = ({
 
   const { videoLink, referer, episodes, isError } = useAnime(idInt, episodeInt);
 
+  const { nextAiringEpisode } = anime;
+
   const previousEpisode = () => {
     router.push(`/watch/${id}?episode=${episodeInt - 1}`);
   };
@@ -133,6 +135,53 @@ const Video = ({
     }
     setProxy(!videoLink.match(urls));
   }, [videoLink, urls]);
+
+  const nth = (days: number) => {
+    if (days > 3 && days < 21) return 'th';
+
+    switch (days % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
+  };
+
+  const convertToDate = (date: number) => {
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const month = dateObj.toLocaleString('en-us', { month: 'short' });
+    const day = dateObj.getDate();
+
+    return `${day}${nth(day)} of ${month} ${year}`;
+  };
+
+  const convertToTime = (date: number) => {
+    const weekday = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+
+    const dateObj = new Date(date);
+    const day = weekday[dateObj.getDay()];
+    let hours = dateObj.getHours();
+    let minutes: number | string = dateObj.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours %= 12;
+    hours = hours || 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    const strTime = `${day} at ${hours}:${minutes} ${ampm} (GMT-4)`;
+    return strTime;
+  };
 
   return (
     <>
@@ -192,6 +241,20 @@ const Video = ({
               <Genre key={genre} genre={genre} />
             ))}
           </div>
+
+          {nextAiringEpisode ? (
+            <div className="text-gray-400 p-2 mt-2">
+              {anime.title.romaji || anime.title.english} Episode{' '}
+              {nextAiringEpisode.episode} will release on the{' '}
+              {
+                <div className="font-bold text-gray-400 inline-block">
+                  {convertToDate(nextAiringEpisode.airingAt * 1000)}.
+                </div>
+              }{' '}
+              Further episodes of the anime will air every{' '}
+              {convertToTime(nextAiringEpisode.airingAt * 1000)}.
+            </div>
+          ) : null}
 
           <Episode id={idInt} episodes={episodes} />
 

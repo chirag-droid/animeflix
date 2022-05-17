@@ -4591,6 +4591,12 @@ export type GetAnimeInfoQuery = {
       medium?: string | null;
       large?: string | null;
     } | null;
+    nextAiringEpisode?: {
+      __typename?: 'AiringSchedule';
+      airingAt: number;
+      timeUntilAiring: number;
+      episode: number;
+    } | null;
   } | null;
 };
 
@@ -4622,6 +4628,12 @@ export type GetAnimeByIdsQuery = {
         color?: string | null;
         medium?: string | null;
         large?: string | null;
+      } | null;
+      nextAiringEpisode?: {
+        __typename?: 'AiringSchedule';
+        airingAt: number;
+        timeUntilAiring: number;
+        episode: number;
       } | null;
     } | null> | null;
   } | null;
@@ -4695,6 +4707,12 @@ export type SearchAnimeQuery = {
         medium?: string | null;
         large?: string | null;
       } | null;
+      nextAiringEpisode?: {
+        __typename?: 'AiringSchedule';
+        airingAt: number;
+        timeUntilAiring: number;
+        episode: number;
+      } | null;
     } | null> | null;
   } | null;
 };
@@ -4725,6 +4743,12 @@ export type SearchGenreQuery = {
         color?: string | null;
         medium?: string | null;
         large?: string | null;
+      } | null;
+      nextAiringEpisode?: {
+        __typename?: 'AiringSchedule';
+        airingAt: number;
+        timeUntilAiring: number;
+        episode: number;
       } | null;
     } | null> | null;
   } | null;
@@ -4765,6 +4789,12 @@ export type AnimeInfoFragment = {
     medium?: string | null;
     large?: string | null;
   } | null;
+  nextAiringEpisode?: {
+    __typename?: 'AiringSchedule';
+    airingAt: number;
+    timeUntilAiring: number;
+    episode: number;
+  } | null;
 };
 
 export type GetListQueryVariables = Exact<{
@@ -4793,6 +4823,12 @@ export type GetListQuery = {
         color?: string | null;
         medium?: string | null;
         large?: string | null;
+      } | null;
+      nextAiringEpisode?: {
+        __typename?: 'AiringSchedule';
+        airingAt: number;
+        timeUntilAiring: number;
+        episode: number;
       } | null;
     } | null> | null;
   } | null;
@@ -4842,6 +4878,12 @@ export type IndexPageQuery = {
         medium?: string | null;
         large?: string | null;
       } | null;
+      nextAiringEpisode?: {
+        __typename?: 'AiringSchedule';
+        airingAt: number;
+        timeUntilAiring: number;
+        episode: number;
+      } | null;
     } | null> | null;
   } | null;
   popular?: {
@@ -4863,6 +4905,12 @@ export type IndexPageQuery = {
         medium?: string | null;
         large?: string | null;
       } | null;
+      nextAiringEpisode?: {
+        __typename?: 'AiringSchedule';
+        airingAt: number;
+        timeUntilAiring: number;
+        episode: number;
+      } | null;
     } | null> | null;
   } | null;
   topRated?: {
@@ -4883,6 +4931,12 @@ export type IndexPageQuery = {
         color?: string | null;
         medium?: string | null;
         large?: string | null;
+      } | null;
+      nextAiringEpisode?: {
+        __typename?: 'AiringSchedule';
+        airingAt: number;
+        timeUntilAiring: number;
+        episode: number;
       } | null;
     } | null> | null;
   } | null;
@@ -4916,6 +4970,12 @@ export type AnimePageQuery = {
       medium?: string | null;
       large?: string | null;
     } | null;
+    nextAiringEpisode?: {
+      __typename?: 'AiringSchedule';
+      airingAt: number;
+      timeUntilAiring: number;
+      episode: number;
+    } | null;
     startDate?: { __typename?: 'FuzzyDate'; year?: number | null } | null;
   } | null;
   recommended?: {
@@ -4938,6 +4998,12 @@ export type AnimePageQuery = {
           color?: string | null;
           medium?: string | null;
           large?: string | null;
+        } | null;
+        nextAiringEpisode?: {
+          __typename?: 'AiringSchedule';
+          airingAt: number;
+          timeUntilAiring: number;
+          episode: number;
         } | null;
       } | null;
     } | null> | null;
@@ -4973,6 +5039,12 @@ export type WatchPageQuery = {
       medium?: string | null;
       large?: string | null;
     } | null;
+    nextAiringEpisode?: {
+      __typename?: 'AiringSchedule';
+      airingAt: number;
+      timeUntilAiring: number;
+      episode: number;
+    } | null;
   } | null;
   recommended?: {
     __typename?: 'Page';
@@ -4999,6 +5071,12 @@ export type WatchPageQuery = {
           color?: string | null;
           medium?: string | null;
           large?: string | null;
+        } | null;
+        nextAiringEpisode?: {
+          __typename?: 'AiringSchedule';
+          airingAt: number;
+          timeUntilAiring: number;
+          episode: number;
         } | null;
       } | null;
     } | null> | null;
@@ -5039,6 +5117,11 @@ export const AnimeInfoFragmentDoc = gql`
     format
     duration
     meanScore
+    nextAiringEpisode {
+      airingAt
+      timeUntilAiring
+      episode
+    }
   }
 `;
 export const GetAnimeBannerDocument = gql`
@@ -5077,6 +5160,7 @@ export const GetAnimeTitleDocument = gql`
     }
   }
 `;
+
 export const GetPopularBannerDocument = gql`
   query getPopularBanner($seasonYear: Int) {
     Media(type: ANIME, sort: POPULARITY_DESC, seasonYear: $seasonYear) {

@@ -12,4 +12,9 @@ fragment AnimeInfo on Media {
   format
   duration
   meanScore
+  nextAiringEpisode {
+    airingAt
+    timeUntilAiring
+    episode
+  }
 }
