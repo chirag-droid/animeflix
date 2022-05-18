@@ -31,8 +31,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           site_name: 'Animeflix',
           images: [
             {
-              url: '/preview.jpeg',
+              url: '/preview.png',
               alt: 'Site preview image',
+              type: 'large',
             },
           ],
         }}
