@@ -2,8 +2,9 @@ import { useState, useEffect, useMemo } from 'react';
 
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+
+import { NextSeo } from 'next-seo';
 
 import Genre from '@components/Genre';
 import Header from '@components/Header';
@@ -183,11 +184,24 @@ const Video = ({
 
   return (
     <>
-      <Head>
-        <title key="title">{`${
+      <NextSeo
+        title={`${
           anime.title.romaji || anime.title.english
-        } | Episode ${episode}`}</title>
-      </Head>
+        } | Episode ${episode}`}
+        description={anime.description}
+        openGraph={{
+          images: [
+            {
+              url:
+                anime.coverImage.large ||
+                anime.coverImage.medium ||
+                anime.bannerImage,
+              alt: `Image for ${anime.title.english || anime.title.romaji}`,
+            },
+          ],
+        }}
+      />
+
       <Header />
 
       <div className="lg:flex mt-4 space-x-4">

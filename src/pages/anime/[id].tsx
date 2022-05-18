@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Head from 'next/head';
 
 import { EmojiSadIcon } from '@heroicons/react/solid';
+import { NextSeo } from 'next-seo';
 
 import Banner from '@components/anime/Banner';
 import EpisodeSection from '@components/anime/EpisodeSection';
@@ -62,11 +62,22 @@ const Anime = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
-      <Head>
-        <title key="title">{`${
-          anime.title.romaji || anime.title.english
-        } | Animeflix`}</title>
-      </Head>
+      <NextSeo
+        title={`${anime.title.romaji || anime.title.english} | Animeflix`}
+        description={anime.description}
+        openGraph={{
+          images: [
+            {
+              url:
+                anime.coverImage.large ||
+                anime.coverImage.medium ||
+                anime.bannerImage,
+              alt: `Image for ${anime.title.english || anime.title.romaji}`,
+            },
+          ],
+        }}
+      />
+
       <Header />
       <Banner anime={anime} onLoadingComplete={progress.finish} />
 

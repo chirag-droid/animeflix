@@ -1,6 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+
+import { NextSeo } from 'next-seo';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
@@ -39,9 +40,7 @@ const Search = ({
 
   return (
     <>
-      <Head>
-        <title key="title">Results for {keyword} | Animeflix</title>
-      </Head>
+      <NextSeo title={`Results for ${keyword} | Animeflix`} />
 
       <Header />
 
