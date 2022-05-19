@@ -68,11 +68,18 @@ const Anime = ({
         openGraph={{
           images: [
             {
-              url:
-                anime.coverImage.large ||
-                anime.coverImage.medium ||
-                anime.bannerImage,
-              alt: `Image for ${anime.title.english || anime.title.romaji}`,
+              type: 'large',
+              url: anime.bannerImage,
+              alt: `Banner Image for ${
+                anime.title.english || anime.title.romaji
+              }`,
+            },
+            {
+              type: 'small',
+              url: anime.coverImage.large || anime.coverImage.medium,
+              alt: `Cover Image for ${
+                anime.title.english || anime.title.romaji
+              }`,
             },
           ],
         }}
