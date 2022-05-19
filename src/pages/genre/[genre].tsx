@@ -1,6 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+
+import { NextSeo } from 'next-seo';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
@@ -42,9 +43,7 @@ const Genre = ({
 
   return (
     <>
-      <Head>
-        <title key="title">Animes for Genre {genre} | Animeflix</title>
-      </Head>
+      <NextSeo title={`Animes for Genre ${genre} | Animeflix`} />
 
       <Header />
 
