@@ -26,7 +26,14 @@ function MyApp({ Component, pageProps }: AppProps) {
             name: 'keywords',
             content: 'watch animes, animes online, anime adsfree, adfree anime',
           },
+          {
+            name: 'theme-color',
+            content: '#C3073F',
+          },
         ]}
+        twitter={{
+          cardType: 'summary_large_image',
+        }}
         openGraph={{
           site_name: 'Animeflix',
           images: [
