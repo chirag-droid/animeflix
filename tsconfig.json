@@ -8,7 +8,6 @@
       "@utility/*": ["./src/utility/*"],
       "@lib/*": ["./src/lib/*"],
       "@styles/*": ["./src/styles/*"],
-      "@pages/*": ["./src/pages/*"],
       "@public/*": ["./public/*"]
     },
     "target": "es5",
