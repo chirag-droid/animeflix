@@ -9,7 +9,6 @@ import Section from '@components/anime/Section';
 import Header from '@components/Header';
 import { EpisodesListFragment } from '@generated/kitsu';
 import { animePage, getKitsuEpisodes } from '@lib/api';
-import { progress } from '@pages/_app';
 import { AnimeBannerFragment, AnimeInfoFragment } from 'src/generated/aniList';
 
 interface AnimeProps {
@@ -86,7 +85,7 @@ const Anime = ({
       />
 
       <Header />
-      <Banner anime={anime} onLoadingComplete={progress.finish} />
+      <Banner anime={anime} />
 
       {/* Don't show episode section if format is movie */}
       {anime.format !== 'MOVIE' && episodes.episodeCount > 0 && (

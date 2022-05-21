@@ -5,9 +5,9 @@ import { InferGetServerSidePropsType } from 'next';
 import Banner from '@components/anime/Banner';
 import Section from '@components/anime/Section';
 import Header from '@components/Header';
+import progressBar from '@components/Progress';
 import { AnimeInfoFragment } from '@generated/aniList';
 import { getAnimeByIds, indexPage } from '@lib/api';
-import { progress } from '@pages/_app';
 
 export const getServerSideProps = async () => {
   const data = await indexPage({
@@ -29,9 +29,8 @@ const Index = ({
   popular,
   topRated,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  useEffect(() => {
-    progress.finish();
-  });
+  // finish the progress bar
+  progressBar.finish();
 
   const [recentlyWatched, setRecentlyWatched] = useState<AnimeInfoFragment[]>(
     []
@@ -54,13 +53,15 @@ const Index = ({
     <>
       <Header />
 
-      <Banner anime={banner} onLoadingComplete={progress.finish} />
+      <Banner anime={banner} />
 
       <Section title="Trending Now" animeList={trending.media} />
+
       {/* only show */}
       {recentlyWatched.length > 0 ? (
         <Section title="Continue watching" animeList={recentlyWatched} />
       ) : null}
+
       <Section title="Popular" animeList={popular.media} />
       <Section title="Top Rated (All time)" animeList={topRated.media} />
     </>

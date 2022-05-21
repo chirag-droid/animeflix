@@ -8,12 +8,12 @@ import { NextSeo } from 'next-seo';
 
 import Genre from '@components/Genre';
 import Header from '@components/Header';
+import progressBar from '@components/Progress';
 import RecommendationCard from '@components/watch/Card';
 import Episode from '@components/watch/Episode';
 import { AnimeBannerFragment, AnimeInfoFragment } from '@generated/aniList';
 import useAnime from '@hooks/useAnime';
 import { watchPage } from '@lib/api';
-import { progress } from '@pages/_app';
 import { proxyUrl } from '@utility/utils';
 
 const VideoPlayer = dynamic(() => import('@components/watch/VideoPlayer'), {
@@ -92,7 +92,7 @@ const Video = ({
     }
   }
 
-  progress.finish();
+  progressBar.finish();
 
   id = typeof id === 'string' ? id : id.join('');
   episode = typeof episode === 'string' ? episode : episode.join('');

@@ -2,18 +2,15 @@ import '@styles/globals.css';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
 
-import ProgressBar from '@badrap/bar-of-progress';
 import { DefaultSeo } from 'next-seo';
 
-export const progress = new ProgressBar({
-  size: 4,
-  color: '#C3073F',
-  className: 'z-50',
-  delay: 100,
-});
+import progressBar from '@components/Progress';
 
-Router.events.on('routeChangeStart', progress.start);
-Router.events.on('routeChangeError', progress.finish);
+// start progress bar when the route starts to change
+Router.events.on('routeChangeStart', progressBar.start);
+
+// finish the progress bar if there is an error while route change
+Router.events.on('routeChangeError', progressBar.finish);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
