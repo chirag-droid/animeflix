@@ -1,4 +1,4 @@
-import { useRef, useEffect, ReactEventHandler } from 'react';
+import { useRef, useEffect } from 'react';
 
 import { Player, Hls, Video } from '@vime/react';
 
@@ -67,20 +67,26 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     });
   });
 
-  const timeUpdateCallback: ReactEventHandler<HTMLVmPlayerElement> = (e) => {
+  const lastTime = useRef(0);
+
+  const timeChangeCallback = (event: CustomEvent<number>) => {
+    if (Math.ceil(event.detail) === lastTime.current) return;
+
+    lastTime.current = Math.ceil(event.detail);
+
     if (videoplayer.current.duration < 0) return;
 
-    if (e.timeStamp / videoplayer.current.duration >= 0.99) {
+    if (event.detail / videoplayer.current.duration >= 0.99) {
       localStorage.removeItem(`Anime${animeId}`);
       return;
     }
 
-    localStorage.setItem(`Anime${animeId}`, `${episode}-${e.timeStamp}`);
+    localStorage.setItem(`Anime${animeId}`, `${episode}-${event.detail}`);
   };
 
   return (
     <Player
-      onTimeUpdate={timeUpdateCallback}
+      onVmCurrentTimeChange={timeChangeCallback}
       ref={videoplayer}
       tabIndex={0}
       style={{ outline: 'none' }}
