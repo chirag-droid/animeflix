@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 
@@ -36,7 +38,7 @@ const Search = ({
   const router = useRouter();
   const { keyword } = router.query;
 
-  progressBar.finish();
+  useEffect(() => progressBar.finish(), []);
 
   return (
     <>

@@ -23,15 +23,15 @@ import {
 } from '@vime/react';
 
 import useMediaQuery from '@hooks/useMediaQuery';
+import useStream from '@hooks/useStream';
 
-// export interface VideoControlsProps {
-//   previousCallback: () => void;
-//   nextCallback: () => void;
-// }
-
-// const VideoControls: React.FC<VideoControlsProps>
-const VideoControls = ({ previousCallback, nextCallback }) => {
+const VideoControls = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
+
+  const [incrementEpisode, decrementEpisode] = useStream((store) => [
+    store.incrementEpisode,
+    store.decrementEpisode,
+  ]);
 
   return (
     <DefaultUi noControls>
@@ -44,14 +44,14 @@ const VideoControls = ({ previousCallback, nextCallback }) => {
           '--vm-controls-spacing': '80px',
         }}
       >
-        <Control onClick={previousCallback} keys="p" label="Previous Episode">
+        <Control onClick={decrementEpisode} keys="p" label="Previous Episode">
           <ChevronDoubleLeftIcon className="text-white w-9" />
           <Tooltip>previous(p)</Tooltip>
         </Control>
 
         <PlaybackControl hideTooltip keys="k/ " />
 
-        <Control onClick={nextCallback} keys="n" label="Next Episode">
+        <Control onClick={incrementEpisode} keys="n" label="Next Episode">
           <ChevronDoubleRightIcon className="text-white w-9" />
           <Tooltip className="text-xs">next(n)</Tooltip>
         </Control>
