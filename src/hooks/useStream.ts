@@ -38,7 +38,7 @@ const useStream = create<StreamData>()(
       set({ animeId });
 
       if (typeof localStorage === 'undefined') {
-        set({ episode: 0 });
+        set({ episode: 1 });
         set({ time: 0 });
         return;
       }
