@@ -60,7 +60,7 @@ export async function getAnime(id: number, episode: number) {
   const romajiAnime = getAnimeSlug(romaji, episode);
   const englishAnime = getAnimeSlug(english, episode);
 
-  const anime = await Promise.all([romajiAnime, englishAnime]).then((r) =>
+  const anime = await Promise.all([englishAnime, romajiAnime]).then((r) =>
     Object.keys(r[0]).length > 0 ? r[0] : r[1]
   );
 
