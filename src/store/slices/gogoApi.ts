@@ -14,11 +14,11 @@ const initialState: GogoApiState = {
   totalEpisodes: 1,
   sources: [
     {
-      file: '/api/404',
+      file: 'https://example.com/404',
     },
   ],
   currentSource: 0,
-  videoLink: '/api/404',
+  videoLink: 'https://example.com/404',
 };
 
 export const gogoApiSlice = createSlice({
@@ -44,7 +44,11 @@ export const gogoApiSlice = createSlice({
       state: Draft<GogoApiState>,
       action: PayloadAction<GogoApiState['sources']>
     ) => {
-      state.sources = action.payload ?? initialState.sources;
+      if (!action.payload || action.payload.length === 0) {
+        state.sources = initialState.sources;
+      } else {
+        state.sources = action.payload;
+      }
       state.currentSource = 0;
       state.videoLink = state.sources[state.currentSource].file;
     },

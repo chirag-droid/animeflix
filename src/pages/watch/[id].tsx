@@ -87,13 +87,13 @@ const Watch = ({
   useEffect(() => {
     if (routerRef.current.query.episode) return;
 
-    const savedEpisode = localStorage
-      .getItem(`Anime${animeId}`)
-      .split('-')
-      .map((v) => parseInt(v, 10))[0];
+    const savedState = localStorage.getItem(`Anime${animeId}`) || '1-0';
+    const savedEpisode = savedState.split('-').map((v) => parseInt(v, 10))[0];
 
-    dispatch(setEpisode(savedEpisode));
-  }, [animeId, dispatch]);
+    if (episode !== savedEpisode) {
+      dispatch(setEpisode(savedEpisode));
+    }
+  }, [animeId, dispatch, episode]);
 
   // update the router url
   useEffect(() => {
@@ -134,8 +134,8 @@ const Watch = ({
   useEffect(() => {
     if (isLoading) return;
 
-    dispatch(setProxy(!sources[0].file.match(proxyFreeUrls)));
-  }, [dispatch, isLoading, sources]);
+    dispatch(setProxy(!videoLink.match(proxyFreeUrls)));
+  }, [dispatch, isLoading, videoLink]);
 
   // get data about next airing episode
   const { nextAiringEpisode } = anime;
