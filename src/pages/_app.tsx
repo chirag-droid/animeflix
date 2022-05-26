@@ -3,8 +3,10 @@ import { AppProps } from 'next/app';
 import Router from 'next/router';
 
 import { DefaultSeo } from 'next-seo';
+import { Provider } from 'react-redux';
 
 import progressBar from '@components/Progress';
+import { useStore } from '@store/store';
 
 // start progress bar when the route starts to change
 Router.events.on('routeChangeStart', progressBar.start);
@@ -13,6 +15,8 @@ Router.events.on('routeChangeStart', progressBar.start);
 Router.events.on('routeChangeError', progressBar.finish);
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const reduxStore = useStore(pageProps.initialReduxState);
+
   return (
     <>
       <DefaultSeo
@@ -42,7 +46,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           ],
         }}
       />
-      <Component {...pageProps} />
+      <Provider store={reduxStore}>
+        <Component {...pageProps} />
+      </Provider>
     </>
   );
 }

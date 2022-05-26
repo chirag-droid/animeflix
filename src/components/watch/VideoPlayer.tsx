@@ -3,31 +3,29 @@ import { useRef, useEffect } from 'react';
 import { Player, Hls, Video } from '@vime/react';
 
 import '@vime/core/themes/default.css';
-import useStream from '@hooks/useStream';
-import { proxyUrl } from '@utility/utils';
+
+import { setCurrentTime, setStartTime } from '@slices/timer';
+import { useDispatch, useSelector } from '@store/store';
 
 import VideoControls from './VideoControls';
 
 export interface VideoPlayerProps {
   src: string;
-  referer: string;
   poster: string;
-  shouldUseProxy: boolean;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({
-  src,
-  referer,
-  poster,
-  shouldUseProxy,
-}) => {
-  const [animeId, episode] = useStream((store) => [
-    store.animeId,
-    store.episode,
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
+  const dispatch = useDispatch();
+  const [startTime, currentTime] = useSelector((store) => [
+    store.timer.startTime,
+    store.timer.currentTime,
   ]);
-  const startTime = useStream((store) => store.time);
+  const [anime, episode] = useSelector((store) => [
+    store.anime.anime,
+    store.episode.episode,
+  ]);
 
-  const videoSrc = shouldUseProxy ? proxyUrl(src, referer) : src;
+  const episodeRef = useRef(episode);
 
   const videoplayer = useRef<HTMLVmPlayerElement>(null);
 
@@ -67,22 +65,39 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     });
   });
 
-  const lastTime = useRef(0);
-
   const timeChangeCallback = (event: CustomEvent<number>) => {
-    if (Math.ceil(event.detail) === lastTime.current) return;
-
-    lastTime.current = Math.ceil(event.detail);
-
     if (videoplayer.current.duration < 0) return;
 
-    if (event.detail / videoplayer.current.duration >= 0.99) {
-      localStorage.removeItem(`Anime${animeId}`);
+    if (currentTime === Math.ceil(event.detail)) return;
+
+    dispatch(setCurrentTime(event.detail));
+  };
+
+  useEffect(() => {
+    const savedState = localStorage.getItem(`Anime${anime}`) || '1-0';
+    const [savedEpisode, savedTime] = savedState
+      .split('-')
+      .map((v) => parseInt(v, 10));
+
+    if (savedEpisode === episode) {
+      dispatch(setStartTime(savedTime));
+    } else {
+      dispatch(setStartTime(0));
+    }
+  }, [anime, dispatch, episode]);
+
+  useEffect(() => {
+    if (currentTime <= 120) return;
+    if (videoplayer.current.duration - currentTime <= 180) {
+      localStorage.removeItem(`Anime${anime}`);
       return;
     }
 
-    localStorage.setItem(`Anime${animeId}`, `${episode}-${event.detail}`);
-  };
+    localStorage.setItem(
+      `Anime${anime}`,
+      `${episodeRef.current}-${currentTime}`
+    );
+  }, [anime, currentTime, dispatch]);
 
   return (
     <Player
@@ -94,13 +109,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         videoplayer.current.currentTime = startTime;
       }}
     >
-      {videoSrc && videoSrc.includes('m3u8') ? (
-        <Hls version="latest" poster={poster} key={videoSrc}>
-          <source data-src={videoSrc} type="application/x-mpegURL" />
+      {src && src.includes('m3u8') ? (
+        <Hls version="latest" poster={poster} key={src}>
+          <source data-src={src} type="application/x-mpegURL" />
         </Hls>
       ) : (
-        <Video poster={poster} key={videoSrc}>
-          <source data-src={videoSrc} type="video/mp4" />
+        <Video poster={poster} key={src}>
+          <source data-src={src} type="video/mp4" />
         </Video>
       )}
 

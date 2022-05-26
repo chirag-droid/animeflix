@@ -23,15 +23,13 @@ import {
 } from '@vime/react';
 
 import useMediaQuery from '@hooks/useMediaQuery';
-import useStream from '@hooks/useStream';
+import { decrementEpisode, incrementEpisode } from '@slices/episode';
+import { useDispatch } from '@store/store';
 
 const VideoControls = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  const [incrementEpisode, decrementEpisode] = useStream((store) => [
-    store.incrementEpisode,
-    store.decrementEpisode,
-  ]);
+  const dispatch = useDispatch();
 
   return (
     <DefaultUi noControls>
@@ -44,14 +42,22 @@ const VideoControls = () => {
           '--vm-controls-spacing': '80px',
         }}
       >
-        <Control onClick={decrementEpisode} keys="p" label="Previous Episode">
+        <Control
+          onClick={() => dispatch(decrementEpisode())}
+          keys="p"
+          label="Previous Episode"
+        >
           <ChevronDoubleLeftIcon className="text-white w-9" />
           <Tooltip>previous(p)</Tooltip>
         </Control>
 
         <PlaybackControl hideTooltip keys="k/ " />
 
-        <Control onClick={incrementEpisode} keys="n" label="Next Episode">
+        <Control
+          onClick={() => dispatch(incrementEpisode())}
+          keys="n"
+          label="Next Episode"
+        >
           <ChevronDoubleRightIcon className="text-white w-9" />
           <Tooltip className="text-xs">next(n)</Tooltip>
         </Control>

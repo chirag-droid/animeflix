@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { setEpisode } from '@slices/episode';
+import { useDispatch, useSelector } from '@store/store';
 
 export interface PageButtonProps {
   start: number;
   end: number;
   onClick: () => void;
-}
-
-export interface EpisodeProps {
-  id: number;
-  episodes: number;
 }
 
 const PageButton: React.FC<PageButtonProps> = ({ start, end, onClick }) => {
@@ -25,22 +20,14 @@ const PageButton: React.FC<PageButtonProps> = ({ start, end, onClick }) => {
   );
 };
 
-const Episode: React.FC<EpisodeProps> = ({ id, episodes }) => {
-  const router = useRouter();
+const Episode: React.FC = () => {
+  const episodes = useSelector((store) => store.gogoApi.totalEpisodes);
+
+  const dispatch = useDispatch();
 
   const [currentPage, setPage] = useState(1);
 
-  const inputKeyHandle: React.KeyboardEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    if (event.key === 'Enter')
-      router.push({
-        query: {
-          id,
-          episode: event.currentTarget.value,
-        },
-      });
-  };
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Show 100 episodes per page.
   // for 123 episodes there should be 2 pages
@@ -53,9 +40,15 @@ const Episode: React.FC<EpisodeProps> = ({ id, episodes }) => {
       <div className="flex m-2">
         <span className="text-gray-300 md:text-lg">Go to episode: </span>
         <input
+          ref={inputRef}
           className="ml-2 w-32 outline-none p-1 text-gray-800 text-sm md:text-base placeholder-gray-700 rounded-sm"
           placeholder="Episode no."
-          onKeyDown={inputKeyHandle}
+          onKeyDown={(e) => {
+            if (e.key !== 'Enter') return;
+
+            dispatch(setEpisode(parseInt(inputRef.current.value, 10)));
+            inputRef.current.value = '';
+          }}
         ></input>
       </div>
 
@@ -79,13 +72,13 @@ const Episode: React.FC<EpisodeProps> = ({ id, episodes }) => {
             {episodeArray
               .slice((currentPage - 1) * 100, currentPage * 100)
               .map((v) => (
-                <Link key={v} passHref href={`/watch/${id}/?episode=${v}`}>
-                  <a className="text-gray-800">
-                    <div className="bg-gray-100 py-[1px] px-1 rounded-sm hover:bg-gray-400">
-                      {v}
-                    </div>
-                  </a>
-                </Link>
+                <div
+                  className="text-gray-800 bg-gray-100 py-[1px] px-1 rounded-sm hover:bg-gray-400"
+                  key={v}
+                  onClick={() => dispatch(setEpisode(v))}
+                >
+                  {v}
+                </div>
               ))}
           </div>
         </div>

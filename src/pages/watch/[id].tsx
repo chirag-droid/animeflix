@@ -13,12 +13,16 @@ import RecommendationCard from '@components/watch/Card';
 import Episode from '@components/watch/Episode';
 import WatchControls from '@components/watch/WatchControls';
 import { AnimeBannerFragment, AnimeInfoFragment } from '@generated/aniList';
-import useStream from '@hooks/useStream';
 import useVideoSources from '@hooks/useVideoSources';
 import { watchPage } from '@lib/api';
 import { proxyFreeUrls } from '@lib/constants';
+import { setAnime } from '@slices/anime';
+import { setEpisode } from '@slices/episode';
+import { setSources, setTotalEpisodes, resetSources } from '@slices/gogoApi';
+import { setProxy } from '@slices/videoSettings';
+import { initialiseStore, useDispatch, useSelector } from '@store/store';
 import { convertToDate, convertToTime } from '@utility/time';
-import { arrayToString } from '@utility/utils';
+import { arrayToString, proxyUrl } from '@utility/utils';
 
 const VideoPlayer = dynamic(() => import('@components/watch/VideoPlayer'), {
   ssr: false,
@@ -32,7 +36,16 @@ interface WatchProps {
 export const getServerSideProps: GetServerSideProps<WatchProps> = async (
   context
 ) => {
+  const store = initialiseStore();
+
   const { id } = context.params;
+  const { episode } = context.query;
+
+  store.dispatch(setAnime(parseInt(arrayToString(id), 10)));
+
+  if (episode) {
+    store.dispatch(setEpisode(parseInt(arrayToString(episode), 10)));
+  }
 
   const data = await watchPage({
     id: parseInt(arrayToString(id), 10),
@@ -47,6 +60,7 @@ export const getServerSideProps: GetServerSideProps<WatchProps> = async (
     props: {
       anime: data.anime,
       recommended,
+      initialReduxState: store.getState(),
     },
   };
 };
@@ -59,72 +73,69 @@ const Watch = ({
   progressBar.finish();
 
   const router = useRouter();
-  const { query } = router;
 
-  // get the stream store
-  const [episode, setEpisode] = useStream((store) => [
-    store.episode,
-    store.setEpisode,
+  const dispatch = useDispatch();
+  const [animeId, episode] = useSelector((store) => [
+    store.anime.anime,
+    store.episode.episode,
   ]);
-  const setAnimeId = useStream((store) => store.setAnimeId);
-  const [shouldUseProxy, setProxy] = useStream((store) => [
-    store.shouldUseProxy,
-    store.setProxy,
-  ]);
-  const isDub = useStream((store) => store.isDub);
-  const [totalEpisodes, setTotalEpisodes] = useStream((store) => [
-    store.totalEpisodes,
-    store.setTotalEpisode,
-  ]);
+  const { useDub, useProxy } = useSelector((store) => store.videoSettings);
+  const videoLink = useSelector((store) => store.gogoApi.videoLink);
+
+  const routerRef = useRef(router);
+
+  useEffect(() => {
+    if (routerRef.current.query.episode) return;
+
+    const savedEpisode = localStorage
+      .getItem(`Anime${animeId}`)
+      .split('-')
+      .map((v) => parseInt(v, 10))[0];
+
+    dispatch(setEpisode(savedEpisode));
+  }, [animeId, dispatch]);
+
+  // update the router url
+  useEffect(() => {
+    routerRef.current.replace(
+      {
+        pathname: '/watch/[id]',
+        query: { id: animeId, episode },
+      },
+      `/watch/${animeId}/?episode=${episode}`,
+      {
+        shallow: true,
+      }
+    );
+  }, [animeId, episode]);
 
   // get the videolink, episode of the anime
   const { sources, referer, isError, isLoading, episodes } = useVideoSources(
-    anime.id,
+    animeId,
     episode,
-    isDub
+    useDub
   );
+
+  // set the videosources
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(resetSources());
+    }
+    dispatch(setSources(sources));
+  }, [dispatch, isLoading, sources]);
 
   // set the total episodes the animes has
   useEffect(() => {
-    setTotalEpisodes(episodes);
-  }, [episodes, setTotalEpisodes]);
-
-  // set the current anime
-  useEffect(() => {
-    setAnimeId(parseInt(arrayToString(query.id), 10));
-  }, [query.id, setAnimeId]);
-
-  // set the current playing episode from the query
-  useEffect(() => {
-    if (query.episode) {
-      setEpisode(parseInt(arrayToString(query.episode), 10));
-    }
-  }, [query.episode, setEpisode]);
+    if (isLoading) return;
+    dispatch(setTotalEpisodes(episodes));
+  }, [dispatch, episodes, isLoading]);
 
   // set the should use proxy by matching regex
   useEffect(() => {
     if (isLoading) return;
 
-    if (!sources[0].file.match(proxyFreeUrls)) {
-      setProxy(true);
-    }
-  }, [isLoading, setProxy, sources]);
-
-  const routerRef = useRef(router);
-
-  // replace the url in the browser
-  useEffect(() => {
-    routerRef.current.replace(
-      {
-        pathname: '/watch/[id]',
-        query: { id: anime.id, episode },
-      },
-      `/watch/${anime.id}/?episode=${episode}`,
-      {
-        shallow: true,
-      }
-    );
-  }, [anime.id, episode]);
+    dispatch(setProxy(!sources[0].file.match(proxyFreeUrls)));
+  }, [dispatch, isLoading, sources]);
 
   // get data about next airing episode
   const { nextAiringEpisode } = anime;
@@ -162,9 +173,7 @@ const Watch = ({
           {/* render the video player element */}
           {!isError ? (
             <VideoPlayer
-              src={!isLoading && sources[0].file}
-              referer={!isLoading ? referer : ''}
-              shouldUseProxy={shouldUseProxy}
+              src={useProxy ? proxyUrl(videoLink, referer) : videoLink}
               poster={anime.bannerImage}
             />
           ) : (
@@ -206,7 +215,7 @@ const Watch = ({
 
           <WatchControls />
 
-          <Episode id={anime.id} episodes={totalEpisodes} />
+          <Episode />
 
           {/* Anime decription */}
           {anime.description ? (

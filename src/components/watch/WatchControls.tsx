@@ -1,15 +1,16 @@
-import useStream from '@hooks/useStream';
+import { AnyAction } from '@reduxjs/toolkit';
+
+import { toggleDub, toggleProxy } from '@store/slices/videoSettings';
+import { useDispatch, useSelector } from '@store/store';
 
 interface TogglerProps {
   label: string;
   checked: boolean;
-  callback: (input: boolean) => void;
+  action: AnyAction;
 }
 
-const Toggler: React.FC<TogglerProps> = ({ label, checked, callback }) => {
-  const toggle = () => {
-    callback(!checked);
-  };
+const Toggler: React.FC<TogglerProps> = ({ label, checked, action }) => {
+  const dispatch = useDispatch();
 
   return (
     <label className="mr-2 relative text-white flex justify-between items-center p2">
@@ -17,7 +18,7 @@ const Toggler: React.FC<TogglerProps> = ({ label, checked, callback }) => {
       <input
         type="checkbox"
         checked={checked}
-        onChange={toggle}
+        onChange={() => dispatch(action)}
         className="absolute left-0 top-0 w-full h-full peer appearance-none"
       />
       <span
@@ -33,26 +34,15 @@ const Toggler: React.FC<TogglerProps> = ({ label, checked, callback }) => {
 };
 
 const WatchControls: React.FC = () => {
-  const [shouldUseProxy, setProxy] = useStream((store) => [
-    store.shouldUseProxy,
-    store.setProxy,
+  const [useProxy, useDub] = useSelector((store) => [
+    store.videoSettings.useProxy,
+    store.videoSettings.useDub,
   ]);
-
-  const [isDub, setDub] = useStream((store) => [store.isDub, store.setDub]);
 
   return (
     <div className="flex space-x-4 m-2">
-      <Toggler
-        label="Use Proxy?"
-        checked={shouldUseProxy}
-        callback={setProxy}
-      />
-
-      <Toggler
-        label="Watch Dubbed Version?"
-        checked={isDub}
-        callback={setDub}
-      />
+      <Toggler label="Use Proxy?" checked={useProxy} action={toggleProxy()} />
+      <Toggler label="Watch Dubbed?" checked={useDub} action={toggleDub()} />
     </div>
   );
 };
