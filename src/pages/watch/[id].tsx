@@ -85,15 +85,16 @@ const Watch = ({
   const routerRef = useRef(router);
 
   useEffect(() => {
+    // only run when the initial episode value was not supplied
     if (routerRef.current.query.episode) return;
 
+    // get the saved episode
     const savedState = localStorage.getItem(`Anime${animeId}`) || '1-0';
     const savedEpisode = savedState.split('-').map((v) => parseInt(v, 10))[0];
 
-    if (episode !== savedEpisode) {
-      dispatch(setEpisode(savedEpisode));
-    }
-  }, [animeId, dispatch, episode]);
+    // update the episode
+    dispatch(setEpisode(savedEpisode));
+  }, [animeId, dispatch]);
 
   // update the router url
   useEffect(() => {
