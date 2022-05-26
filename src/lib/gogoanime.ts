@@ -21,21 +21,41 @@ export async function getAnimeSlug(title: string, episode: number) {
 
   const episodeSlug = gogoEpisodes[0]?.episodeId.split('-episode')[0];
 
-  const data = await scrapeMP4({
-    id: `${episodeSlug}-episode-${episode}`,
+  // fetch animes dub and sub
+  const subAnime = scrapeMP4({ id: `${episodeSlug}-episode-${episode}` });
+  const dubAnime = scrapeMP4({
+    id: `${episodeSlug.replace(/-movie$/, '')}-dub-episode-${episode}`,
   });
 
-  const bestQuality = data.sources?.[data.sources.length - 1].file;
+  const [sub, dub] = await Promise.all([subAnime, dubAnime]);
+
+  sub.sources = sub.sources || [];
+  sub.sources_bk = sub.sources_bk || [];
+  dub.sources = dub.sources || [];
+  dub.sources_bk = dub.sources_bk || [];
 
   return {
-    referer: data.Referer || null,
-    videoLink: bestQuality || null,
+    sub: {
+      Referer: sub.Referer,
+      sources: [...sub.sources, ...sub.sources_bk],
+    },
+    dub: {
+      Referer: dub.Referer,
+      sources: [...dub.sources, ...dub.sources_bk],
+    },
     episodes: gogoEpisodes.length || null,
   };
 }
 
 export async function getAnime(id: number, episode: number) {
-  const { english, romaji } = (await getAnimeTitle({ id })).Media.title;
+  let { english, romaji } = (await getAnimeTitle({ id })).Media.title;
+
+  english = english.toLocaleLowerCase();
+  romaji = romaji.toLocaleLowerCase();
+
+  if (english === romaji) {
+    return getAnimeSlug(english, episode);
+  }
 
   const romajiAnime = getAnimeSlug(romaji, episode);
   const englishAnime = getAnimeSlug(english, episode);

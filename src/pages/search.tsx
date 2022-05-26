@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 
@@ -5,9 +7,9 @@ import { NextSeo } from 'next-seo';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
+import progressBar from '@components/Progress';
 import { SearchAnimeQuery } from '@generated/aniList';
 import { searchAnime } from '@lib/api';
-import { progress } from '@pages/_app';
 
 interface SearchResult {
   searchResults: SearchAnimeQuery;
@@ -36,7 +38,7 @@ const Search = ({
   const router = useRouter();
   const { keyword } = router.query;
 
-  progress.finish();
+  useEffect(() => progressBar.finish(), []);
 
   return (
     <>

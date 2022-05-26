@@ -3,27 +3,33 @@ import { useRef, useEffect } from 'react';
 import { Player, Hls, Video } from '@vime/react';
 
 import '@vime/core/themes/default.css';
+
+import { setCurrentTime, setStartTime } from '@slices/timer';
+import { useDispatch, useSelector } from '@store/store';
+
 import VideoControls from './VideoControls';
 
 export interface VideoPlayerProps {
   src: string;
   poster: string;
-  previousCallback: () => void;
-  nextCallback: () => void;
-  saveProgressCallback: (progress: number) => void;
-  startTime: number;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({
-  src,
-  poster,
-  previousCallback,
-  nextCallback,
-  saveProgressCallback,
-  startTime,
-}) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
+  const dispatch = useDispatch();
+  const [startTime, currentTime] = useSelector((store) => [
+    store.timer.startTime,
+    store.timer.currentTime,
+  ]);
+  const [anime, episode] = useSelector((store) => [
+    store.anime.anime,
+    store.episode.episode,
+  ]);
+
+  const episodeRef = useRef(episode);
+
   const videoplayer = useRef<HTMLVmPlayerElement>(null);
 
+  // Workaround for keyboard shortcuts not working
   useEffect(() => {
     // focus on videoplayer by default
     videoplayer.current.focus();
@@ -59,16 +65,43 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     });
   });
 
-  // save episode progress every 2 minutes
+  const timeChangeCallback = (event: CustomEvent<number>) => {
+    if (videoplayer.current.duration < 0) return;
+
+    if (currentTime === Math.ceil(event.detail)) return;
+
+    dispatch(setCurrentTime(event.detail));
+  };
+
   useEffect(() => {
-    const intervalID = setInterval(() => {
-      saveProgressCallback(videoplayer.current.currentTime);
-    }, 1000 * 60 * 2);
-    return () => clearInterval(intervalID);
-  }, [saveProgressCallback]);
+    const savedState = localStorage.getItem(`Anime${anime}`) || '1-0';
+    const [savedEpisode, savedTime] = savedState
+      .split('-')
+      .map((v) => parseInt(v, 10));
+
+    if (savedEpisode === episode) {
+      dispatch(setStartTime(savedTime));
+    } else {
+      dispatch(setStartTime(0));
+    }
+  }, [anime, dispatch, episode]);
+
+  useEffect(() => {
+    if (currentTime <= 120) return;
+    if (videoplayer.current.duration - currentTime <= 180) {
+      localStorage.removeItem(`Anime${anime}`);
+      return;
+    }
+
+    localStorage.setItem(
+      `Anime${anime}`,
+      `${episodeRef.current}-${currentTime}`
+    );
+  }, [anime, currentTime, dispatch]);
 
   return (
     <Player
+      onVmCurrentTimeChange={timeChangeCallback}
       ref={videoplayer}
       tabIndex={0}
       style={{ outline: 'none' }}
@@ -76,7 +109,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         videoplayer.current.currentTime = startTime;
       }}
     >
-      {src.includes('m3u8') ? (
+      {src && src.includes('m3u8') ? (
         <Hls version="latest" poster={poster} key={src}>
           <source data-src={src} type="application/x-mpegURL" />
         </Hls>
@@ -86,10 +119,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         </Video>
       )}
 
-      <VideoControls
-        nextCallback={nextCallback}
-        previousCallback={previousCallback}
-      />
+      <VideoControls />
     </Player>
   );
 };

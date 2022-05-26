@@ -3,3 +3,6 @@ export const proxyUrl = (url: string, referer: string) => {
     url
   )}&referer=${encodeURIComponent(referer)}`;
 };
+
+export const arrayToString = (data: string | string[]) =>
+  typeof data === 'string' ? data : data.join('');

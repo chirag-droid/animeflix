@@ -7,15 +7,15 @@ import { PlayIcon } from '@heroicons/react/solid';
 
 import Genre from '@components/Genre';
 import Icon from '@components/Icon';
+import progressBar from '@components/Progress';
 import { AnimeBannerFragment } from '@generated/aniList';
 import useMediaQuery from '@hooks/useMediaQuery';
 
 export interface BannerProps {
   anime: AnimeBannerFragment;
-  onLoadingComplete: () => void;
 }
 
-const Banner: React.FC<BannerProps> = ({ anime, onLoadingComplete }) => {
+const Banner: React.FC<BannerProps> = ({ anime }) => {
   const router = useRouter();
 
   const isMedium = useMediaQuery('(min-width: 768px)');
@@ -41,7 +41,7 @@ const Banner: React.FC<BannerProps> = ({ anime, onLoadingComplete }) => {
         {anime.bannerImage ? (
           <Image
             alt=""
-            onLoadingComplete={onLoadingComplete}
+            onLoadingComplete={progressBar.finish}
             priority
             src={anime.bannerImage}
             layout="fill"
@@ -49,7 +49,7 @@ const Banner: React.FC<BannerProps> = ({ anime, onLoadingComplete }) => {
             className="opacity-60"
           />
         ) : (
-          onLoadingComplete()
+          progressBar.finish()
         )}
       </>
 

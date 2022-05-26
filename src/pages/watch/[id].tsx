@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import dynamic from 'next/dynamic';
@@ -8,13 +8,21 @@ import { NextSeo } from 'next-seo';
 
 import Genre from '@components/Genre';
 import Header from '@components/Header';
+import progressBar from '@components/Progress';
 import RecommendationCard from '@components/watch/Card';
 import Episode from '@components/watch/Episode';
+import WatchControls from '@components/watch/WatchControls';
 import { AnimeBannerFragment, AnimeInfoFragment } from '@generated/aniList';
-import useAnime from '@hooks/useAnime';
+import useVideoSources from '@hooks/useVideoSources';
 import { watchPage } from '@lib/api';
-import { progress } from '@pages/_app';
-import { proxyUrl } from '@utility/utils';
+import { proxyFreeUrls } from '@lib/constants';
+import { setAnime } from '@slices/anime';
+import { setEpisode } from '@slices/episode';
+import { setSources, setTotalEpisodes, resetSources } from '@slices/gogoApi';
+import { setProxy } from '@slices/videoSettings';
+import { initialiseStore, useDispatch, useSelector } from '@store/store';
+import { convertToDate, convertToTime } from '@utility/time';
+import { arrayToString, proxyUrl } from '@utility/utils';
 
 const VideoPlayer = dynamic(() => import('@components/watch/VideoPlayer'), {
   ssr: false,
@@ -28,12 +36,19 @@ interface WatchProps {
 export const getServerSideProps: GetServerSideProps<WatchProps> = async (
   context
 ) => {
-  let { id } = context.params;
+  const store = initialiseStore();
 
-  id = typeof id === 'string' ? id : id.join('');
+  const { id } = context.params;
+  const { episode } = context.query;
+
+  store.dispatch(setAnime(parseInt(arrayToString(id), 10)));
+
+  if (episode) {
+    store.dispatch(setEpisode(parseInt(arrayToString(episode), 10)));
+  }
 
   const data = await watchPage({
-    id: parseInt(id, 10),
+    id: parseInt(arrayToString(id), 10),
     perPage: 20,
   });
 
@@ -45,142 +60,86 @@ export const getServerSideProps: GetServerSideProps<WatchProps> = async (
     props: {
       anime: data.anime,
       recommended,
+      initialReduxState: store.getState(),
     },
   };
 };
 
-const Video = ({
+const Watch = ({
   anime,
   recommended,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // finish the progress bar
+  progressBar.finish();
+
   const router = useRouter();
 
-  let { id, episode } = router.query;
+  const dispatch = useDispatch();
+  const [animeId, episode] = useSelector((store) => [
+    store.anime.anime,
+    store.episode.episode,
+  ]);
+  const { useDub, useProxy } = useSelector((store) => store.videoSettings);
+  const videoLink = useSelector((store) => store.gogoApi.videoLink);
 
-  let startTime = 0;
-
-  if (typeof window === 'undefined') {
-    episode = episode || '1';
-  }
-
-  if (typeof window !== 'undefined') {
-    // check if last watched episode in localstorage
-    const savedState = localStorage.getItem(`Anime${id}`) || '1-0';
-    const [savedEpisode, savedTime] = savedState.split('-');
-
-    if (episode === undefined) {
-      if (savedEpisode) {
-        episode = savedEpisode;
-      } else {
-        episode = '1';
-      }
-
-      router.replace(
-        {
-          pathname: '/watch/[id]',
-          query: { id, episode },
-        },
-        `/watch/${id}/?episode=${episode}`,
-        {
-          shallow: true,
-        }
-      );
-    }
-
-    if (episode === savedEpisode) {
-      startTime = parseInt(savedTime, 10);
-    }
-  }
-
-  progress.finish();
-
-  id = typeof id === 'string' ? id : id.join('');
-  episode = typeof episode === 'string' ? episode : episode.join('');
-
-  const episodeInt = parseInt(episode, 10);
-  const idInt = parseInt(id, 10);
-
-  const { videoLink, referer, episodes, isError } = useAnime(idInt, episodeInt);
-
-  const { nextAiringEpisode } = anime;
-
-  const previousEpisode = () => {
-    router.push(`/watch/${id}?episode=${episodeInt - 1}`);
-  };
-
-  const nextEpisode = () => {
-    router.push(`/watch/${id}?episode=${episodeInt + 1}`);
-  };
-
-  const saveProgress = (time: number) => {
-    // delete progress if on last episode
-    if (episode === episodes.toString() && time > 60 * 10) {
-      localStorage.removeItem(`Anime${id}`);
-      return;
-    }
-    localStorage.setItem(`Anime${id}`, `${episode}-${time}`);
-  };
-
-  const urls = useMemo(() => {
-    return /(gogocdn\.stream)|(manifest\.prod\.boltdns\.net)/;
-  }, []);
-
-  const [shouldUseProxy, setProxy] = useState(false);
+  const routerRef = useRef(router);
 
   useEffect(() => {
-    if (!videoLink) {
-      setProxy(false);
-      return;
+    // only run when the initial episode value was not supplied
+    if (routerRef.current.query.episode) return;
+
+    // get the saved episode
+    const savedState = localStorage.getItem(`Anime${animeId}`) || '1-0';
+    const savedEpisode = savedState.split('-').map((v) => parseInt(v, 10))[0];
+
+    // update the episode
+    dispatch(setEpisode(savedEpisode));
+  }, [animeId, dispatch]);
+
+  // update the router url
+  useEffect(() => {
+    routerRef.current.replace(
+      {
+        pathname: '/watch/[id]',
+        query: { id: animeId, episode },
+      },
+      `/watch/${animeId}/?episode=${episode}`,
+      {
+        shallow: true,
+      }
+    );
+  }, [animeId, episode]);
+
+  // get the videolink, episode of the anime
+  const { sources, referer, isError, isLoading, episodes } = useVideoSources(
+    animeId,
+    episode,
+    useDub
+  );
+
+  // set the videosources
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(resetSources());
     }
-    setProxy(!videoLink.match(urls));
-  }, [videoLink, urls]);
+    dispatch(setSources(sources));
+  }, [dispatch, isLoading, sources]);
 
-  const nth = (days: number) => {
-    if (days > 3 && days < 21) return 'th';
+  // set the total episodes the animes has
+  useEffect(() => {
+    if (isLoading) return;
+    dispatch(setTotalEpisodes(episodes));
+  }, [dispatch, episodes, isLoading]);
 
-    switch (days % 10) {
-      case 1:
-        return 'st';
-      case 2:
-        return 'nd';
-      case 3:
-        return 'rd';
-      default:
-        return 'th';
-    }
-  };
+  // set the should use proxy by matching regex
+  useEffect(() => {
+    if (isLoading) return;
 
-  const convertToDate = (date: number) => {
-    const dateObj = new Date(date);
-    const year = dateObj.getFullYear();
-    const month = dateObj.toLocaleString('en-us', { month: 'short' });
-    const day = dateObj.getDate();
+    dispatch(setProxy(!videoLink.match(proxyFreeUrls)));
+  }, [dispatch, isLoading, videoLink]);
 
-    return `${day}${nth(day)} of ${month} ${year}`;
-  };
-
-  const convertToTime = (date: number) => {
-    const weekday = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-
-    const dateObj = new Date(date);
-    const day = weekday[dateObj.getDay()];
-    let hours = dateObj.getHours();
-    let minutes: number | string = dateObj.getMinutes();
-    const ampm = hours >= 12 ? 'pm' : 'am';
-    hours %= 12;
-    hours = hours || 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? `0${minutes}` : minutes;
-    const strTime = `${day} at ${hours}:${minutes} ${ampm} (GMT-4)`;
-    return strTime;
-  };
+  // get data about next airing episode
+  const { nextAiringEpisode } = anime;
 
   return (
     <>
@@ -212,14 +171,11 @@ const Video = ({
 
       <div className="lg:flex mt-4 space-x-4">
         <div className="flex-shrink-0 max-w-[800px] mx-auto sm:p-4 lg:p-0 lg:ml-4 lg:mx-0 lg:max-w-full lg:w-[65%]">
+          {/* render the video player element */}
           {!isError ? (
             <VideoPlayer
-              src={shouldUseProxy ? proxyUrl(videoLink, referer) : videoLink}
+              src={useProxy ? proxyUrl(videoLink, referer) : videoLink}
               poster={anime.bannerImage}
-              nextCallback={nextEpisode}
-              previousCallback={previousEpisode}
-              saveProgressCallback={saveProgress}
-              startTime={startTime}
             />
           ) : (
             <p className="font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
@@ -227,39 +183,23 @@ const Video = ({
             </p>
           )}
 
+          {/* the title of what anime is playing */}
           <div className="flex w-full justify-between items-center">
             <p className="m-2 font-semibold text-white mt-4 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
-              {`${
-                anime.title.romaji || anime.title.english
-              } | Episode ${episode}`}
+              {`${anime.title.romaji || anime.title.english}${
+                anime.format !== 'MOVIE' ? ` | Episode ${episode}` : ''
+              }`}
             </p>
-
-            {/* Toggle button, whether to use proxy or not */}
-            <label className="mr-2 relative text-white flex justify-between items-center p2">
-              Use proxy?
-              <input
-                type="checkbox"
-                checked={shouldUseProxy}
-                onChange={() => setProxy(!shouldUseProxy)}
-                className="absolute left-0 top-0 w-full h-full peer appearance-none"
-              />
-              <span
-                className={`
-                  w-9 h-5 flex items-center flex-shrink-0 bg-gray-300
-                  ml-2 p-1 rounded-full
-                  after:w-4 after:h-4 after:bg-gray-500 after:rounded-full after:shadow-lg
-                  peer-checked:bg-red-500 peer-checked:after:bg-gray-800 peer-checked:after:translate-x-3 after:duration-300
-                `}
-              />
-            </label>
           </div>
 
+          {/* list of genres */}
           <div className="flex flex-wrap mx-3 gap-x-1 sm:gap-x-2 gap-y-1">
             {anime.genres.map((genre) => (
               <Genre key={genre} genre={genre} />
             ))}
           </div>
 
+          {/* Info about the next airing episode */}
           {nextAiringEpisode ? (
             <div className="text-gray-400 p-2 mt-2">
               {anime.title.romaji || anime.title.english} Episode{' '}
@@ -274,8 +214,11 @@ const Video = ({
             </div>
           ) : null}
 
-          <Episode id={idInt} episodes={episodes} />
+          <WatchControls />
 
+          <Episode />
+
+          {/* Anime decription */}
           {anime.description ? (
             <p
               className="text-gray-400 p-2 mt-2"
@@ -284,6 +227,7 @@ const Video = ({
           ) : null}
         </div>
 
+        {/* Anime recommendations */}
         <div className="mx-auto">
           <p className="lg:mt-0 font-semibold text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
             Recommended animes
@@ -300,4 +244,4 @@ const Video = ({
   );
 };
 
-export default Video;
+export default Watch;
