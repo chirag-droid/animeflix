@@ -1,19 +1,21 @@
 {
-    "name": "Animeflix",
-    "short_name": "animeflix",
-    "icons": [
-        {
-            "src": "/icons/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/icons/android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#C3073F",
-    "background_color": "#ffffff",
-    "display": "standalone"
+  "name": "Animeflix - Watch animes without ads",
+  "short_name": "Animeflix",
+  "start_url": "/",
+  "display": "standalone",
+  "description": "Watch anime shows, tv, movies for free without ads on your mobile, tablet, or pc",
+  "background_color": "#000",
+  "theme_color": "#C3073F",
+  "icons": [
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
