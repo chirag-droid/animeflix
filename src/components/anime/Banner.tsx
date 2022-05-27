@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,7 +11,6 @@ import Genre from '@components/Genre';
 import Icon from '@components/Icon';
 import progressBar from '@components/Progress';
 import { AnimeBannerFragment } from '@generated/aniList';
-import useMediaQuery from '@hooks/useMediaQuery';
 
 export interface BannerProps {
   anime: AnimeBannerFragment;
@@ -18,73 +19,64 @@ export interface BannerProps {
 const Banner: React.FC<BannerProps> = ({ anime }) => {
   const router = useRouter();
 
-  const isMedium = useMediaQuery('(min-width: 768px)');
-  const isLarge = useMediaQuery('(min-width: 1024px)');
-
-  const { romaji, english } = anime.title;
-  let title = romaji || english;
-  title = `${title.split(' ').splice(0, 11).join(' ')}...`;
-
-  let description = '';
-
-  if (isLarge) description = `${anime.description.substr(0, 380)}...`;
-  else if (isMedium) description = `${anime.description.substr(0, 300)}...`;
+  // finish the progress bar if the bannerimage doesn't exist
+  useEffect(() => {
+    if (!anime.bannerImage) progressBar.finish();
+  }, [anime.bannerImage]);
 
   // remove all the html tags
-  description = description.replace(/<\w*\\?>/g, '');
+  const description = anime.description.replace(/<\w*\\?>/g, '');
 
   return (
     <div className="relative h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] 2xl:h-[450px]">
       {/* The image behind the banner */}
+      {anime.bannerImage && (
+        <Image
+          priority
+          src={anime.bannerImage}
+          alt={`Banner for ${anime.title.english || anime.title.romaji}`}
+          layout="fill"
+          objectFit="cover"
+          className="opacity-60"
+          onLoadingComplete={progressBar.finish}
+        />
+      )}
 
-      <>
-        {anime.bannerImage ? (
-          <Image
-            alt=""
-            onLoadingComplete={progressBar.finish}
-            priority
-            src={anime.bannerImage}
-            layout="fill"
-            objectFit="cover"
-            className="opacity-60"
-          />
-        ) : (
-          progressBar.finish()
-        )}
-      </>
-
+      {/* The container that lies on top of the image */}
       <div className="absolute ml-4 mt-4 space-y-2 text-white sm:ml-8 sm:mt-6 md:space-y-3 lg:mt-8 xl:mt-10 2xl:mt-12">
-        <p className="text-xl font-extrabold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
-          {title}
+        {/* the title */}
+        <p className="text-xl font-extrabold line-clamp-1 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
+          {anime.title.romaji || anime.title.english}
         </p>
-        {english && english.length > 35 ? null : (
-          <p className="text-sm font-normal text-gray-300 sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">
-            {english}
-          </p>
-        )}
+        <p className="text-sm font-normal text-gray-300 line-clamp-1 sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">
+          {anime.title.english ?? anime.title.romaji}
+        </p>
 
+        {/* Icons showing the info about the anime */}
         <div className="flex space-x-2">
           <Icon icon={PlayIcon} text={anime.format} />
           <Icon icon={ClockIcon} text={`${anime.duration} Min/Ep`} />
           <Icon icon={ThumbUpIcon} text={`${anime.meanScore}%`} />
         </div>
 
+        {/* Array of the genres */}
         <div className="mr-2 flex flex-wrap gap-x-2 gap-y-1 sm:gap-x-3 md:gap-x-4">
           {anime.genres.map((genre) => (
             <Genre key={genre} genre={genre} />
           ))}
         </div>
 
-        <p className="max-w-3xl">{description}</p>
+        <p className="hidden max-w-3xl md:block md:line-clamp-3 lg:line-clamp-4 xl:line-clamp-5 2xl:line-clamp-6">
+          {description}
+        </p>
 
+        {/* the button at the bottom */}
         <Link
-          href={
-            router.route === '/' ? `/anime/${anime.id}` : `/watch/${anime.id}`
-          }
+          href={`/${router.route === '/' ? 'anime' : 'watch'}/${anime.id}`}
           passHref
         >
           <a>
-            <button className="flex-wra flex transform cursor-pointer items-center rounded-lg bg-[#C3073F] px-2 py-1 text-xs text-white transition duration-300 ease-in active:scale-90 sm:text-sm md:text-base">
+            <button className="mt-2 flex transform items-center rounded-lg bg-[#C3073F] px-2 py-1 text-xs text-white transition duration-300 ease-in active:scale-90 sm:text-sm md:text-base">
               <PlayIcon className="mr-1 w-5" />
               {router.route === '/' ? 'Read More' : 'Watch Now'}
             </button>

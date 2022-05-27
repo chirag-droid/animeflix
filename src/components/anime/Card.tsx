@@ -13,18 +13,17 @@ export interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ anime }) => {
-  let title = anime.title.romaji || anime.title.english;
-
-  if (title.length > 35) title = `${title.substr(0, 35)}...`;
+  const title = anime.title.romaji || anime.title.english;
 
   return (
     <Link href={`/anime/${anime.id}`} passHref>
-      <a className="w-46 transform cursor-pointer p-2 transition duration-300 ease-out hover:scale-105 sm:w-56">
-        <div className="relative h-48 w-40 sm:h-64 sm:w-52">
+      <a className="w-46 transform p-2 transition duration-300 ease-out hover:scale-105 sm:w-56">
+        <div className="aspect-w-7 aspect-h-9 relative w-40 sm:w-52">
           <Image
             alt="Cover Image"
             src={anime.coverImage.large || anime.coverImage.medium}
             layout="fill"
+            objectFit="cover"
             objectPosition="center"
             className="rounded-md"
             placeholder="blur"
@@ -35,9 +34,11 @@ const Card: React.FC<CardProps> = ({ anime }) => {
         </div>
 
         <div>
-          <p className="mt-2 h-12 text-sm font-bold text-white">{title}</p>
+          <p className="mt-2 h-9 text-sm font-bold text-white line-clamp-2">
+            {title}
+          </p>
 
-          <div className="flex space-x-2 text-xs text-white">
+          <div className="mt-3 flex space-x-2 text-xs text-white">
             <Icon
               icon={PlayIcon}
               text={anime.format}
@@ -46,10 +47,6 @@ const Card: React.FC<CardProps> = ({ anime }) => {
             <Icon icon={ClockIcon} text={`${anime.duration} Min`} />
             <Icon icon={ThumbUpIcon} text={`${anime.meanScore}%`} />
           </div>
-
-          <p className="float-right mt-2 text-xs text-gray-500">
-            Click to read more...
-          </p>
         </div>
       </a>
     </Link>

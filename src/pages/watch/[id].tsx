@@ -169,7 +169,7 @@ const Watch = ({
 
       <Header />
 
-      <div className="mt-4 space-x-4 lg:flex">
+      <div className="space-x-4 sm:mt-4 lg:flex">
         <div className="mx-auto max-w-[800px] flex-shrink-0 sm:p-4 lg:mx-0 lg:ml-4 lg:w-[65%] lg:max-w-full lg:p-0">
           {/* render the video player element */}
           {!isError ? (
@@ -219,12 +219,9 @@ const Watch = ({
           <Episode />
 
           {/* Anime decription */}
-          {anime.description ? (
-            <p
-              className="mt-2 p-2 text-gray-400"
-              dangerouslySetInnerHTML={{ __html: anime.description }}
-            />
-          ) : null}
+          <p className="m-2 text-gray-400 line-clamp-6 md:line-clamp-none">
+            {anime.description.replace(/<\w*\\?>/g, '')}
+          </p>
         </div>
 
         {/* Anime recommendations */}

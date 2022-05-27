@@ -17,13 +17,14 @@ export interface CardProps {
 const Card: React.FC<CardProps> = ({ anime }) => {
   return (
     <Link href={`/watch/${anime.id}`} passHref>
-      <a className="h-30 ml-2 mr-4 flex transform cursor-pointer space-x-4 py-2 text-white transition duration-300 ease-out hover:scale-105">
-        <div className="flex-shrink-1 relative min-h-[8rem] min-w-[6rem]">
+      <a className="ml-2 mr-4 flex transform space-x-4 py-2 text-white transition duration-300 ease-out hover:scale-105">
+        {/* Card Image */}
+        <div className="aspect-h-1 aspect-w-3 relative w-24 flex-shrink-0">
           <Image
             alt={anime.title.english || anime.title.romaji}
             src={anime.coverImage.large || anime.coverImage.medium}
             layout="fill"
-            objectPosition="left"
+            objectFit="cover"
             className="rounded-md"
             placeholder="blur"
             blurDataURL={`data:image/svg+xml;base64,${base64SolidImage(
@@ -33,10 +34,12 @@ const Card: React.FC<CardProps> = ({ anime }) => {
         </div>
 
         <div className="flex flex-col">
-          <p>{anime.title.english || anime.title.romaji}</p>
+          <p className="line-clamp-1">
+            {anime.title.english || anime.title.romaji}
+          </p>
 
-          <p className="text-gray-400">
-            {`${anime.description.replace(/<\w*\\?>/g, '').slice(0, 70)}...`}
+          <p className="text-gray-400 line-clamp-2">
+            {anime.description.replace(/<\w*\\?>/g, '')}
           </p>
 
           <div className="m-4 flex justify-end space-x-2 text-xs text-white">
