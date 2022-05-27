@@ -17,8 +17,8 @@ export interface CardProps {
 const Card: React.FC<CardProps> = ({ anime }) => {
   return (
     <Link href={`/watch/${anime.id}`} passHref>
-      <a className="flex space-x-4 ml-2 mr-4 text-white py-2 h-30 cursor-pointer hover:scale-105 transform transition duration-300 ease-out">
-        <div className="relative min-w-[6rem] min-h-[8rem] flex-shrink-1">
+      <a className="h-30 ml-2 mr-4 flex transform cursor-pointer space-x-4 py-2 text-white transition duration-300 ease-out hover:scale-105">
+        <div className="flex-shrink-1 relative min-h-[8rem] min-w-[6rem]">
           <Image
             alt={anime.title.english || anime.title.romaji}
             src={anime.coverImage.large || anime.coverImage.medium}
@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = ({ anime }) => {
             {`${anime.description.replace(/<\w*\\?>/g, '').slice(0, 70)}...`}
           </p>
 
-          <div className="justify-end m-4 flex space-x-2 text-white text-xs">
+          <div className="m-4 flex justify-end space-x-2 text-xs text-white">
             <Icon
               icon={PlayIcon}
               text={anime.format}

@@ -53,12 +53,12 @@ const Banner: React.FC<BannerProps> = ({ anime }) => {
         )}
       </>
 
-      <div className="text-white absolute ml-4 sm:ml-8 mt-4 sm:mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 space-y-2 md:space-y-3">
-        <p className="font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
+      <div className="absolute ml-4 mt-4 space-y-2 text-white sm:ml-8 sm:mt-6 md:space-y-3 lg:mt-8 xl:mt-10 2xl:mt-12">
+        <p className="text-xl font-extrabold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
           {title}
         </p>
         {english && english.length > 35 ? null : (
-          <p className="text-gray-300 font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">
+          <p className="text-sm font-normal text-gray-300 sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">
             {english}
           </p>
         )}
@@ -69,7 +69,7 @@ const Banner: React.FC<BannerProps> = ({ anime }) => {
           <Icon icon={ThumbUpIcon} text={`${anime.meanScore}%`} />
         </div>
 
-        <div className="flex flex-wrap gap-x-2 sm:gap-x-3 md:gap-x-4 gap-y-1 mr-2">
+        <div className="mr-2 flex flex-wrap gap-x-2 gap-y-1 sm:gap-x-3 md:gap-x-4">
           {anime.genres.map((genre) => (
             <Genre key={genre} genre={genre} />
           ))}
@@ -84,8 +84,8 @@ const Banner: React.FC<BannerProps> = ({ anime }) => {
           passHref
         >
           <a>
-            <button className="flex-wra cursor-pointer flex items-center px-2 py-1 rounded-lg text-xs sm:text-sm md:text-base bg-[#C3073F] text-white active:scale-90 transform transition duration-300 ease-in">
-              <PlayIcon className="w-5 mr-1" />
+            <button className="flex-wra flex transform cursor-pointer items-center rounded-lg bg-[#C3073F] px-2 py-1 text-xs text-white transition duration-300 ease-in active:scale-90 sm:text-sm md:text-base">
+              <PlayIcon className="mr-1 w-5" />
               {router.route === '/' ? 'Read More' : 'Watch Now'}
             </button>
           </a>

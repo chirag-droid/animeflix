@@ -13,7 +13,7 @@ const PageButton: React.FC<PageButtonProps> = ({ start, end, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="active:scale-90 duration-75 transition ease-out px-2 py-1 hover:bg-gray-800 rounded-md bg-gray-700 text-gray-300"
+      className="rounded-md bg-gray-700 px-2 py-1 text-gray-300 transition duration-75 ease-out hover:bg-gray-800 active:scale-90"
     >
       {start}-{end}
     </button>
@@ -37,11 +37,11 @@ const Episode: React.FC = () => {
 
   return (
     <div>
-      <div className="flex m-2">
+      <div className="m-2 flex">
         <span className="text-gray-300 md:text-lg">Go to episode: </span>
         <input
           ref={inputRef}
-          className="ml-2 w-32 outline-none p-1 text-gray-800 text-sm md:text-base placeholder-gray-700 rounded-sm"
+          className="ml-2 w-32 rounded-sm p-1 text-sm text-gray-800 placeholder-gray-700 outline-none md:text-base"
           placeholder="Episode no."
           onKeyDown={(e) => {
             if (e.key !== 'Enter') return;
@@ -55,7 +55,7 @@ const Episode: React.FC = () => {
       {episodes && (
         <div className="m-2">
           <div className="flex space-x-2">
-            <span className="text-gray-300 text-lg">Episodes: </span>
+            <span className="text-lg text-gray-300">Episodes: </span>
             <div className="flex flex-wrap space-x-2">
               {new Array(pages).fill(1).map((_v, i) => (
                 <PageButton
@@ -68,12 +68,12 @@ const Episode: React.FC = () => {
             </div>
           </div>
 
-          <div className="py-1 gap-x-2 gap-y-1 grid grid-cols-11 sm:grid-cols-[repeat(16,_minmax(0,_1fr))] lg:grid-cols-[repeat(20,_minmax(0,_1fr))]  xl:grid-cols-[repeat(25,_minmax(0,_1fr))]">
+          <div className="grid grid-cols-11 gap-x-2 gap-y-1 py-1 sm:grid-cols-[repeat(16,_minmax(0,_1fr))] lg:grid-cols-[repeat(20,_minmax(0,_1fr))]  xl:grid-cols-[repeat(25,_minmax(0,_1fr))]">
             {episodeArray
               .slice((currentPage - 1) * 100, currentPage * 100)
               .map((v) => (
                 <div
-                  className="text-gray-800 bg-gray-100 py-[1px] px-1 rounded-sm hover:bg-gray-400"
+                  className="rounded-sm bg-gray-100 py-[1px] px-1 text-gray-800 hover:bg-gray-400"
                   key={v}
                   onClick={() => dispatch(setEpisode(v))}
                 >

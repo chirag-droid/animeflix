@@ -19,8 +19,8 @@ const Card: React.FC<CardProps> = ({ anime }) => {
 
   return (
     <Link href={`/anime/${anime.id}`} passHref>
-      <a className="cursor-pointer w-46 sm:w-56 p-2 hover:scale-105 transform transition duration-300 ease-out">
-        <div className="relative w-40 sm:w-52 h-48 sm:h-64">
+      <a className="w-46 transform cursor-pointer p-2 transition duration-300 ease-out hover:scale-105 sm:w-56">
+        <div className="relative h-48 w-40 sm:h-64 sm:w-52">
           <Image
             alt="Cover Image"
             src={anime.coverImage.large || anime.coverImage.medium}
@@ -35,9 +35,9 @@ const Card: React.FC<CardProps> = ({ anime }) => {
         </div>
 
         <div>
-          <p className="h-12 text-sm mt-2 text-white font-bold">{title}</p>
+          <p className="mt-2 h-12 text-sm font-bold text-white">{title}</p>
 
-          <div className="flex space-x-2 text-white text-xs">
+          <div className="flex space-x-2 text-xs text-white">
             <Icon
               icon={PlayIcon}
               text={anime.format}
@@ -47,7 +47,7 @@ const Card: React.FC<CardProps> = ({ anime }) => {
             <Icon icon={ThumbUpIcon} text={`${anime.meanScore}%`} />
           </div>
 
-          <p className="text-gray-500 text-xs mt-2 float-right">
+          <p className="float-right mt-2 text-xs text-gray-500">
             Click to read more...
           </p>
         </div>

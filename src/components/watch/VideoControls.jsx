@@ -47,7 +47,7 @@ const VideoControls = () => {
           keys="p"
           label="Previous Episode"
         >
-          <ChevronDoubleLeftIcon className="text-white w-9" />
+          <ChevronDoubleLeftIcon className="w-9 text-white" />
           <Tooltip>previous(p)</Tooltip>
         </Control>
 
@@ -58,7 +58,7 @@ const VideoControls = () => {
           keys="n"
           label="Next Episode"
         >
-          <ChevronDoubleRightIcon className="text-white w-9" />
+          <ChevronDoubleRightIcon className="w-9 text-white" />
           <Tooltip className="text-xs">next(n)</Tooltip>
         </Control>
       </Controls>

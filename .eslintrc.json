@@ -4,7 +4,6 @@
     "next/core-web-vitals",
     "plugin:prettier/recommended"
   ],
-
   "plugins": ["unused-imports"],
   "rules": {
     "prettier/prettier": [
@@ -13,7 +12,6 @@
         "singleQuote": true
       }
     ],
-    "class-methods-use-this": "off", // _document.tsx use render method without `this` keyword
     "import/order": [
       "error",
       {

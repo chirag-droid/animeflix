@@ -169,8 +169,8 @@ const Watch = ({
 
       <Header />
 
-      <div className="lg:flex mt-4 space-x-4">
-        <div className="flex-shrink-0 max-w-[800px] mx-auto sm:p-4 lg:p-0 lg:ml-4 lg:mx-0 lg:max-w-full lg:w-[65%]">
+      <div className="mt-4 space-x-4 lg:flex">
+        <div className="mx-auto max-w-[800px] flex-shrink-0 sm:p-4 lg:mx-0 lg:ml-4 lg:w-[65%] lg:max-w-full lg:p-0">
           {/* render the video player element */}
           {!isError ? (
             <VideoPlayer
@@ -178,14 +178,14 @@ const Watch = ({
               poster={anime.bannerImage}
             />
           ) : (
-            <p className="font-semibold text-white mt-4 ml-3 sm:ml-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
+            <p className="mt-4 ml-3 text-base font-semibold text-white sm:ml-6 sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
               Sorry, the anime video couldn&apos;t be found
             </p>
           )}
 
           {/* the title of what anime is playing */}
-          <div className="flex w-full justify-between items-center">
-            <p className="m-2 font-semibold text-white mt-4 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
+          <div className="flex w-full items-center justify-between">
+            <p className="m-2 mt-4 text-base font-semibold text-white sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
               {`${anime.title.romaji || anime.title.english}${
                 anime.format !== 'MOVIE' ? ` | Episode ${episode}` : ''
               }`}
@@ -193,7 +193,7 @@ const Watch = ({
           </div>
 
           {/* list of genres */}
-          <div className="flex flex-wrap mx-3 gap-x-1 sm:gap-x-2 gap-y-1">
+          <div className="mx-3 flex flex-wrap gap-x-1 gap-y-1 sm:gap-x-2">
             {anime.genres.map((genre) => (
               <Genre key={genre} genre={genre} />
             ))}
@@ -201,11 +201,11 @@ const Watch = ({
 
           {/* Info about the next airing episode */}
           {nextAiringEpisode ? (
-            <div className="text-gray-400 p-2 mt-2">
+            <div className="mt-2 p-2 text-gray-400">
               {anime.title.romaji || anime.title.english} Episode{' '}
               {nextAiringEpisode.episode} will release on the{' '}
               {
-                <div className="font-bold text-gray-400 inline-block">
+                <div className="inline-block font-bold text-gray-400">
                   {convertToDate(nextAiringEpisode.airingAt * 1000)}.
                 </div>
               }{' '}
@@ -221,7 +221,7 @@ const Watch = ({
           {/* Anime decription */}
           {anime.description ? (
             <p
-              className="text-gray-400 p-2 mt-2"
+              className="mt-2 p-2 text-gray-400"
               dangerouslySetInnerHTML={{ __html: anime.description }}
             />
           ) : null}
@@ -229,7 +229,7 @@ const Watch = ({
 
         {/* Anime recommendations */}
         <div className="mx-auto">
-          <p className="lg:mt-0 font-semibold text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
+          <p className="text-base font-semibold text-white sm:text-lg md:text-xl lg:mt-0 lg:text-2xl xl:text-3xl 2xl:text-4xl">
             Recommended animes
           </p>
           {recommended.map((recommendation) => (
