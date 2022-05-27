@@ -30,7 +30,7 @@ const Index = ({
   topRated,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   // finish the progress bar
-  useEffect(() => progressBar.finish(), []);
+  progressBar.finish();
 
   const [recentlyWatched, setRecentlyWatched] = useState<AnimeInfoFragment[]>(
     []
