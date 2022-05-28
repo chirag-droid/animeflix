@@ -51,13 +51,13 @@
   <a href="https://graphql.com/">
     <img src="https://img.shields.io/github/package-json/dependency-version/chirag-droid/animeflix/graphql?color=8080f2&labelColor=1a1c1e&logoColor=4b32c3&style=flat-square&logo=graphql">
   </a>
-  </a href="https://github.com/riimuru/gogoanime/">
+  <a href="https://github.com/riimuru/gogoanime/">
     <img src="https://img.shields.io/badge/riimuru/gogoanime-333.svg?style=flat-square">
   </a>
-  </a href="https://anilist.co">
+  <a href="https://anilist.co">
     <img src="https://img.shields.io/badge/AnList-222435.svg?logo=anilist&style=flat-square">
   </a>
-  </a href="https://kitsu.io">
+  <a href="https://kitsu.io">
     <img src="https://img.shields.io/badge/Kitsu-402f3f.svg?logo=kitsu&style=flat-square">
   </a>
 </p>
