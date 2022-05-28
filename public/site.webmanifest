@@ -31,7 +31,7 @@
   "related_applications": [
     {
       "platform": "webapp",
-      "url": "https://aniflix.pro/site.manifest"
+      "url": "https://aniflix.pro/site.webmanifest"
     }
   ]
 }
