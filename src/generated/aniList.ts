@@ -4951,6 +4951,7 @@ export type AnimePageQuery = {
   __typename?: 'Query';
   Media?: {
     __typename?: 'Media';
+    status?: MediaStatus | null;
     id: number;
     format?: MediaFormat | null;
     duration?: number | null;
@@ -5160,7 +5161,6 @@ export const GetAnimeTitleDocument = gql`
     }
   }
 `;
-
 export const GetPopularBannerDocument = gql`
   query getPopularBanner($seasonYear: Int) {
     Media(type: ANIME, sort: POPULARITY_DESC, seasonYear: $seasonYear) {
@@ -5226,6 +5226,7 @@ export const IndexPageDocument = gql`
 export const AnimePageDocument = gql`
   query animePage($id: Int, $perPage: Int) {
     Media(id: $id, type: ANIME) {
+      status
       ...AnimeInfo
       ...AnimeBanner
     }

@@ -24,6 +24,7 @@ query indexPage($perPage: Int, $page: Int, $seasonYear: Int) {
 
 query animePage($id: Int, $perPage: Int) {
   Media(id: $id, type: ANIME) {
+    status
     ...AnimeInfo
     ...AnimeBanner
   }

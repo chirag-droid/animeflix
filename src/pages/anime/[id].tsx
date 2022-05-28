@@ -7,9 +7,13 @@ import Banner from '@components/anime/Banner';
 import EpisodeSection from '@components/anime/EpisodeSection';
 import Section from '@components/anime/Section';
 import Header from '@components/Header';
+import {
+  AnimeBannerFragment,
+  AnimeInfoFragment,
+  MediaStatus,
+} from '@generated/aniList';
 import { EpisodesListFragment } from '@generated/kitsu';
 import { animePage, getKitsuEpisodes } from '@lib/api';
-import { AnimeBannerFragment, AnimeInfoFragment } from 'src/generated/aniList';
 
 interface AnimeProps {
   anime: AnimeInfoFragment & AnimeBannerFragment;
@@ -35,13 +39,21 @@ export const getServerSideProps: GetServerSideProps<AnimeProps> = async (
     };
   }
 
-  // fetch episode list
-  const { title, startDate, season } = data.Media;
-  const english = getKitsuEpisodes(title.english, season, startDate.year);
-  const romaji = getKitsuEpisodes(title.romaji, season, startDate.year);
-  const episodes = await Promise.all([english, romaji]).then((r) => {
-    return r[0].episodeCount > 0 ? r[0] : r[1];
-  });
+  let episodes: EpisodesListFragment = {
+    episodeCount: 0,
+    episodes: null,
+  };
+
+  // dont fetch episodes if the anime hasn't released
+  if (data.Media.status !== MediaStatus.NotYetReleased) {
+    // fetch episode list
+    const { title, startDate, season } = data.Media;
+    const english = getKitsuEpisodes(title.english, season, startDate.year);
+    const romaji = getKitsuEpisodes(title.romaji, season, startDate.year);
+    episodes = await Promise.all([english, romaji]).then((r) => {
+      return r[0].episodeCount > 0 ? r[0] : r[1];
+    });
+  }
 
   return {
     props: {

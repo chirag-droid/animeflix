@@ -73,8 +73,15 @@ export const getKitsuEpisodes = async (
   });
 
   let kitsuAnime = kitsuAnimes.searchAnimeByTitle.animes.filter((r) => {
+    // return if the anime doesn't exists
     if (!r) return false;
-    if (r.season !== season) return false;
+
+    // return false if the startDate doesn't exist
+    if (!r.startDate) return false;
+
+    // only return false if the season exists and doesn't
+    // match with the kitsu one
+    if (r.season !== season && season) return false;
 
     return r.startDate.trim().split('-')[0] === startDate.toString();
   })[0];
