@@ -26,6 +26,9 @@
   <a href="https://github.com/chirag-droid/issues">
     <img src="https://img.shields.io/github/issues/chirag-droid/animeflix?style=flat-square">
   </a>
+  <a href="https://github.com/chirag-droid/forks">
+    <img src="https://img.shields.io/github/forks/chirag-droid/animeflix?style=flat-square">
+  </a>
   <br/>
   <!-- DEPENDENCY BADGES -->
   <a href="https://nextjs.org">
@@ -34,22 +37,22 @@
   <a href="https://17.reactjs.org/">
     <img src="https://img.shields.io/github/package-json/dependency-version/chirag-droid/animeflix/react?color=5fd9fb&logo=react&labelColor=222435&style=flat-square">
   </a>
+  <a href="https://eslint.org/">
+    <img src="https://img.shields.io/github/package-json/dependency-version/chirag-droid/animeflix/dev/eslint?color=8080f2&labelColor=1a1c1e&logoColor=4b32c3&style=flat-square&logo=eslint">
+  </a>
   <a href="https://redux-toolkit.js.org/">
     <img src="https://img.shields.io/github/package-json/dependency-version/chirag-droid/animeflix/@reduxjs/toolkit?label=redux-toolkit&color=593d88&logo=redux&labelColor=242526&style=flat-square&logoColor=b58bf7">
   </a>
   <a href="https://tailwindcss.com/">
     <img src="https://img.shields.io/github/package-json/dependency-version/chirag-droid/animeflix/dev/tailwindcss?color=37b8f1&logo=tailwindcss&labelColor=0b1120&style=flat-square&logoColor=38bdf8">
   </a>
-  <a href="https://eslint.org/">
-    <img src="https://img.shields.io/github/package-json/dependency-version/chirag-droid/animeflix/dev/eslint?color=8080f2&labelColor=1a1c1e&logoColor=4b32c3&style=flat-square&logo=eslint">
-  </a>
   <br/>
   <!-- API INFO -->
-  </a href="https://graphql.com/">
+  <a href="https://graphql.com/">
     <img src="https://img.shields.io/github/package-json/dependency-version/chirag-droid/animeflix/graphql?color=8080f2&labelColor=1a1c1e&logoColor=4b32c3&style=flat-square&logo=graphql">
   </a>
   </a href="https://github.com/riimuru/gogoanime/">
-    <img src="https://img.shields.io/badge/^1.0.0-fcb040.svg?label=riimuru/gogoanime&labelColor=111&style=flat-square">
+    <img src="https://img.shields.io/badge/riimuru/gogoanime-333.svg?style=flat-square">
   </a>
   </a href="https://anilist.co">
     <img src="https://img.shields.io/badge/AnList-222435.svg?logo=anilist&style=flat-square">
