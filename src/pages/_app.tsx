@@ -37,8 +37,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           },
           {
             name: 'apple-mobile-web-app-status-bar-style',
-            content: '#0F0F0F'
-          }
+            content: '#0F0F0F',
+          },
         ]}
         twitter={{
           cardType: 'summary_large_image',
