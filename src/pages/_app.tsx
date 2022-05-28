@@ -29,8 +29,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           },
           {
             name: 'theme-color',
-            content: '#C3073F',
+            content: '#0F0F0F',
           },
+          {
+            name: 'applie-mobile-web-app-capable',
+            content: 'yes',
+          },
+          {
+            name: 'apple-mobile-web-app-status-bar-style',
+            content: '#0F0F0F'
+          }
         ]}
         twitter={{
           cardType: 'summary_large_image',
