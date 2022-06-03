@@ -8,13 +8,25 @@ import { AnimeList, GogoEpisode } from 'gogoanime-api/lib/types';
 import { getAnimeTitle } from '@lib/api';
 
 export async function getAnimeSlug(title: string, episode: number) {
-  if (!title || title === '') return {};
+  const emptyData = {
+    sub: {
+      Referer: '',
+      sources: [],
+    },
+    dub: {
+      Referer: '',
+      sources: [],
+    },
+    episodes: 0,
+  };
+
+  if (!title || title === '') return emptyData;
 
   const slug = title.replace(/[^0-9a-zA-Z]+/g, ' ');
 
   const findAnime = (await scrapeSearch({ keyw: slug })) as AnimeList[];
 
-  if (findAnime.length === 0) return {};
+  if (findAnime.length === 0) return emptyData;
 
   const gogoEpisodes = (await scrapeAnimeDetails({ id: findAnime[0].animeId }))
     .episodesList as GogoEpisode[];
@@ -67,9 +79,9 @@ export async function getAnime(id: number, episode: number) {
   const romajiAnime = getAnimeSlug(romaji, episode);
   const englishAnime = getAnimeSlug(english, episode);
 
-  // grab the one which has atleast one key
+  // grab the one which has episodes key
   const anime = await Promise.all([englishAnime, romajiAnime]).then((r) =>
-    Object.keys(r[0]).length > 0 ? r[0] : r[1]
+    r[0].episodes > 0 ? r[0] : r[1]
   );
 
   return anime;
