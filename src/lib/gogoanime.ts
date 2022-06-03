@@ -50,16 +50,24 @@ export async function getAnimeSlug(title: string, episode: number) {
 export async function getAnime(id: number, episode: number) {
   let { english, romaji } = (await getAnimeTitle({ id })).Media.title;
 
+  // ensure both of them don't have null value
+  english = english || romaji;
+  romaji = romaji || english;
+
+  // lower case both the titles
   english = english.toLocaleLowerCase();
   romaji = romaji.toLocaleLowerCase();
 
+  // if the titles are same run this function once
   if (english === romaji) {
     return getAnimeSlug(english, episode);
   }
 
+  // get both romaji and english results
   const romajiAnime = getAnimeSlug(romaji, episode);
   const englishAnime = getAnimeSlug(english, episode);
 
+  // grab the one which has atleast one key
   const anime = await Promise.all([englishAnime, romajiAnime]).then((r) =>
     Object.keys(r[0]).length > 0 ? r[0] : r[1]
   );
