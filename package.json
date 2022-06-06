@@ -36,7 +36,7 @@
     "@tailwindcss/line-clamp": "^0.4.0",
     "@types/node": "^17.0.35",
     "@types/react": "^18.0.9",
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.26.0",
     "autoprefixer": "^10.4.6",
     "eslint": "8.16.0",
