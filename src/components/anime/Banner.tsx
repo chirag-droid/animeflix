@@ -66,8 +66,9 @@ const Banner: React.FC<BannerProps> = ({ anime }) => {
           ))}
         </div>
 
+      
         <p className="hidden max-w-3xl md:block md:line-clamp-3 lg:line-clamp-4 xl:line-clamp-5 2xl:line-clamp-6">
-          {description}
+          {description.replace(/<[^>]*>?/gm, '')}
         </p>
 
         {/* the button at the bottom */}
