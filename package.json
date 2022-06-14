@@ -17,7 +17,7 @@
     "@vime/react": "^5.3.0",
     "gogoanime-api": "github:riimuru/gogoanime",
     "graphql": "^16.5.0",
-    "graphql-request": "^4.2.0",
+    "graphql-request": "^4.3.0",
     "graphql-tag": "^2.12.6",
     "next": "latest",
     "next-pwa": "^5.5.2",
@@ -34,12 +34,12 @@
     "@graphql-codegen/typescript-operations": "^2.4.2",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.4.0",
-    "@types/node": "^17.0.35",
+    "@types/node": "^17.0.42",
     "@types/react": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.28.0",
     "autoprefixer": "^10.4.6",
-    "eslint": "8.16.0",
+    "eslint": "8.17.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-next": "12.1.6",
@@ -57,7 +57,7 @@
     "prettier-plugin-tailwindcss": "^0.1.11",
     "tailwind-scrollbar-hide": "^1.1.6",
     "tailwindcss": "^3.0.24",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.3"
   },
   "optionalDependencies": {
     "sharp": "^0.30.6"
