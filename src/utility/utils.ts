@@ -6,3 +6,5 @@ export const proxyUrl = (url: string, referer: string) => {
 
 export const arrayToString = (data: string | string[]) =>
   typeof data === 'string' ? data : data.join('');
+
+export const stripHtml = (data: string) => data.replace(/<\/?\w*\\?>/gm, '');
