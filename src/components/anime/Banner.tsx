@@ -11,6 +11,7 @@ import Genre from '@components/Genre';
 import Icon from '@components/Icon';
 import progressBar from '@components/Progress';
 import { AnimeBannerFragment } from '@generated/aniList';
+import { stripHtml } from '@utility/utils';
 
 export interface BannerProps {
   anime: AnimeBannerFragment;
@@ -23,9 +24,6 @@ const Banner: React.FC<BannerProps> = ({ anime }) => {
   useEffect(() => {
     if (!anime.bannerImage) progressBar.finish();
   }, [anime.bannerImage]);
-
-  // remove all the html tags
-  const description = anime.description.replace(/<\w*\\?>/g, '');
 
   return (
     <div className="relative h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] 2xl:h-[450px]">
@@ -67,7 +65,7 @@ const Banner: React.FC<BannerProps> = ({ anime }) => {
         </div>
 
         <p className="hidden max-w-3xl md:block md:line-clamp-3 lg:line-clamp-4 xl:line-clamp-5 2xl:line-clamp-6">
-          {description}
+          {stripHtml(anime.description)}
         </p>
 
         {/* the button at the bottom */}
