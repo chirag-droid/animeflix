@@ -1,0 +1,44 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "generate": {
+      "dependsOn": [
+        "^generate"
+      ],
+      "outputs": [
+        "src/generated/**"
+      ],
+      "inputs": [
+        "src/graphql/**"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "generate",
+        "^build"
+      ],
+      "outputs": [
+        "src/generated/*",
+        "public/*.js",
+        ".next/**"
+      ]
+    },
+    "start": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": ["generate"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["lint"],
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}

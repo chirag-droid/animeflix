@@ -1,4 +1,6 @@
 node_modules/
 .next/
-./src/generated/
+src/generated/
 public/
+.husky
+.github

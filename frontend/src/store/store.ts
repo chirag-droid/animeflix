@@ -1,16 +1,15 @@
 import { useMemo } from 'react';
 
 import { configureStore } from '@reduxjs/toolkit';
-import {
-  useDispatch as useDispatchBase,
-  useSelector as useSelectorBase,
-} from 'react-redux';
-
 import anime from '@slices/anime';
 import episode from '@slices/episode';
 import gogoApi from '@slices/gogoApi';
 import timer from '@slices/timer';
 import videoSettings from '@slices/videoSettings';
+import {
+  useDispatch as useDispatchBase,
+  useSelector as useSelectorBase,
+} from 'react-redux';
 
 const createStore = (preloadedState?: { [x: string]: any }) =>
   configureStore({

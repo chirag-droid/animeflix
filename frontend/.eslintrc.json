@@ -52,7 +52,7 @@
       "plugins": ["@typescript-eslint"],
       "extends": ["airbnb-typescript"],
       "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": "tsconfig.json"
       },
       "rules": {
         "@typescript-eslint/comma-dangle": "off", // Avoid conflict rule between Eslint and Prettier
