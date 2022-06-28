@@ -2,7 +2,8 @@
   "name": "animeflix",
   "private": true,
   "workspaces": [
-    "frontend"
+    "frontend",
+    "packages/*"
   ],
   "scripts": {
     "build": "turbo run build",

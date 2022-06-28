@@ -1,2 +1,4 @@
 frontend:
   - "frontend/**/*"
+eslint:
+  - "packages/eslint-config-animeflix/**/*"
