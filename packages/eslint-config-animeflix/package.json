@@ -1,0 +1,27 @@
+{
+  "name": "eslint-config-animeflix",
+  "version": "0.0.1",
+  "description": "Custom eslint configurations for animeflix",
+  "main": "index.js",
+  "repository": "https://github.com/chirag-droid/animeflix",
+  "author": "Chirag Singla",
+  "license": "AGPL-3.0",
+  "private": true,
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "eslint": "8.18.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-next": "12.1.6",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.11"
+  }
+}

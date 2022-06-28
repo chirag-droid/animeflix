@@ -1,38 +1,38 @@
-{
-  "extends": [
+module.exports = {
+  extends: [
     "airbnb-base",
     "next/core-web-vitals",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["unused-imports"],
-  "rules": {
+  plugins: ["unused-imports"],
+  rules: {
     "prettier/prettier": [
       "error",
       {
-        "singleQuote": true
+        singleQuote: true
       }
     ],
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal"],
-        "pathGroups": [
+        groups: ["builtin", "external", "internal"],
+        pathGroups: [
           {
-            "pattern": "react",
-            "group": "external",
-            "position": "before"
+            pattern: "react",
+            group: "external",
+            position: "before"
           },
           {
-            "pattern": "{next,next/*}",
-            "group": "external",
-            "position": "before"
+            pattern: "{next,next/*}",
+            group: "external",
+            position: "before"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react"],
+        pathGroupsExcludedImportTypes: ["react"],
         "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
+        alphabetize: {
+          order: "asc",
+          caseInsensitive: true
         }
       }
     ],
@@ -42,19 +42,19 @@
     "react/jsx-props-no-spreading": "off", // _app.tsx uses spread operator and also, react-hook-form
     "react/require-default-props": "off", // Allow non-defined react props as undefined
     "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    "unused-imports/no-unused-vars": ["error", { argsIgnorePattern: "^_" }]
   },
 
-  "overrides": [
+  overrides: [
     // Configuration for TypeScript files
     {
-      "files": ["**/*.ts", "**/*.tsx"],
-      "plugins": ["@typescript-eslint"],
-      "extends": ["airbnb-typescript"],
-      "parserOptions": {
-        "project": "tsconfig.json"
+      files: ["**/*.ts", "**/*.tsx"],
+      plugins: ["@typescript-eslint"],
+      extends: ["airbnb-typescript"],
+      parserOptions: {
+        project: "tsconfig.json"
       },
-      "rules": {
+      rules: {
         "@typescript-eslint/comma-dangle": "off", // Avoid conflict rule between Eslint and Prettier
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/indent": "off"
@@ -63,8 +63,8 @@
 
     // disable global-require rule for config files
     {
-      "files": ["*.config.js"],
-      "rules": {
+      files: ["*.config.js"],
+      rules: {
         "global-require": "off",
         "import/no-extraneous-dependencies": [
           "error",
