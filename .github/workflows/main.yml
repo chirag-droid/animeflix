@@ -1,0 +1,61 @@
+# Inspired by https://gist.github.com/amacneil/60bf679f357bad9d62103cfdc86cbd74
+# Automatically save updated `yarn.lock` file for dependabot PRs.
+# This is necessary because dependabot doesn't support Yarn v2 yet:
+# https://github.com/dependabot/dependabot-core/issues/1297
+#
+# Note: We use the `pull_request_target` event due to GitHub security measures.
+#       It is important to ensure we don't execute any untrusted PR code in this context.
+# See: https://github.blog/changelog/2021-02-19-github-actions-workflows-triggered-by-dependabot-prs-will-run-with-read-only-permissions/
+#      https://securitylab.github.com/research/github-actions-preventing-pwn-requests
+
+name: Dependabot add yarn.lock
+
+on:
+  pull_request_target
+
+jobs:
+  build:
+    name: fix
+    runs-on: ubuntu-18.04
+    if: |
+      github.actor == 'dependabot[bot]' &&
+      contains(github.event.pull_request.head.ref, 'dependabot/npm_and_yarn/')
+    # IMPORTANT: setting YARN_ENABLE_SCRIPTS=false is critical to ensure that untrusted
+    # PRs can't add an npm package and then use that to execute untrusted code in
+    # a trusted context. See links at the top of this workflow for further details.
+    # See also: https://github.com/yarnpkg/berry/issues/1679#issuecomment-669937860
+    env:
+      YARN_ENABLE_SCRIPTS: false
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Using a Personal Access Token here is required to trigger workflows on our new commit.
+          # The default GitHub token doesn't trigger any workflows.
+          # See: https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          # Need fetch-depth in order to soft reset the most recent commit.
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.5'
+      
+      # Undo yarn.lock changes from last commit (if any), run yarn install,
+      # and add/commit any yarn.lock changes. Dependabot will commit an invalid
+      # yarn.lock file for dependecy changes in the root package.json. `yarn install`
+      # will not work with an invalid yarn.lock file.
+      - name: Install and commit yarn.lock
+        working-directory: ./
+        run: |
+          git config user.name "chirag-droid"
+          git config user.email "chirag.singla.pi@gmail.com"
+          git reset --soft HEAD~1
+          git restore --staged yarn.lock
+          git checkout -- yarn.lock
+          yarn install
+          git add yarn.lock
+          git commit -m '${{ github.event.pull_request.title }}'
+          git push -f
