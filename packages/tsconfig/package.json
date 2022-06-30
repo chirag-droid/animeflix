@@ -1,0 +1,17 @@
+{
+  "name": "@animeflix/tsconfig",
+  "version": "0.0.1",
+  "description": "The typescript configurations for animeflix",
+  "main": "index.js",
+  "repository": "https://github.com/chirag-droid/animeflix",
+  "author": {
+    "name": "Chirag Singla",
+    "email": "chirag.singla.pi@gmail.com",
+    "url": "https://github.com/chirag-droid"
+  },
+  "license": "AGPL-3.0",
+  "private": true,
+  "files": [
+    "nextjs.json"
+  ]
+}

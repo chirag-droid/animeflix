@@ -1,9 +1,9 @@
 module.exports = {
   root: true,
-  extends: ["animeflix"],
+  extends: ['animeflix'],
   settings: {
     next: {
-      rootDir: ["frontend"],
+      rootDir: ['frontend'],
     },
   },
-}
+};
