@@ -6,6 +6,16 @@
 version: 2
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/frontend" # Location of package manifests
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/eslint-config-animeflix"
+    schedule:
+      interval: "daily"
+  
+  - package-ecosystem: "npm"
+    directory: "/packages/tsconfig"
     schedule:
       interval: "daily"
