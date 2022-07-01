@@ -1,4 +1,6 @@
 // @ts-check
+const path = require('node:path');
+
 const withPwa = require('next-pwa');
 
 /**
@@ -10,6 +12,10 @@ const nextConfig = {
     disableStaticImages: true,
   },
   poweredByHeader: false,
+  experimental: {
+    outputStandalone: true,
+    outputFileTracingRoot: path.join(__dirname, '../'),
+  },
 };
 
 module.exports = withPwa({

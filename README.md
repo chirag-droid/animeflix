@@ -85,6 +85,20 @@ Following are the recommended online deployment services which are tested to wor
 
 [![Deploy with netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/chirag-droid/animeflix)
 
+## Docker Deployment
+
+The docker images for this app is available at dockerhub. [chiragdroid/animeflix](https://hub.docker.com/repository/docker/chiragdroid/animeflix).
+
+Run it easily using this command
+
+```
+docker run -p 3000:3000 chiragdroid/animeflix
+```
+
+This will start animeflix at port 3000. You can change the port by doing `-p <port>:3000`,
+
+You can run this as a background service by adding `-d` flag
+
 ## Local Deployment
 
 You need to have `nodejs` and `git` installed on your pc for following the intructions
