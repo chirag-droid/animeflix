@@ -49,6 +49,7 @@ RUN adduser --system --uid 1001 nextjs
 # Copy the build files from the builder stage
 COPY --from=builder --chown=nextjs:nodejs /app/frontend/next.config.js ./frontend/
 COPY --from=builder --chown=nextjs:nodejs /app/frontend/.next/static ./frontend/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/frontend/public ./frontend/public
 
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/frontend/.next/standalone ./

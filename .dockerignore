@@ -1,9 +1,9 @@
 Dockerfile
 .dockerignore
-node_modules
+**/node_modules
 npm-debug.log
 README.md
-.next
+**/.next
 .git
-.turbo
-dist
+**/.turbo
+**/dist
