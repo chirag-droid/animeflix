@@ -3,12 +3,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@utility/*": ["./src/utility/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@store/*": ["./src/store/*"],
-      "@slices/*": ["./src/store/slices/*"]
+      "@components/*": ["./components/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@utility/*": ["./utility/*"],
+      "@styles/*": ["./styles/*"],
+      "@store/*": ["./store/*"],
+      "@slices/*": ["./store/slices/*"]
     }
   },
   "include": ["**/*.ts", "**/*.jsx", "**/*.tsx"],
