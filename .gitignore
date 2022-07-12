@@ -5,6 +5,10 @@ frontend/public/sw.js
 frontend/public/workbox-*.js
 frontend/public/*.js.map
 
+# generated
+generated/
+dist/
+
 # turbo
 .turbo/
 

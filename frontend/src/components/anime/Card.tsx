@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { AnimeInfoFragment } from '@animeflix/api/aniList';
 import { ClockIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import { PlayIcon } from '@heroicons/react/solid';
 
 import Icon from '@components/Icon';
-import { AnimeInfoFragment } from '@generated/aniList';
 import { base64SolidImage } from '@utility/image';
 
 export interface CardProps {

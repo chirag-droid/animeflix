@@ -1,5 +1,12 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
+import { animePage, getKitsuEpisodes } from '@animeflix/api';
+import {
+  AnimeBannerFragment,
+  AnimeInfoFragment,
+  MediaStatus,
+} from '@animeflix/api/aniList';
+import { EpisodesListFragment } from '@animeflix/api/kitsu';
 import { EmojiSadIcon } from '@heroicons/react/solid';
 import { NextSeo } from 'next-seo';
 
@@ -7,13 +14,6 @@ import Banner from '@components/anime/Banner';
 import EpisodeSection from '@components/anime/EpisodeSection';
 import Section from '@components/anime/Section';
 import Header from '@components/Header';
-import {
-  AnimeBannerFragment,
-  AnimeInfoFragment,
-  MediaStatus,
-} from '@generated/aniList';
-import { EpisodesListFragment } from '@generated/kitsu';
-import { animePage, getKitsuEpisodes } from '@lib/api';
 
 interface AnimeProps {
   anime: AnimeInfoFragment & AnimeBannerFragment;

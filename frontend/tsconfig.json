@@ -3,21 +3,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@generated/*": ["./src/generated/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@utility/*": ["./src/utility/*"],
-      "@lib/*": ["./src/lib/*"],
       "@styles/*": ["./src/styles/*"],
       "@store/*": ["./src/store/*"],
       "@slices/*": ["./src/store/slices/*"]
     }
   },
-  "include": [
-    "next.env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/components/watch/VideoControls.jsx"
-  ],
+  "include": ["**/*.ts", "**/*.jsx", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

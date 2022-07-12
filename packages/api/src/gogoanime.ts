@@ -5,7 +5,7 @@ import {
 } from 'gogoanime-api/lib/anime_parser';
 import { AnimeList, GogoEpisode } from 'gogoanime-api/lib/types';
 
-import { getAnimeTitle } from '@lib/api';
+import { getAnimeTitle } from './api';
 
 export async function getAnimeSlug(title: string, episode: number) {
   const emptyData = {

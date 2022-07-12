@@ -1,0 +1,9 @@
+{
+  "extends": "@animeflix/tsconfig/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "isolatedModules": false
+  },
+  "include": ["src"],
+  "exclude": ["dist", "node_modules"]
+}

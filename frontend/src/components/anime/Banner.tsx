@@ -4,13 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { AnimeBannerFragment } from '@animeflix/api/aniList';
 import { ClockIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import { PlayIcon } from '@heroicons/react/solid';
 
 import Genre from '@components/Genre';
 import Icon from '@components/Icon';
 import progressBar from '@components/Progress';
-import { AnimeBannerFragment } from '@generated/aniList';
 import { stripHtml } from '@utility/utils';
 
 export interface BannerProps {

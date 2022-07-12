@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { InferGetServerSidePropsType } from 'next';
 
+import { getAnimeByIds, indexPage } from '@animeflix/api';
+import { AnimeInfoFragment } from '@animeflix/api/aniList';
+
 import Banner from '@components/anime/Banner';
 import Section from '@components/anime/Section';
 import Header from '@components/Header';
 import progressBar from '@components/Progress';
-import { AnimeInfoFragment } from '@generated/aniList';
-import { getAnimeByIds, indexPage } from '@lib/api';
 
 export const getServerSideProps = async () => {
   const data = await indexPage({

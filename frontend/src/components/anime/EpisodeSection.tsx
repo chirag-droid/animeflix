@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 
+import { AnimeBannerFragment } from '@animeflix/api/aniList';
+import { EpisodesListFragment } from '@animeflix/api/kitsu';
+
 import EpisodeCard from '@components/anime/Episode';
-import { AnimeBannerFragment } from '@generated/aniList';
-import { EpisodesListFragment } from '@generated/kitsu';
 
 export interface SectionProps {
   anime: AnimeBannerFragment;

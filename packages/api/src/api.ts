@@ -1,12 +1,12 @@
 import { ClientError, GraphQLClient } from 'graphql-request';
 
-import { getSdk as aniSdk } from '@generated/aniList';
+import { aniListEndpoint, kitsuEndpoint } from './constants';
+import { getSdk as aniSdk } from './generated/aniList';
 import {
   getSdk as kitsuSdk,
   EpisodesListFragment,
   SdkFunctionWrapper,
-} from '@generated/kitsu';
-import { aniListEndpoint, kitsuEndpoint } from '@lib/constants';
+} from './generated/kitsu';
 
 const aniListClient = new GraphQLClient(aniListEndpoint, {
   headers: {},
