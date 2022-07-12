@@ -1,13 +1,13 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 
+import { searchAnime } from '@animeflix/api';
+import { SearchAnimeQuery } from '@animeflix/api/aniList';
 import { NextSeo } from 'next-seo';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
 import progressBar from '@components/Progress';
-import { SearchAnimeQuery } from '@generated/aniList';
-import { searchAnime } from '@lib/api';
 
 interface SearchResult {
   searchResults: SearchAnimeQuery;

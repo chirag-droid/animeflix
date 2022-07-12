@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 
+import { AnimeInfoFragment } from '@animeflix/api/aniList';
+
 import AnimeCard from '@components/anime/Card';
-import { AnimeInfoFragment } from '@generated/aniList';
 
 export interface SectionProps {
   title: string;

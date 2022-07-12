@@ -4,6 +4,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
+import { watchPage } from '@animeflix/api';
+import { AnimeBannerFragment, AnimeInfoFragment } from '@animeflix/api/aniList';
 import { NextSeo } from 'next-seo';
 
 import Genre from '@components/Genre';
@@ -12,10 +14,7 @@ import progressBar from '@components/Progress';
 import RecommendationCard from '@components/watch/Card';
 import Episode from '@components/watch/Episode';
 import WatchControls from '@components/watch/WatchControls';
-import { AnimeBannerFragment, AnimeInfoFragment } from '@generated/aniList';
 import useVideoSources from '@hooks/useVideoSources';
-import { watchPage } from '@lib/api';
-import { proxyFreeUrls } from '@lib/constants';
 import { setAnime } from '@slices/anime';
 import { setEpisode } from '@slices/episode';
 import { setSources, setTotalEpisodes, resetSources } from '@slices/gogoApi';
@@ -23,6 +22,8 @@ import { setProxy } from '@slices/videoSettings';
 import { initialiseStore, useDispatch, useSelector } from '@store/store';
 import { convertToDate, convertToTime } from '@utility/time';
 import { arrayToString, proxyUrl } from '@utility/utils';
+
+import { proxyFreeUrls } from '../../constants';
 
 const VideoPlayer = dynamic(() => import('@components/watch/VideoPlayer'), {
   ssr: false,

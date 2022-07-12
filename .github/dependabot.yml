@@ -14,8 +14,13 @@ updates:
     directory: "/packages/eslint-config-animeflix"
     schedule:
       interval: "daily"
-  
+
   - package-ecosystem: "npm"
     directory: "/packages/tsconfig"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/api"
     schedule:
       interval: "daily"

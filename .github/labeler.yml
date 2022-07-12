@@ -4,3 +4,5 @@ eslint:
   - "packages/eslint-config-animeflix/**/*"
 tsconfig:
   - "packages/tsconfig/**/*"
+api:
+  - "packages/api/**/*"

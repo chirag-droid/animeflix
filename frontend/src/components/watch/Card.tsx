@@ -3,11 +3,11 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { AnimeBannerFragment, AnimeInfoFragment } from '@animeflix/api/aniList';
 import { ClockIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import { PlayIcon } from '@heroicons/react/solid';
 
 import Icon from '@components/Icon';
-import { AnimeBannerFragment, AnimeInfoFragment } from '@generated/aniList';
 import { base64SolidImage } from '@utility/image';
 
 export interface CardProps {

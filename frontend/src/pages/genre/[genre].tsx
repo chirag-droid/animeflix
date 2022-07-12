@@ -1,13 +1,13 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 
+import { searchGenre } from '@animeflix/api';
+import { AnimeInfoFragment } from '@animeflix/api/aniList';
 import { NextSeo } from 'next-seo';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
 import progressBar from '@components/Progress';
-import { AnimeInfoFragment } from '@generated/aniList';
-import { searchGenre } from '@lib/api';
 
 interface GenreProps {
   searchResults: AnimeInfoFragment[];

@@ -12,6 +12,7 @@
   "license": "AGPL-3.0",
   "private": true,
   "files": [
-    "nextjs.json"
+    "nextjs.json",
+    "base.json"
   ]
 }
