@@ -21,10 +21,11 @@
     <a href="https://github.com/chirag-droid/forks">
       <img src="https://img.shields.io/github/forks/chirag-droid/animeflix?style=flat-square">
     </a>
+    <a href="https://github.com/chirag-droid/animeflix/actions/workflows/docker-publish.yml">
+      <img src="https://github.com/chirag-droid/animeflix/actions/workflows/docker-publish.yml/badge.svg">
+    </a>
   </div>
-
   <hr />
-
   <p align="center">
     The open-source anime streaming service made with NextJs and TailwindCSS. It lets you search, watch animes without any ads with a beautiful ui. It can be self hosted or deployed online.
   </p>
