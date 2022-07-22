@@ -1,8 +1,9 @@
 name: Publish Docker Image
 on:
-  push:
-    branches: [ "main" ]    
-    tags: [ 'v*.*.*' ]
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
   workflow_dispatch:    
 
 env:
