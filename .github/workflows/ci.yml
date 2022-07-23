@@ -7,15 +7,12 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   ci:
     runs-on: ubuntu-latest
-
     # env:
     #   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -43,4 +40,15 @@ jobs:
 
       - name: Run tests
         run: yarn test
-
+  
+  DockerPublish:
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: publish
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+          docker-compose build --pull
+          docker-compose push
