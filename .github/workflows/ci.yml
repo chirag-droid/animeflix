@@ -50,5 +50,5 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: |
           docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
-          docker-compose build --pull
-          docker-compose push
+          docker build -t "${{ github.actor }}"/animeflix .
+          docker push "${{ github.actor }}"/animeflix
