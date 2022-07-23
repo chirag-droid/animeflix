@@ -19,11 +19,7 @@
       <img src="https://img.shields.io/github/issues/chirag-droid/animeflix?style=flat-square">
     </a>
     <a href="https://github.com/chirag-droid/forks">
-      <img src="https://img.shields.io/github/forks/chirag-droid/animeflix?style=flat-square">
-    </a>
-    <a href="https://github.com/chirag-droid/animeflix/actions/workflows/docker-publish.yml">
-      <img src="https://github.com/chirag-droid/animeflix/actions/workflows/docker-publish.yml/badge.svg">
-    </a>
+      <img src="https://img.shields.io/github/forks/chirag-droid/animeflix?style=flat-squa
   </div>
   <hr />
   <p align="center">
