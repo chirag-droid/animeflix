@@ -19,7 +19,8 @@
       <img src="https://img.shields.io/github/issues/chirag-droid/animeflix?style=flat-square">
     </a>
     <a href="https://github.com/chirag-droid/forks">
-      <img src="https://img.shields.io/github/forks/chirag-droid/animeflix?style=flat-squa
+      <img src="https://img.shields.io/github/forks/chirag-droid/animeflix?style=flat-square">
+    </a>
   </div>
   <hr />
   <p align="center">
