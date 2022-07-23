@@ -1,0 +1,13 @@
+name: Docker Publish
+on:
+  workflow_dispatch:    
+jobs:
+  DockerPublish:  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: publish        
+        run: |
+          docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+          docker build -t "${{ github.actor }}"/animeflix:latest .              
+          docker push "${{ github.actor }}"/animeflix:latest
