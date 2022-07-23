@@ -2,12 +2,17 @@ name: Docker Publish
 on:
   workflow_dispatch:    
 jobs:
-  DockerPublish:  
+  dockerpublish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: publish        
-        run: |
-          docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
-          docker build -t ghcr.io/"${{ github.actor }}"/animeflix:latest .              
-          docker push ghcr.io/"${{ github.actor }}"/animeflix:latest
+      - name: login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: create image from repository
+        run: docker build -t ghcr.io/${{ github.actor }}/animeflix .
+      - name: push image to GitHub Container Registry
+        run: docker push ghcr.io/${{ github.actor }}/animeflix:latest
