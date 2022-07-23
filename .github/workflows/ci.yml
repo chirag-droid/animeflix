@@ -45,10 +45,14 @@ jobs:
     needs: [ci]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: publish
+      - name: login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Docker Image
         if: ${{ github.event_name == 'push' }}
-        run: |
-          docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
-          docker build -t "${{ github.actor }}"/animeflix .
-          docker push "${{ github.actor }}"/animeflix
+        run: | 
+          docker build -t ghcr.io/${{ github.actor }}/animeflix .
+          docker push ghcr.io/${{ github.actor }}/animeflix:latest
