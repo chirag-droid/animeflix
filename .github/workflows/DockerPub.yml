@@ -9,5 +9,5 @@ jobs:
       - name: publish        
         run: |
           docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
-          docker build -t "${{ github.actor }}"/animeflix:latest .              
+          docker build -t ghcr.io/"${{ github.actor }}"/animeflix:latest .              
           docker push ghcr.io/"${{ github.actor }}"/animeflix:latest
