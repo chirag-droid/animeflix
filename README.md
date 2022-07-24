@@ -92,7 +92,7 @@ The docker images for this app is available at dockerhub. [chiragdroid/animeflix
 Run it easily using this command
 
 ```
-docker run -p 3000:3000 chiragdroid/animeflix
+docker run -p 3000:3000 ghcr.io/chirag-droid/animeflix
 ```
 
 This will start animeflix at port 3000. You can change the port by doing `-p <port>:3000`,
