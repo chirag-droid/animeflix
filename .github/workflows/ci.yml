@@ -9,9 +9,9 @@ on:
       - main
 
 jobs:
-  ci:
+  # lint and test the project
+  lint-test:
     runs-on: ubuntu-latest
-
     # env:
     #   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
@@ -43,4 +43,25 @@ jobs:
 
       - name: Run tests
         run: yarn test
+  
+  # publish to github container registry
+  publish-docker:
+    # only run if lint and test is success
+    needs: [lint-test]
+    # only run if the workflow was triggered on push
+    if: github.event_name == 'push'
+    
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Publish Docker Image
+        run: | 
+          docker build -t ghcr.io/${{ github.actor }}/animeflix .
+          docker push ghcr.io/${{ github.actor }}/animeflix:latest
