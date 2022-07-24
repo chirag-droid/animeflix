@@ -37,6 +37,10 @@ RUN yarn build
 
 # Production image, copy all the files and run the server
 FROM node:16-slim AS runner
+
+# link the docker image to animeflix repo
+LABEL org.opencontainers.image.source https://github.com/chirag-droid/animeflix
+
 WORKDIR /app
 
 ENV NODE_ENV production
