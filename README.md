@@ -108,15 +108,21 @@ First download the repository using
 git clone https://github.com/chirag-droid/animeflix
 ```
 
+Next make sure you have yarn installed on your system
+```
+npm i -g yarn
+```
+> this step probably requires admin perms
+
 This should download this repository to your computer. Next, to download the dependencies run
 ```
-npm i
+yarn install
 ```
 
 Now build and start the production build of the site using
 ```
-npm run build
-npm run start
+yarn build
+yarn start
 ```
 
 This will start the app on http://localhost:3000
