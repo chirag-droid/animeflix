@@ -8,7 +8,6 @@ import { AnimeInfoFragment } from '@animeflix/api/aniList';
 import Banner from '@components/anime/Banner';
 import Section from '@components/anime/Section';
 import Header from '@components/Header';
-import progressBar from '@components/Progress';
 
 export const getServerSideProps = async () => {
   const data = await indexPage({
@@ -30,8 +29,7 @@ const Index = ({
   popular,
   topRated,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  // finish the progress bar
-  progressBar.finish();
+
 
   const [recentlyWatched, setRecentlyWatched] = useState<AnimeInfoFragment[]>(
     []

@@ -7,7 +7,6 @@ import { NextSeo } from 'next-seo';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
-import progressBar from '@components/Progress';
 
 interface SearchResult {
   searchResults: SearchAnimeQuery;
@@ -36,7 +35,6 @@ const Search = ({
   const router = useRouter();
   const { keyword } = router.query;
 
-  progressBar.finish();
 
   return (
     <>

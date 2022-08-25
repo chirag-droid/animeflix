@@ -7,7 +7,7 @@ import { NextSeo } from 'next-seo';
 
 import Card from '@components/anime/Card';
 import Header from '@components/Header';
-import progressBar from '@components/Progress';
+
 
 interface GenreProps {
   searchResults: AnimeInfoFragment[];
@@ -39,7 +39,7 @@ const Genre = ({
   const router = useRouter();
   const { genre } = router.query;
 
-  progressBar.finish();
+
 
   return (
     <>

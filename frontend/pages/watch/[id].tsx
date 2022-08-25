@@ -10,7 +10,6 @@ import { NextSeo } from 'next-seo';
 
 import Genre from '@components/Genre';
 import Header from '@components/Header';
-import progressBar from '@components/Progress';
 import RecommendationCard from '@components/watch/Card';
 import Episode from '@components/watch/Episode';
 import WatchControls from '@components/watch/WatchControls';
@@ -70,8 +69,6 @@ const Watch = ({
   anime,
   recommended,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  // finish the progress bar
-  progressBar.finish();
 
   const router = useRouter();
 
