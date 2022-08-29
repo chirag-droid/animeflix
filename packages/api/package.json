@@ -24,7 +24,7 @@
   "dependencies": {
     "gogoanime-api": "github:riimuru/gogoanime",
     "graphql": "^16.5.0",
-    "graphql-request": "^4.3.0",
+    "graphql-request": "^5.0.0",
     "graphql-tag": "^2.12.6"
   },
   "devDependencies": {
