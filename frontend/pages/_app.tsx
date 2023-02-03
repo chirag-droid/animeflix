@@ -14,6 +14,9 @@ Router.events.on('routeChangeStart', progressBar.start);
 // finish the progress bar if there is an error while route change
 Router.events.on('routeChangeError', progressBar.finish);
 
+// finish the progress bar when pages loads completely
+Router.events.on('routeChangeComplete',progressBar.finish)
+
 function MyApp({ Component, pageProps }: AppProps) {
   const reduxStore = useStore(pageProps.initialReduxState);
 
