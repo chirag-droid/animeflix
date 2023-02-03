@@ -47,7 +47,7 @@
 </p>
 
 <!-- PREVIEW IMAGE -->
-<img src="https://aniflix.pro/preview.png">
+<img src="https://repository-images.githubusercontent.com/428654890/3eb14869-768d-4bdb-95a7-6e73bb347803">
 
 <hr/>
 
