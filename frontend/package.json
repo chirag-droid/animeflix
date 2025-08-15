@@ -33,7 +33,7 @@
     "@animeflix/tsconfig": "*",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.4.0",
-    "@types/node": "^18.0.0",
+    "@types/node": "^24.3.0",
     "@types/react": "^18.0.9",
     "autoprefixer": "^10.4.6",
     "eslint-config-animeflix": "*",
