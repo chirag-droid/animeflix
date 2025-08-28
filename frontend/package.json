@@ -34,7 +34,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@types/node": "^18.0.0",
-    "@types/react": "^18.0.9",
+    "@types/react": "^19.1.12",
     "autoprefixer": "^10.4.6",
     "eslint-config-animeflix": "*",
     "postcss": "^8.4.14",
