@@ -13,7 +13,7 @@
   "private": true,
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.0",
-    "@typescript-eslint/parser": "^5.30.0",
+    "@typescript-eslint/parser": "^8.43.0",
     "eslint": "8.20.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
